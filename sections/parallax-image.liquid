@@ -1,0 +1,167 @@
+{%- assign image_size = '2000x' -%}
+{%- assign img_url = section.settings.image | img_url: image_size -%}
+
+<section class="parallax-{{ section.id }} index-section parallax parallax-window no-fouc" data-section-type="parallax-section" data-parallax="scroll" data-image-src="{{ img_url }}" data-section-id="{{ section.id }}" >
+  <article class="row">
+    <div class="parallax-content desktop-12 tablet-6 mobile-3">     
+      
+      <div class="parallax-text">
+        {% if section.settings.link != blank %}
+        <a href="{{ section.settings.link }}">{{ section.settings.page-text | escape }}</a>
+        {% if section.settings.button-text != blank %}
+        <div class="clear"></div>
+        <a class="button" href="{{ section.settings.link }}">{{ section.settings.button-text }}</a>
+        {% endif %}
+        {% else %}
+        {{ section.settings.page-text | escape }}
+        {% endif %}
+      </div>
+
+  {% if section.settings.image == blank %}
+  {% include 'onboard-parallax' %}
+  {% endif %}       
+    </div>
+  </article> 
+</section>
+
+<div class="clear"></div>
+
+
+
+<style>
+  .parallax-{{ section.id }} article {
+    display: table;
+    height: {{ section.settings.page-height }}px;
+    min-height: {{ section.settings.page-height }}px;
+  }
+  .parallax-{{ section.id }} .parallax-text {
+    font-size: {{ section.settings.parallax-font-size }}px;
+    font-weight: {{ section.settings.parallax-font-weight }};
+  }
+  section.parallax-{{ section.id }} .parallax-text, section.parallax-{{ section.id }} .parallax-text, section.parallax-{{ section.id }} .parallax-text a, section.parallax-{{ section.id }} .parallax-text a:visited {
+    color: {{ section.settings.page-text-color }};
+  }
+  
+  .parallax-{{ section.id }} .parallax-text a.button, .parallax-{{ section.id }} .parallax-text a.button:visited {
+    background: {{ section.settings.button-color }};
+    color: {{ section.settings.button-text-color }};
+  }    
+  
+  @media screen and ( min-width: 1220px ) {
+    section.parallax-{{ section.id }} {
+      background-size: 100%! important;
+    }
+  }
+
+  @media screen and ( max-width: 1024px ) {
+    .parallax-{{ section.id }} {
+      background-attachment: scroll! important;
+      background-size: cover! important;
+    }
+
+    section.parallax-{{ section.id }} {
+      background: url({{ img_url }});
+    }
+  }
+  
+  @media screen and ( max-width: 740px ) { 
+    section.parallax-{{ section.id }} article {
+      height: initial;
+      min-height: 200px;
+    }
+  }
+  
+</style>
+
+
+{% schema %}
+  {
+    "name": "Image with text overlay",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Image"
+      },
+      {
+        "type": "text",
+        "id": "page-text",
+        "label": "Add some content to accompany your image"
+      },
+      {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+      },
+      {
+       "id": "button-text",
+       "type": "text",
+       "label": "Button text",
+	   "default": "Add a button",
+	   "info": "Visible only if a link is chosen"
+      },
+      {
+        "type": "range",
+        "id": "page-height",
+        "min": 200,
+        "max": 1000,
+        "step": 100,
+        "label": "Section height",
+        "default": 500
+      }, 
+      {
+        "type": "range",
+        "id": "parallax-font-size",
+        "min": 12,
+        "max": 36,
+        "step": 1,
+        "unit": "px",
+        "label": "Text size",
+        "default": 26
+      },       
+      {
+        "type": "select",
+        "id": "parallax-font-weight",
+        "label": "Text weight",
+        "options": [
+          {
+            "value": "400",
+            "label": "Normal"
+          },
+          {
+            "value": "300",
+            "label": "Light"
+          },
+          {
+            "value": "700",
+            "label": "Bold"
+          }
+        ]
+      },
+      {
+        "type": "color",
+        "id": "page-text-color",
+        "label": "Text color",
+        "default": "#000"
+      },
+      {
+        "type": "color",
+        "id": "button-color",
+        "label": "Button background",
+        "default": "#000"
+      },
+      {
+        "type": "color",
+        "id": "button-text-color",
+        "label": "Button text",
+        "default": "#fff"
+      }
+	],
+  "presets": [
+      {
+        "name": "Image with text overlay  (inactive)",
+        "category": "Image"
+      }
+    ]
+}
+{% endschema %}

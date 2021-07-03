@@ -1,0 +1,13 @@
+{%- assign image_size = '500x' -%}
+<div class="collection-image ci">
+  <a href="{{ collection.url }}" title="{{ collection_title }}">
+    {% if collection.image %}
+    {{ collection.image.src | collection_img_url: '600x' | img_tag: collection_title }}
+    {% else %}
+    {{ collection.products.first.featured_image | product_img_url: '600x' | img_tag: collection_title }}
+    {% endif %}
+  </a>     
+</div>
+<div class="product-details">
+  <h3><a href="{{ collection.url }}" title="{{ collection_title }}">{{ collection.title }}</a></h3>
+</div>

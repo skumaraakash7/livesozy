@@ -1,0 +1,126 @@
+<div class="custom-module module-trust-icons module-{{ block.id }} clearfix desktop-hidden">
+	
+	{% if section.settings.title != blank %}
+		<h4 class="custom-h4">{{ section.settings.title | escape | upcase }}</h4>
+	{% endif %}
+	
+	<div class="module-trust-icons-items carousel" data-flickity='{ "freeScroll": true, "contain": true, "prevNextButtons": false, "pageDots": false, "wrapAround": true }'>
+		{%- for i in (1..5) -%}
+			{% capture temp_icon %}icon_{{ i }}{% endcapture %}
+		
+			{%- if section.settings[temp_icon] != blank -%}
+				<div class="carousel-cell">
+					<img src="{{ section.settings[temp_icon] | img_url: '600x' }}" alt="{{ section.settings[temp_icon].alt }}" />
+				</div>
+			{%- endif -%}
+		{%- endfor -%}
+	</div>
+	
+</div>
+
+<div class="custom-module module-trust-icons module-{{ block.id }} clearfix mobile-hidden">
+	
+	{% if section.settings.title != blank %}
+		<h4 class="custom-h4">{{ section.settings.title | escape | upcase }}</h4>
+	{% endif %}
+	
+	<div class="module-trust-icons-items carousel" data-flickity='{ "freeScroll": false, "contain": true, "prevNextButtons": false, "pageDots": false, "wrapAround": false, draggable: false }'>
+		{%- for i in (1..5) -%}
+			{% capture temp_icon %}icon_{{ i }}{% endcapture %}
+		
+			{%- if section.settings[temp_icon] != blank -%}
+				<div class="carousel-cell">
+					<img src="{{ section.settings[temp_icon] | img_url: '600x' }}" alt="{{ section.settings[temp_icon].alt }}" />
+				</div>
+			{%- endif -%}
+		{%- endfor -%}
+	</div>
+	
+</div>
+
+<style>
+	
+	.module-{{ block.id }} {
+		background: {{ section.settings.bgd_color }};
+	}
+	
+	@media screen and (max-width: 740px) {
+		
+		.module-{{ block.id }} {
+			background: white;
+		}
+		
+		.module-trust-icons-items .carousel-cell {
+			background: {{ section.settings.bgd_color }};
+		}
+		
+	}
+	
+</style>
+
+<script>
+	
+	$(window).load(function() {
+		
+		setTimeout(function() {
+			Flickity.data('.module-trust-icons-items').select(2, true, true);
+		}, 500);
+		
+	});
+	
+</script>
+
+{% schema %}
+{
+	"name": "Trust icons",
+	"settings": [
+		{
+			"type": "color",
+			"id": "bgd_color",
+			"label": "Background"
+		},
+		{
+			"type": "text",
+			"id": "title",
+			"label": "Title"
+		},
+		{
+			"type": "image_picker",
+			"id": "icon_1",
+			"label": "Icon 1",
+			"info": "600 x 600px .png (recommended)"
+		},
+		{
+			"type": "image_picker",
+			"id": "icon_2",
+			"label": "Icon 2",
+			"info": "600 x 600px .png (recommended)"
+		},
+		{
+			"type": "image_picker",
+			"id": "icon_3",
+			"label": "Icon 3",
+			"info": "600 x 600px .png (recommended)"
+		},
+		{
+			"type": "image_picker",
+			"id": "icon_4",
+			"label": "Icon 4",
+			"info": "600 x 600px .png (recommended)"
+		},
+		{
+			"type": "image_picker",
+			"id": "icon_5",
+			"label": "Icon 5",
+			"info": "600 x 600px .png (recommended)"
+		}
+	],
+	 "presets":[	
+			{	
+			 "name":"Trust icons",
+			 "category":"Images"
+
+		}
+	 ]
+}
+{% endschema %}

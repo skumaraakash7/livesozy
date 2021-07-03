@@ -1,0 +1,30 @@
+<div class="account__global_header">
+  <div class="global_header__internal">
+    <div class="internal_copy">
+      <h2>Hi, {{customer.name}}!</h2>
+      <p>Great to see you again</p>
+     {{ 'Logout' | customer_logout_link }}
+    </div>
+    <div class="internal_rewards">
+      <a href="#">Redeem Sozy Rewards ></a>
+      <p>Earn Sozy Dollars with every purchase.</p>
+    </div>
+  </div>
+</div>
+
+<div class="account__navigation">
+  <a href="/account"
+     {%if canonical_url == "https://livesozy.com/account" or canonical_url contains '/account?page=' or canonical_url contains '/account/orders/'%}
+     class="active_link"
+     {%endif%}>
+    MY ORDERS
+  </a>
+  <a href="/account/addresses"
+     {%if canonical_url == 'https://livesozy.com/account/addresses' or canonical_url contains '/account/addresses?page='%}
+     class="active_link"
+     {%endif%}>
+    MY PROFILE</a>
+  
+  {{ 'Logout' | customer_logout_link }}
+</div>
+ 

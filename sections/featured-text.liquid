@@ -1,0 +1,82 @@
+{% assign grcap_anchor_page_content = '<span class="grcap_anchor_page">' | append: page.content | append: '</span>' %}
+<section class="homepage-content-text index-section no-fouc" data-section-id="{{ section.id }}">
+  {% if section.settings.title != blank %}
+  <div class="section-title row">
+    <h2>{{ section.settings.title | escape }}</h2>
+  </div>
+  {% endif %}
+  <div class="row">
+    <div class="desktop-8 desktop-push-2 tablet-6 mobile-3">
+      {% if section.settings.page != blank %}
+      {%- assign feat_page = pages[section.settings.page] -%}
+      <span class='gc_autolink_page'>{{ feat_grcap_anchor_page_content }}</span>
+      {% else %}
+      <div class="rte">
+        {{ section.settings.rich-text }}
+      </div>
+      {% endif %}
+
+      {% if section.settings.page == blank and section.settings.rich-text == blank %}
+      <div class="content-onboard">
+        <p>Use this section to tell customers about your store or add content from one of your pages which makes it easy to add images, video or any other content</p>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+<div class="clear"></div>
+
+<style>
+  section.homepage-content-text {
+    background: {{ section.settings.homepage-content-background }};
+  }
+  section.homepage-content-text h2 {
+    color: {{ section.settings.homepage-content-color }}!important; 
+  }
+</style>
+
+
+{% schema %}
+{
+  "name": "Featured text",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Welcome"
+    },
+    {
+    	"type": "richtext",
+    	"id": "rich-text",
+    	"label": "Text",
+    	"info": "Use basic HTML to format text",
+    	"default": "<p>Use this text to share information about your brand with your customers. Describe a product, share announcements, or welcome customers to your store.</p>"
+    },
+    {
+      "type": "page",
+      "id": "page",
+	  "label": "Or Show content from a page"
+    },
+    {
+      "type": "color",
+      "id": "homepage-content-color",
+      "label": "Title",
+      "default": "#000"
+    },
+    {
+      "type": "color",
+      "id": "homepage-content-background",
+      "label": "Background",
+      "default": "#fff"
+    }
+  ],
+   "presets":[  
+      {  
+       "name":"Rich text (inactive)",
+       "category":"Text"
+
+	  }
+   ]
+}
+{% endschema %}

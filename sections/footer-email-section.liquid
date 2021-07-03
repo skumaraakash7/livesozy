@@ -1,0 +1,58 @@
+{%if section.settings.enable_footer_email == true%}
+
+{%if section.settings.enable_instagram == true%}
+<div id="insta-feed"></div>
+{%endif%}
+
+<div class="footerEmailSection">
+  <div class="footerEmailSection__internalContainer">
+    <div class="footerEmailSection__copy">
+      <p>{{section.settings.section_copy}}</p>
+    </div>
+    <div class="footerEmailSection__form">
+      <div class="klaviyo-form-RchR7p"></div>
+    </div>
+  </div>
+</div>
+{%endif%}
+
+<style>
+.footerEmailSection{
+background: {{section.settings.bg_color}};
+}
+</style>
+{% schema %}
+  {
+    "name": "Footer Email",
+    "settings": [
+		{
+			"type":"checkbox",
+			"id":"enable_footer_email",
+			"label":"Enable Section",
+			"default":true
+		},
+		{
+			"type":"checkbox",
+			"id":"enable_instagram",
+			"label":"Enable Instagram Section",
+			"default":false
+		},
+		{
+			"type":"color",
+			"id":"bg_color",
+			"label":"Background Color"		
+		},
+		{
+			"type":"textarea",
+			"id":"section_copy",
+			"label":"Copy"
+		}
+	]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

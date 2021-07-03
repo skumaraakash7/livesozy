@@ -1,0 +1,25 @@
+ var afterpay_cart_currency = afterpay_cart_currency || {{ cart.currency.iso_code | json }};
+ var afterpay_sidecart_total_price = cart.total_price/100;
+ var afterpay_sidecart_loaded = afterpay_sidecart_loaded || false;
+ var afterpay_is_eligible = afterpay_sidecart_total_price > 35 ? true : false;
+  if(afterpay_sidecart_loaded == false){
+    document.addEventListener("Afterpay.customplacements", function(e) {
+      afterpay_sidecart_loaded = true;
+      e.stopPropagation();
+      if(typeof Afterpay !== "undefined"){
+        Afterpay.createPlacements({
+          targetSelector: '.ajaxcart-amount',
+          attributes: {
+            locale: 'en_US',
+            currency: afterpay_cart_currency,
+            amount: afterpay_sidecart_total_price,
+            size: 'sm',
+			isEligible: afterpay_is_eligible
+          }
+        });
+      }
+    })
+  }
+  setTimeout(function(){ 
+    document.dispatchEvent(new CustomEvent("Afterpay.customplacements"));
+  }, 100);

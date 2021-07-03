@@ -1,0 +1,646 @@
+$min: min-width;
+$max: max-width;
+@mixin at-query ($constraint_, $viewport1_, $viewport2_:null) {
+ $constraint: $constraint_; $viewport1: $viewport1_; $viewport2: $viewport2_;
+  @if type-of($constraint_) == number {
+    $viewport1 : $constraint_; $viewport2 : $viewport1_; $constraint : null;
+  }
+  @if $constraint == $min {
+    @media screen and ($min: $viewport1) {
+      @content;
+    }
+  } @else if $constraint == $max {
+    @media screen and ($max: $viewport1) {
+      @content;
+    }
+  } @else {
+    @media screen and ($min: $viewport1) and ($max: $viewport2) {
+      @content;
+    }
+  }
+} 
+
+$small: 740px;
+$medium: 769px; 
+$x-large: 1024px;
+
+
+$brandom: brandon-grotesque,sans-serif;
+
+/*COLOR THEME SOSY*/
+
+$color_btn_hover: #C56E6F;
+
+$color_btn: {{settings.cta_color_accent_bg}};
+$opacity_value: {{settings.cta_hover_opacity}};
+
+
+/*COLOR THEME GENERAL*/
+$color_gray: #f8f8f8;
+
+$color_dark_gray:  #919191;
+
+$color_border_gray: #D9D9D9;
+
+$color_stars-yotpo: #3D3D3D;
+
+$color_active_input: #5A5959;
+
+
+.module-banner-image{
+  .image-container{
+    .slide-text{
+      top: 50% !important;
+      bottom: unset !important;
+      transform:translateY(-50%);
+      
+      @include at-query($max, $small){
+        top: unset !important;
+        bottom: 20px !important;
+        transform: unset;
+      }
+      
+      .slide-text-content{
+        h1{
+          font-family: $brandom;
+          font-style: normal;
+          font-weight: bold;
+          font-size: 42px;
+          line-height: 54px;         
+          letter-spacing: 0.05em;
+
+          @include at-query($max, $small){
+            text-align: center !important; 
+            font-size: 36px;
+          }
+        }
+      }
+    }
+  }
+
+}
+
+/* .mobile-3{
+  width: 100% !important;
+  margin: 0 !important;
+} */
+
+
+#collection-description{
+  margin-top: 50px;
+  margin-bottom: 28px !important;
+  padding: 0px 15px;
+  
+  @include at-query($max, $small){
+    margin-top: 25px;
+    margin-bottom: 5px !important; 
+    padding: 0px 20px;
+  }
+  
+  
+  .internal-col-descr{
+    background: #FFF8F5;
+    padding: 38px 0px !important;
+
+    font-family: $brandom; 
+    font-style: normal;
+    font-weight: 100;
+    font-size: 15px !important;
+    line-height: 20px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase !important; 
+    
+    @include at-query($max, $small){
+      font-size: 12px !important;
+    }
+    
+    a, span{
+      font-family: $brandom; 
+      font-style: normal;
+      font-weight: bold;
+      font-size: 14px !important;
+      line-height: 20px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase !important; 
+      
+      @include at-query($max, $small){
+        font-size: 12px !important;
+      }
+    }
+    
+    span{
+      color: $color_active_input !important;
+    }
+    
+    a{
+      color: $color_btn !important;
+      text-decoration: underline !important;
+      &:hover{
+      	opacity: $opacity_value !important;
+      }
+    }
+  }
+}
+
+/*-------------------------------------*/
+/*BREADCRUMBS*/
+#breadcrumb{
+  text-align: left !important;
+  
+  @include at-query($max, '1200px'){
+    margin-left: 14px !important;    
+  }
+ 
+  @include at-query($max, '1023px'){
+    display: none;
+  }
+  
+ 
+  
+  a, span{
+    font-family: $brandom;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 10px !important;
+    line-height: 30px; 
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: $color_stars-yotpo;
+  }
+  
+  a{ 
+    &:hover{
+      color: $color_btn_hover !important;
+    }
+  }
+}
+
+/*-------------------------------------*/
+/*PRODUCT CARD*/
+
+#product-loop{
+  margin-top: 20px;
+  .featured, .collection-carousel .featured{
+    @include at-query($max, $medium){
+      position: relative;
+      z-index: -1;
+      left: 0;
+      top:0;
+      opacity: 1;
+    }
+  }
+
+  .hover-carousel, .collection-carousel .hover-carousel{
+    @include at-query($max, $medium){
+      position: absolute;
+    }
+  }
+  
+  .slick-arrow{
+    @include at-query($min, '1025px'){
+      top: 33% !important;
+    }
+    
+    @include at-query($min, '1250px'){
+      top: 50%!important;
+    }
+  }
+
+}
+
+.collection-carousel{
+  .slick-arrow{
+    @include at-query($min, '1025px'){
+      top: 33% !important;
+    }
+
+    @include at-query($min, '1250px'){
+      top: 50%!important;
+    }
+  }
+} 
+ 
+.product{
+  
+  
+
+  @include at-query($max, $medium){
+    width: 100% !important;
+    margin: 0 auto;
+	margin-left: 0px !important;
+    margin-right: 0px !important;
+    margin-bottom: 50px !important
+  }
+  
+  .ci{
+   
+    .product_form{
+      background-color: transparent !important;
+ 
+      
+      @include at-query($min, '900px'){
+        padding: 0px 5px !important;
+        width: 100% !important;
+        left: 40% !important;
+        transform: translate(-40%);
+        bottom: 15px !important;
+      }
+     
+      @include at-query($min, '1200px'){
+        bottom: 3px !important;         
+        width: 100% !important;
+        left: 0px !important;
+        transform: translate(0px);
+      }
+      
+      @include at-query($min, '1250px'){
+        padding: 20px 15px !important;
+      }
+      
+      @include at-query($min, '1350px'){
+        padding: 28px 15px !important;
+      }
+      
+      @include at-query($max, $x-large){
+        display: block !important;
+        padding: 0px 0px !important;
+        margin-top: 5px;
+      }
+
+
+      .swatch{
+        .header{  display: none !important;  }
+        
+        .content{
+          &:nth-child(2){ 
+            margin-top: 10px !important;
+            
+          }
+
+          @include at-query($max, $x-large){ 
+            	flex-wrap: wrap !important; 
+            	margin: 0 auto;
+                z-index: 10;
+                position: relative;
+          }
+
+          .swatch-element.color input:checked+label{ border: 2px solid #fff !important; }
+          
+          .swatch-element{
+
+            @include at-query($max, $x-large){ margin-right: 3px !important;  }
+
+            input:checked+label{
+              -webkit-box-shadow: 0px 0px 0px 1px $color_active_input !important;
+              -moz-box-shadow: 0px 0px 1px 1px $color_active_input !important;
+              box-shadow: 0px 0px 0px 1px $color_active_input !important;
+              border: none !important;
+            }
+
+            label{
+              border-radius: 0px !important; 
+              border: 1px solid $color_border_gray !important;
+              opacity: 1 !important;
+              background: white ;
+              color: $color_active_input !important;
+              font-family: $brandom;
+              font-weight: bold;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              position: relative;
+
+              &:hover{
+                border: 1px solid $color_active_input !important;
+              }
+
+              .crossed-out{
+                width: 100% !important;
+                height: 100% !important;
+              }
+              
+              
+            }
+          }   
+          
+
+          .color{
+            .tooltip{ font-family: $brandom;  } 
+
+            input:checked+label{
+              -webkit-box-shadow: 0px 0px 0px 1px $color_active_input !important;
+              -moz-box-shadow: 0px 0px 1px 1px $color_active_input !important;
+              box-shadow: 0px 0px 0px 1px $color_active_input !important;
+            } 
+
+            label{
+              margin: 0 4px 5px 0 !important;
+              border:none !important;
+              border-radius: 17px !important; 
+              position: relative;
+              min-width: 32px !important;
+              width: 32px !important;
+              height: 32px !important;
+
+              .crossed-out{
+                width: 100% !important;
+                height: 100% !important;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .product-details{
+    margin-top: 11px !important;
+
+    &:hover > a > h3{
+      text-decoration: underline !important; 
+    }
+    
+    h3{
+      font-family: $brandom;
+      color: $color_stars-yotpo;
+      font-size: 14px;
+      line-height: 20px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase !important;                    
+      font-weight:600;
+      margin-top: 5px;
+      @include at-query($max, $x-large){
+        font-size: 14px;
+        text-align: center !important;
+        margin-top: 0px;
+        margin-bottom: 0px;
+        font-weight: 500;
+        line-height: 26px;
+        text-decoration: underline;                      
+      }
+    }
+
+    .price, .onsale{
+      font-family: $brandom;
+      color: $color_stars-yotpo;
+      font-size: 13px;
+      line-height: 20px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase !important;                    
+      font-weight:600;
+
+      @include at-query($max, $x-large){
+        text-align: center !important;                      
+        font-weight: 500;
+      }                   
+    }
+    .star-clickable{
+      align-items: center; 
+      @include at-query($max, $x-large){
+        display: flex !important;
+        align-items: baseline;
+        justify-content: center !important;
+        margin-top: 0px;
+      }       
+    }
+    .text-m{
+      color: $color_stars-yotpo !important;
+      font-size: 12px !important;
+      font-weight: 700;
+      font-family: $brandom;
+      letter-spacing: 0.05em;
+      padding-top: 0px;
+      padding-left: 5px !important; 
+    }  
+
+    .spacer-write{
+      margin-top: -1px !important;
+    }
+
+    .yotpo-stars{
+      padding-right:5px; 
+    }      
+    .yotpo-icon-star, .yotpo-icon-half-star,  .yotpo-icon-empty-star{
+      font-size: 15px !important;
+    }
+    .yotpo-icon.rating-star::before{
+      color: $color_stars-yotpo !important;
+    }     
+    .yotpo a:hover{
+      color: $color_btn_hover !important;
+      font-family: $brandom;
+      letter-spacing: 0.05em;
+      padding-top: 0px;
+    }
+    .yotpo{
+      @include at-query($max, $x-large){
+        margin-bottom: 0px !important;
+      }
+
+      span{
+        @include at-query($max, $small){
+          line-height: 30px !important;
+        }
+      }
+    }
+
+
+    .form--quick-atc{
+      margin-top: 9px;
+
+      @include at-query($max, $x-large){
+        display: block !important;
+      }
+
+      .btn{
+        background-color: $color_btn !important;
+        /*transition: 0.3s all;  */                  
+        font-family: $brandom;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 14px;
+        line-height: 20px;                    
+        letter-spacing: 0.05em;                    
+        margin-top: 0px;
+        width: 100% !important;
+        padding: 20px 0px !important;
+
+        &:hover{
+          opacity:$opacity_value !important;
+          transition: 0.3s all;
+        }
+
+        @include at-query($max, $x-large){
+          width: 100% !important;
+          margin-top: 0px;
+        }
+
+        @include at-query($max, $medium){
+          width: 90% !important;
+        }
+      }
+      
+      .cta-soldout-style{
+        background-color: #D9D9D9 !important;
+        position: relative;
+        z-index: -1;
+        &:hover{
+          background-color: #D9D9D9 !important;
+        }
+      }
+    }
+  }
+}
+
+/*---------------------------------------------*/
+.collection-double-cta{
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  @include at-query($min, $medium){
+    margin-bottom: 30px;
+  }
+  
+  @include at-query($max, $small){
+    flex-direction: column;  
+  }
+  
+  .coll-cta-card{
+    position: relative;
+    width: 50%;
+    
+    @include at-query($max, $small){
+      width: 100%;
+    }
+    
+    &:first-child{
+      padding-right: 20px;
+      @include at-query($max, $small){
+        padding-right: 0px;
+        margin-bottom: 10px;
+      }
+    }
+    &:nth-child(2){
+      padding-left: 20px;
+      
+      @include at-query($max, $small){
+        padding-left: 0px;
+      }
+    }
+    
+    img{
+      display: block;
+      width: 100%;
+    }
+    
+    .cta-text-container{
+      position: absolute;
+      bottom: 81px;
+      left: 50%;
+      text-align: center;
+      transform: translateX(-50%);
+      
+      h2{
+        font-family: $brandom;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 36px;
+        line-height: 51px;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        margin-bottom: 18px;
+        color: white;
+        
+        @include at-query($max, $medium){
+          font-size: 30px;
+        }
+      }
+
+      a{
+        display: block;
+        font-family: $brandom;
+        font-style: normal;
+        font-weight: 700;
+        font-size: 15px;
+        line-height: 20px;        
+        letter-spacing: 0.05em;
+        width: 230px;
+        padding: 20px 0px;          
+        color: $color_stars-yotpo;
+        background: white;
+        transition:  0.3s all ;
+        text-align:center;
+        &:hover{
+          background: $color_btn_hover !important;
+          transition:  0.3s all ;
+          color: white !important;
+        }
+
+        @include at-query($max, $x-large){
+          width: 230px;
+          display: block;
+          padding: 18px 0px;
+          margin: 0 auto;
+        }
+      }
+    }
+  }
+}
+
+#pagination{
+  span, a{
+    font-family: $brandom;
+  }
+}
+
+/*COLLECTION COPY BLOCK FOR SEO*/
+.collection-block-seo{
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 60px 0px 85px 0px;
+  border-top: 1px solid #dedede;
+  @include at-query($max, '999px'){
+    width: 90%;
+    border-top: 1px solid #dedede;
+  }
+
+  h2{
+    font-family: $brandom;
+    font-size: 27px;
+    font-weight: 500;
+    line-height: 1.4;
+    letter-spacing: 0;
+    color: $color_active_input;
+
+    @include at-query($max, $medium){
+      text-align: left;
+      font-size: 18px;
+      margin-bottom: 20px;
+      letter-spacing: 0;
+    }
+  }
+
+  p{
+    font-family: $brandom;
+    font-size: 16px;
+    color: $color_active_input;
+    margin-bottom: 25px;
+    
+    @include at-query($max, $medium){
+      &:last-child{
+        margin-bottom: 0px;
+      }      
+    }
+  }
+  
+  a, [read-more-link]{
+    color: $color_btn !important;
+    &:hover{
+      opacity: $opacity_value !important;
+    }
+  }
+}
+
+/*---------------------------------------------------------------------------------------------------*/

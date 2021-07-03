@@ -1,0 +1,57 @@
+{{'customer_stylesheet.css' | asset_url | stylesheet_tag}}
+
+{%render 'account_header'%}
+
+<div id="customer-wrapper" class="desktop-12 mobile-3">
+  <div id="customer_orders" class="desktop-9 mobile-3">
+    <div class="customer_orders__header">
+      <h1 class="name">{{ 'customer.orders.title' | t }}</h1>
+      
+      <div class="customer_orders__sort_container">
+        <span>Sort By:</span>
+        <select class="sort_options">
+          <option>Most Recent</option>
+          <option>Older</option>
+          <option>Delivered</option>
+          <option>In Transit</option>
+        </select>      
+      </div>
+    </div>
+       
+    
+    {% if customer.orders.size != 0 %}
+    {% paginate customer.orders by 5 %}
+    <table class="customer_orders__table">     
+      {% for order in customer.orders %}
+      <tr class="{% cycle 'odd', 'even' %} {% if order.cancelled %}cancelled_order{% endif %}">
+        <td class="order_info">
+          <p class="created"><span>Date Ordered: </span>{{order.created_at | date: format: 'abbreviated_date'}}</p>
+          <p class="date"><span>Order Number: </span> {{order.order_number}}</p>          
+        </td>
+
+        <td class="order_product">
+          {%for item in order.line_items%}
+          <a href="{{item.url}}" class='order_item {%if forloop.index > 3%}hide_item{%endif%}'>
+            {%if item.image != blank%}
+            <img src="{{item.image | img_url: "95x160"}}">
+            {%endif%}
+          </a>
+          {%endfor%}          
+        </td>
+
+        <td class="order_details">
+          <a href="{{order.customer_url,order.name}}" class="a_desktop">VIEW ORDER DETAILS</a>
+          <a href="{{order.customer_url,order.name}}" class="a_mobile">DETAILS</a>
+        </td>
+      </tr>
+      {% endfor %}   
+    </table>
+    {% include 'pagination' %}
+    {% endpaginate %}
+    {% else %}
+    <h3 id="empty_orders">{{ 'customer.orders.none' | t }}</h3>
+    {% endif %}
+  </div>
+</div>
+
+

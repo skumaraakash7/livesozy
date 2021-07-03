@@ -1,0 +1,1198 @@
+$min: min-width;
+$max: max-width;
+@mixin at-query ($constraint_, $viewport1_, $viewport2_:null) {
+  $constraint: $constraint_; $viewport1: $viewport1_; $viewport2: $viewport2_;
+  @if type-of($constraint_) == number {
+    $viewport1 : $constraint_; $viewport2 : $viewport1_; $constraint : null;
+  }
+  @if $constraint == $min {
+    @media screen and ($min: $viewport1) {
+      @content;
+    }
+  } @else if $constraint == $max {
+    @media screen and ($max: $viewport1) {
+      @content;
+    }
+  } @else {
+    @media screen and ($min: $viewport1) and ($max: $viewport2) {
+      @content;
+    }
+  }
+} 
+
+$small: 740px;
+$medium: 769px; 
+$x-large: 1024px;
+
+$brandom: brandon-grotesque,sans-serif;
+
+
+/*COLOR THEME SOSY*/
+
+$color_btn_hover: #C56E6F;
+
+$color_btn:  #c56e6f;
+
+$opacity_value: 0.8;
+
+
+/*COLOR THEME GENERAL*/
+$color_gray: #f8f8f8;
+
+$color_dark_gray:  #919191;
+
+$color_border_gray: #D9D9D9;
+
+$color_stars-yotpo: #3D3D3D;
+
+$color_active_input: #5A5959;
+
+
+/*--------------------------------------------------------------------*/
+/*CIRCLE TAG SECTION*/
+
+.circle-tags-container{
+  display: none;
+
+  @include at-query($max, '980px'){
+    display: block; 
+    position: relative; 
+    width: 100%;
+    padding-top: 8px;
+    padding-bottom: 10px;
+  }
+
+  @include at-query($min, '700px'){
+    justify-content: center;
+  }
+
+  .internal-tags-container{
+    display: flex;    
+    align-items: baseline;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    margin:0px 0px 0px 10px ;
+
+    @include at-query($min, '700px'){
+      justify-content: center;
+    }
+
+    .tag-container{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+
+      flex: 0 0 auto;
+      margin: 0 0px 5px 0px;
+
+      width: 82px;
+
+      img{
+        display: block;
+        width: 65px;
+        height: 65px;
+        border-radius: 50%;
+      }
+
+      a{
+        font-family: $brandom;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 9px;
+        line-height: 11px;
+        text-align: center;
+        text-transform: uppercase;
+        color: black;
+
+        margin-top: 5px;
+      }
+    }
+  } 
+}
+
+
+
+
+
+
+
+
+
+/*--------------------------------------------------------------------*/
+
+.index-sections{
+  
+  /*HOMEPAGE BANNER*/
+  .homepage-content-banner{ 
+    
+    padding: 0px !important;
+    margin-top: 0px !important;
+    
+    .custom-module-content{
+      width: 600px !important;
+      
+      @include at-query($max, $x-large){
+        width: 100%!important;
+        top:50%;        
+      }
+      
+      @include at-query($max, '999px'){
+        padding-top: 0px !important;
+        padding-bottom: 0px;
+      }
+      
+      @include at-query($max, $small){        
+        padding-top: 0px;
+        top: 18%;
+      }
+      
+      .custom-module-pretitle{
+        width: 100%;
+        @include at-query($max, $small){
+          position: absolute;
+          bottom: -155px;
+        }
+      }
+      
+      
+      .custom-module-title{
+        font-family: $brandom;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 48px;
+        line-height: 54px;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        margin-bottom: 60px;
+        
+        @include at-query($max, $x-large){
+          width: 370px;
+          margin: 0 auto;
+          font-size: 38px;
+           
+        }
+      }
+      
+      p{
+        @include at-query($max, $small){
+          position: absolute;
+          bottom: -290px;
+          left: 50%;
+          transform: translateX(-50%);
+        }
+      }
+      
+      .custom-module-button{
+        font-family: $brandom;
+        font-style: normal;
+        font-weight: 700;
+        font-size: 15px;
+        line-height: 20px;        
+        letter-spacing: 0.05em;
+        padding: 20px 72px;
+
+        transition:  0.3s all ;
+        &:hover{
+          background: #D18B8C !important;
+          transition:  0.3s all ;
+        }
+        
+        @include at-query($max, $x-large){
+          width: 230px;
+          display: block;
+          padding: 20px 0px;
+          margin: 0 auto;
+        }
+        
+      }
+    }
+    
+    .banner-image-desktop,.banner-image-mobile{
+      img{
+        display: block;
+        width: 100%;
+      }
+    }
+  }
+
+  /*HOMEPAGE DOBLE CTA*/
+  .homepage-double-cta{
+    margin-top: 41px !important;
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    
+    @include at-query($max, $medium){
+      margin-top: 10px !important;
+      flex-direction: column ;
+    }
+
+    .homepage-double-cta-left{
+      width: 50% !important;
+      margin: 0 !important;
+      margin-right: 20px !important;
+      
+      position: relative;
+
+      &:after{
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        visibility: hidden;
+        transition: 0.45s opacity, 0.45s visibility;
+        background-color: rgba(0,0,0,0.2);
+      }
+
+      &:hover{
+        &:after{
+          opacity: 1;
+          visibility: visible;
+        }
+      }
+      
+      @include at-query($max, $medium){
+        width: 100% !important;;
+        margin: 0 auto !important; 
+      }
+      
+      .custom-module-content{
+        z-index:1;
+        .custom-module-title{
+          font-family: $brandom;
+          font-style: normal;
+          font-weight: 100;
+          font-size: 36px;
+          line-height: 51px;
+          letter-spacing: 0.05em;
+          text-transform: uppercase; 
+          margin-bottom: 30px !important;
+          
+          @include at-query($max, $medium){
+            font-size: 30px;
+            top: 0px !important;
+          }
+        }
+
+        .custom-module-button{
+          font-family: $brandom;
+          font-style: normal;
+          font-weight: 700;
+          font-size: 15px;
+          line-height: 20px;        
+          letter-spacing: 0.05em;
+          padding: 20px 72px;
+
+          transition:  0.3s all ;
+          &:hover{
+            background: $color_btn_hover !important;
+            transition:  0.3s all ;
+            color: white !important;
+          }
+        }
+      }     
+      
+      .banner-image-desktop,.banner-image-mobile{
+        img{
+          display: block;
+          width: 100%;
+        }
+      }
+    }
+
+    .homepage-double-cta-right{
+      width: 50% !important;
+      margin: 0 !important;
+      margin-left:20px  !important; 
+      
+      position: relative;
+
+      &:after{
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        visibility: hidden;
+        transition: 0.45s opacity, 0.45s visibility;
+        background-color: rgba(0,0,0,0.2);
+      }
+
+      &:hover{
+        &:after{
+          opacity: 1;
+          visibility: visible;
+        }
+      }
+
+      @include at-query($max, $medium){
+        width: 100% !important;
+        margin: 0 auto !important; 
+        margin-top: 10px !important;
+        margin-bottom: 10px !important;
+      }
+      
+      .custom-module-content{
+        z-index: 1;
+        @include at-query($max, $x-large){
+          width: 100% !important;
+        }
+
+        .custom-module-title{
+          font-family: $brandom;
+          font-style: normal;
+          font-weight: 100;
+          font-size: 36px;
+          line-height: 51px;
+          letter-spacing: 0.05em;
+          text-transform: uppercase;  
+          margin-bottom: 30px !important;
+          
+
+          @include at-query($max, $medium){
+            font-size: 30px;
+            top: 0px !important;
+          }
+          
+        }
+
+        .custom-module-button{
+          font-family: $brandom;
+          font-style: normal;
+          font-weight: 700;
+          font-size: 15px;
+          line-height: 20px;        
+          letter-spacing: 0.05em;
+          padding: 20px 72px;
+
+          transition:  0.3s all ;
+          &:hover{
+            background: $color_btn_hover !important;
+            transition:  0.3s all ;
+            color: white !important;
+          }
+        }
+      }      
+
+      .banner-image-desktop,.banner-image-mobile{
+        img{
+          display: block;
+          width: 100%;
+        }
+      }
+    }
+  }
+
+  
+  /*New Arrivals Carousel & Featured Collection*/
+  .featured-products-new-section, .featured-collections-row{
+
+    .section-title{
+      display: block;
+      margin: 0 auto;
+      h2{        
+        margin-bottom: 18px;
+        font-family: $brandom;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 18px;
+        line-height: 26px;           
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: $color_active_input !important;
+
+        @include at-query($max, $medium){
+          padding-top: 16px;
+          padding-bottom: 0px;
+          margin-bottom: 10px;
+        }
+
+        a{
+          font-family: $brandom;
+          font-style: normal;
+          font-weight: bold;
+          font-size: 18px;
+          line-height: 26px;           
+          letter-spacing: 0.2em;
+          text-transform: uppercase;
+          color: $color_active_input !important;
+        }
+      }
+    }
+
+    .row{
+      @include at-query($max, $small){
+        margin-left: 0px !important;
+      }
+    }
+
+    .collection-carousel, .collection-row-carousel{
+
+      @include at-query($max, $small){         
+        margin-left: 2%;           
+      }
+
+      .slick-list.draggable{
+        &:first-child{
+          @include at-query($max, $small){
+            padding-right: 20%;
+          }
+        }
+      }
+
+      .lazyOwl{
+        padding: 0px 10px !important;
+
+        h4{
+          font-family: $brandom;
+        }              
+        &:hover{
+          h3{
+            text-decoration: underline !important;                  
+          }                  
+        }
+
+        .collection-row-button{   
+          display: block;
+          background-color: $color_btn !important;
+          transition: 0.3s all;                    
+          font-family: $brandom;
+          font-style: normal;
+          font-weight: bold;
+          font-size: 14px;
+          line-height: 20px;                    
+          letter-spacing: 0.05em;    
+          text-align: center;
+          width: 60% !important;
+          margin: 0 auto;
+          margin-top: 10px;
+          margin-bottom: 20px;
+          padding: 20px 0px !important;
+
+          &:hover{
+            opacity: $opacity_value  !important;
+            transition: 0.3s all;
+          }
+
+          @include at-query($max, $x-large){
+            width: 100% !important;
+            margin-top: 22px;
+          }
+        }
+
+        /*Hover Slick Active & Form*/
+        .ci{
+          .product_form{
+            background-color: transparent !important;
+            padding: 28px 15px !important;
+
+            @include at-query($max, $x-large){
+              display: block !important;
+              padding: 0px 0px !important;
+            }
+
+            .swatch{
+              .header{
+                display: none !important;
+              }
+              .content{
+                &:nth-child(2){
+                  margin-top: 10px !important;
+                }
+
+                @include at-query($max, $x-large){
+                  flex-wrap: wrap !important;
+                  margin: 0 !important;
+                }
+
+                .swatch-element.color input:checked+label{
+                  border: 2px solid #fff !important;
+                }
+
+                .swatch-element{
+
+                  @include at-query($max, $x-large){
+                    margin-right: 3px !important;
+                  }
+
+                  input:checked+label{
+                    -webkit-box-shadow: 0px 0px 0px 1px $color_active_input !important;
+                    -moz-box-shadow: 0px 0px 1px 1px $color_active_input !important;
+                    box-shadow: 0px 0px 0px 1px $color_active_input !important;
+                    border: none !important;
+                  }
+
+                  label{
+                    border-radius: 0px !important; 
+                    border: 1px solid $color_border_gray !important;
+                    opacity: 1 !important;
+                    background: white ;
+                    color: $color_active_input !important;
+                    font-family: $brandom;
+                    font-weight: bold;
+
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+
+                    position: relative;
+
+                    .crossed-out{
+                      width: 100% !important;
+                      height: 100% !important;
+                    }
+                  }
+                }
+
+                .color{
+                  .tooltip{
+                    font-family: $brandom;
+                  } 
+
+                  input:checked+label{
+                    -webkit-box-shadow: 0px 0px 0px 1px $color_active_input !important;
+                    -moz-box-shadow: 0px 0px 1px 1px $color_active_input !important;
+                    box-shadow: 0px 0px 0px 1px $color_active_input !important;
+                  } 
+
+                  label{
+                    margin: 0 4px 5px 0 !important;
+                    border:none !important;
+                    border-radius: 17px !important; 
+
+                    position: relative;
+
+                    min-width: 32px !important;
+                    width: 32px !important;
+                    height: 32px !important;
+
+                    .crossed-out{
+                      width: 100% !important;
+                      height: 100% !important;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+
+        /*Title - Price - Add Button - Yotpo*/
+        .product-details{
+          margin-top: 11px !important;
+          @include at-query($max, $x-large){
+          margin-top: 3px!important;
+          }
+          h3{
+            font-family: $brandom;
+            color: $color_stars-yotpo;
+            font-size: 14px;
+            line-height: 23px;
+            letter-spacing: 0.05em;
+            text-transform: uppercase !important;
+            margin-top: 0px;                    
+            font-weight:600;
+
+            @include at-query($max, $x-large){
+              font-size: 14px;
+              text-align: center !important;
+              margin-top: 0px;
+              margin-bottom: 0px;
+              font-weight: 500;
+              line-height: 26px;
+              text-decoration: underline;                      
+            }
+          }
+
+          .price, .onsale{
+            font-family: $brandom;
+            color: $color_stars-yotpo;
+            font-size: 14px;
+            line-height: 23px;
+            letter-spacing: 0.05em;
+            text-transform: uppercase !important;                    
+            font-weight:600;
+
+            @include at-query($max, $x-large){
+              font-size: 14px;
+              text-align: center !important;                      
+              font-weight: 500;
+              line-height: 26px;
+            }                   
+          }
+
+          .star-clickable{
+            align-items: center; 
+            @include at-query($max, $x-large){
+              display: flex !important;
+              align-items: baseline;
+              justify-content: center !important; 
+              margin-top: 0px !important;
+            } 
+
+          }
+          .text-m{
+            color: $color_stars-yotpo !important;
+            font-size: 12px !important;
+            font-weight: 700;
+            font-family: $brandom;
+            letter-spacing: 0.05em;
+            padding-top: 0px;
+            padding-left: 0px !important; 
+          }  
+
+          .yotpo-stars{
+            padding-right:5px; 
+          }      
+          .yotpo-icon-star, .yotpo-icon-half-star,  .yotpo-icon-empty-star{
+            font-size: 15px !important;
+          }
+          .yotpo-icon.rating-star::before{
+            color: $color_stars-yotpo !important;
+          }     
+          .yotpo a:hover{
+            color: $color_btn_hover !important;
+            font-family: $brandom;
+            letter-spacing: 0.05em;
+            padding-top: 0px;
+          }
+          .yotpo{
+            @include at-query($max, $x-large){
+              margin-bottom: 0px !important;
+            }
+
+            span{
+              @include at-query($max, $small){
+                line-height: 30px !important;
+              }
+            }
+          }
+
+          .form--quick-atc{
+            margin-top: 13px;
+
+            @include at-query($max, $x-large){
+              display: block !important;
+            }
+
+            .btn{
+              background-color: $color_btn !important;                  
+              font-family: $brandom;
+              font-style: normal;
+              font-weight: bold;
+              font-size: 14px;
+              line-height: 20px;                    
+              letter-spacing: 0.05em;                    
+              margin-top: 0px;
+              padding: 20px 0px !important;
+
+              &:hover{
+                opacity: $opacity_value !important;
+                transition: 0.3s all;
+              }
+
+              @include at-query($max, $x-large){
+                width: 100% !important;
+                margin-top: -2px;
+              }
+            }
+
+            .cta-soldout-style{
+              background-color: #D9D9D9 !important;
+              &:hover{
+                background-color: #D9D9D9 !important;
+              }
+            }
+          }
+        }
+      }
+
+      /*Arrows*/
+      .arrow-angle{
+        width: 2%;
+        display: block;
+        top: 35% !important;
+        transform: translateY(-50%);
+        position: absolute;
+
+        @include at-query($max, '1200px'){
+          width: 3%;          
+        }
+
+        img{
+          width: 100%;
+          display: block;
+        }
+      }
+
+      .left-arrow{
+        left: -35px;
+        transform: rotate(-180deg);
+        @include at-query($max, '1300px'){
+          left: -25px;
+        }
+      }
+
+      .right-arrow{
+        right: -35px;
+        @include at-query($max, '1300px'){
+          right: -25px;
+        }
+      }
+
+      /*.slick-track*/
+      .slick-track{
+        @include at-query($max, '1024px'){
+          display: flex !important;          
+        }
+      } 
+    }
+  }
+
+}
+
+/*--------------------------------------------------------------------*/
+/*HOMEPAGE FRAMED TEXT*/
+.framed-text-section{
+  position: relative;
+  display: block;
+  width: 100%;
+  margin: 85px 0px;
+  margin-bottom: 70px;
+
+  @include at-query($max, $medium){     
+    margin-top:0px;
+    margin-bottom: 0px;
+  }
+
+  .internal-frame{
+    max-width: 87%;    
+    width: 100%;    
+    margin: 0 auto;
+    text-align: center;  
+
+    @include at-query($max, $medium){
+      max-width: 100%;
+    }
+
+    h3{
+      font-family: $brandom;
+      font-size: 24px;
+      letter-spacing: 0.05em;
+      line-height: 33px;
+      font-weight: 100 !important;
+      margin: 0 auto;
+      padding-top: 105px;
+      color: $color_active_input;
+      
+      width: 500px;
+
+      @include at-query($max,$small){
+        font-size: 24px;
+        line-height: 34px;
+        padding: 60px 8px 0px 8px;
+        width: 100%;
+      }
+    }
+    
+    p{
+      font-family: $brandom;
+      font-size: 18px;     
+      width: 600px;
+      margin: 0 auto;
+      margin-top:10px;
+      margin-bottom: 0px;      
+      color: $color_active_input;
+
+      line-height: 26px;
+
+      @include at-query($max, $x-large){
+        width: 80%;
+      }
+
+      @include at-query($max, $small){
+        width: 93%;  
+        letter-spacing: 0px;
+        margin-bottom: 8px;
+      }
+    }
+    
+    a{
+      display: inline-block;
+      position: relative;
+      font-family: $brandom;
+      color: $color_active_input;
+      font-weight: 700;
+      line-height: 51px;
+      padding-right: 30px;
+      padding-left: 30px;
+      padding-bottom: 90px;
+      font-size: 15px;
+      font-style: normal;
+      
+      
+      
+      &:hover{
+        color: $color_btn;
+        
+        &:after{
+          right: -24px;
+          content: '';
+          background-image: url(https://cdn.shopify.com/s/files/1/3012/3948/files/right-arrow-hover.svg?v=1605720129);
+        }
+      }
+
+      @include at-query($max, $medium){
+        padding-bottom: 45px;
+      }
+      
+      &:after{
+        content: '';
+        background-image: url(https://cdn.shopify.com/s/files/1/3012/3948/files/right-arrow.svg?v=1605551399);
+        background-repeat: no-repeat;
+        background-size: contain;
+        position: absolute;
+        width: 34px;
+        height: 21px;
+        top: 14px;
+        right: -14px;
+        transition: right 0.4s cubic-bezier(0.1, 0.41, 0.32, 0.85);
+      }
+    }
+  }
+}
+
+/*--------------------------------------------------------------------*/
+/*HOMEPAGE TEXT & IMAGE*/
+.text-image-columns-container{
+  
+  @include at-query($min, '1000px'){
+    padding: 0px 40px; 
+  }
+
+  @include at-query($min, '1400px'){
+    padding: 0px 0px;
+  }
+
+  .text-image-internal{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 1fr;
+    max-width: 1400px;
+    width: 100%;
+    margin: 0 auto;
+    margin-top: 160px;
+    
+    @include at-query($max, $medium){
+      grid-template-columns: 1fr;
+      grid-template-rows: repeat(2,auto);
+      margin-top: 75px;
+    }
+
+    .text-col{
+      margin: 0 auto;
+      margin-top: 110px;
+      
+      &.text-left-alignment{
+        grid-column: 1 / 2;
+        
+        @include at-query($max, $medium){
+          grid-column: 1 / 2;
+        }
+      }
+      
+      &.text-right-alignment{
+        grid-column: 2 / 3;
+        
+        @include at-query($max, $medium){
+          grid-column: 1 / 2;
+        }
+      }
+
+      @include at-query($max, '1200px'){  
+        padding-left: 20px;
+        display: flex;
+        justify-content: center;
+        flex-direction: column; 
+        margin-top: 0px;
+      }   
+     
+      @include at-query($max, $medium){
+        grid-row-start: 2;
+        width: 100%;
+        margin-top: 35px;
+        padding: 0px 40px;
+      }
+
+      h3{
+        font-family: $brandom;
+        font-size: 36px;
+        line-height: 42px;
+        font-weight: 500;         
+        color: $color_active_input;
+        
+        @include at-query($max, $medium){
+          font-size: 30px;
+          line-height: 38px;
+          text-align: left;   
+          width: 90%;
+        }
+      }
+
+      p{
+        font-family: $brandom;
+        font-size: 18px;      
+        width: 575px;         
+        margin-top:16px;
+        margin-bottom: 65px;      
+        color: $color_active_input;
+        line-height: 24px;
+
+        @include at-query($max, '1200px'){
+          width: 90%;
+        }
+
+        @include at-query($max, $medium){
+          width: 100%;            
+          margin-top: 20px;
+          margin-bottom: 50px;
+          font-size: 16px;
+          letter-spacing: 0px;
+        }
+      }
+
+      a{
+        background-color: $color_stars-yotpo !important;
+        transition: 0.3s all;                    
+        font-family: $brandom;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 14px;
+        line-height: 20px;                         
+        margin-top: -15px;
+        width: 230px !important;
+        padding: 20px 0px !important;
+        color: white !important;
+        display: block;
+        text-align: center;
+        &:hover{
+          background-color: $color_active_input !important;
+          transition: 0.3s all;
+        } 
+      }
+    }
+    
+    .img-col{
+      margin: 0 auto;
+      
+      &.text-left-alignment{
+        grid-column: 2 / 3;
+        padding-right: 10px;
+        
+        @include at-query($max, $medium){
+          grid-column: 1 / 2;
+        }
+      }
+
+      &.text-right-alignment{
+        grid-column: 1 / 2;
+        grid-row: 1;
+        padding-left: 10px;
+        
+        @include at-query($max, $medium){
+          grid-column: 1 / 2;
+          padding-left: 0px;
+        }
+      }
+      
+      @include at-query($max, '1200px'){       
+        padding-right:10px;        
+      }
+
+      @include at-query($max, $medium){
+        grid-row-start: 1;
+        margin: 0;
+        padding: 0px;
+      }
+      
+      img{
+        display: block;
+        width: 100%;
+      }
+    }
+  }
+  
+  
+
+}
+
+/*--------------------------------------------------------------------*/
+/*HOMEPAGE POST SLIDER*/
+.post-cards-container{
+  margin-bottom: 130px;
+  h2{
+    font-family: $brandom;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 26px;           
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: $color_active_input !important;
+    display: block;
+    text-align: center;
+    
+    margin-top: 190px;
+    margin-bottom: 45px;
+
+    @include at-query($max, '1023px'){
+      margin-bottom: 30px;
+      margin-top: 106px;
+    }
+     
+  }
+
+  .cards-container{
+    
+    @include at-query($min, $x-large){       
+      max-width: 1300px;
+      width:100%;
+      margin: 0 auto;
+      padding: 0px 10px;
+    }
+
+    @include at-query($min, '1300px' ){
+      padding: 0px;
+    }
+ 
+    @include at-query($max, '1023px'){
+      width: 98%;
+    }
+    
+    
+    .slick-list{
+      @include at-query($max, '1023px'){
+        padding: 0px 22% 0 0;
+      }
+    }
+    
+    
+    .post-card{
+      position: relative;
+      display: block;
+      padding: 0px 10px;
+      
+      img{
+        display: block;
+        width: 100%;         
+      }
+
+      h3{
+        font-family: $brandom;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 16px;
+        line-height: 26px;
+        text-align: center;
+        text-transform: uppercase;
+        color: $color_active_input;
+
+        margin: 0 auto;
+        margin-top: 17px;
+        margin-bottom: 22px; 
+        
+        width: 325px;
+        
+        @include at-query($max, '1300px'){
+          width: 90%;           
+        }              
+      }
+
+      .cta-a{
+        background-color: $color_stars-yotpo !important;
+        transition: 0.3s all;                    
+        font-family: $brandom;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 12px;
+        line-height: 20px;                         
+        margin-top: 10px;         
+        padding: 10px 30px !important;
+        color: white !important;
+        
+        display: block;
+        width: 150px;
+        text-align: center;
+        margin: auto;
+        &:hover{
+          background-color: $color_active_input !important;
+          transition: 0.3s all;
+        }
+      }
+    }
+  }  
+}
+
+/*HOME PAGE COPY BLOCK FOR SEO*/
+#shopify-section-copy-block-homepage{
+  .copy-block-homepage{
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: left;
+    padding: 85px 0px;
+
+    @include at-query($max,'999px'){
+      width: 81%;
+      margin: 0 auto;
+      padding: 0px;
+      margin-top: 45px;
+      margin-bottom: 45px;
+      text-align: left;
+    }
+    
+    h2{
+      font-family: $brandom;
+      font-size: 24px;
+      font-weight: 500;
+      line-height: 60px;
+      letter-spacing: 0;
+      color: $color_active_input;
+      
+      @include at-query($max, $medium){
+        text-align: left;
+        font-size: 24px;
+        line-height: 35px;
+        margin-bottom: 20px;
+      }
+    }
+    
+    p{
+      font-family: $brandom;
+      font-size: 18px;
+      color: $color_active_input;
+    }
+    
+    a.read-more-expand{
+      display: block;
+      margin-top: 20px;
+      font-family: $brandom;
+      font-size: 14px;
+      color: $color_active_input;
+      font-weight: bold;
+    }
+    .read-more{
+      display: none;
+    }
+    &.show-readmore{
+      .read-more{
+        display: block;
+      }
+    }
+  }
+}

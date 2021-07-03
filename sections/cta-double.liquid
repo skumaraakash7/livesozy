@@ -1,0 +1,605 @@
+{% include 'module_double_cta' %}
+
+{% schema %}
+	{
+		"name": "Double CTA",
+		"settings": [
+			{
+				"type": "header",
+				"content": "Promo 1"
+			},
+			{
+				"type": "image_picker",
+				"id": "image-1",
+				"label": "Image",
+				"info": "1200x900 jpg recommended"
+			},
+			{
+				"type": "image_picker",
+				"id": "image-mobile-1",
+				"label": "Image (mobile)",
+				"info": "700x700 jpg recommended"
+			},
+			{
+				"type": "text",
+				"id": "heading-1",
+				"label": "Heading"
+			},
+			{
+				"type": "url",
+				"id": "button-link-1",
+				"label": "Link"
+			},
+			{
+				"id": "button-text-1",
+				"type": "text",
+				"label": "Button text",
+				"default": "Shop Now",
+				"info": "Visible only if a link is chosen"
+			},
+			{
+				"type": "color",
+				"id": "text-color-1",
+				"label": "Text color",
+				"default": "#ffffff"
+			},
+			{
+				"type": "color",
+				"id": "button-color-1",
+				"label": "Button background",
+				"default": "#000000"
+			},
+			{
+				"type": "color",
+				"id": "button-text-color-1",
+				"label": "Button text",
+				"default": "#fff"
+			},
+			{
+				"type": "header",
+				"content": "Promo 1 Alignment - Desktop"
+			},
+			{
+				"type": "range",
+				"id": "text_width-1",
+				"label": "Width",
+				"min": 40,
+				"max": 100,
+				"step": 5,
+				"unit": "%",
+				"default": 100
+			},
+			{
+				"type": "range",
+				"id": "text_padding_top-1",
+				"label": "Padding top",
+				"min": 0,
+				"max": 200,
+				"step": 5,
+				"unit": "px",
+				"default": 0
+			},
+			{
+				"type": "range",
+				"id": "text_padding_bottom-1",
+				"label": "Padding bottom",
+				"min": 0,
+				"max": 200,
+				"step": 5,
+				"unit": "px",
+				"default": 0
+			},
+			{
+				"type": "range",
+				"id": "text_padding_left-1",
+				"label": "Padding left",
+				"min": 0,
+				"max": 200,
+				"step": 5,
+				"unit": "px",
+				"default": 0
+			},
+			{
+				"type": "range",
+				"id": "text_padding_right-1",
+				"label": "Padding right",
+				"min": 0,
+				"max": 200,
+				"step": 5,
+				"unit": "px",
+				"default": 0
+			},
+			{
+				"type": "select",
+				"id": "text_alignment-1",
+				"label": "Text alignment",
+				"options": [
+					{
+						"value": "left",
+						"label": "Left"
+					},
+					{
+						"value": "center",
+						"label": "Center"
+					},
+					{
+						"value": "right",
+						"label": "Right"
+					}
+				],
+				"default": "center"
+			},
+			{
+				"type": "select",
+				"id": "text_position-1",
+				"label": "Text position",
+				"options": [
+					{
+						"value": "top-left",
+						"label": "Top left"
+					},
+					{
+						"value": "top-center",
+						"label": "Top center"
+					},
+					{
+						"value": "top-right",
+						"label": "Top right"
+					},
+					{
+						"value": "center-left",
+						"label": "Center left"
+					},
+					{
+						"value": "center-center",
+						"label": "Center"
+					},
+					{
+						"value": "center-right",
+						"label": "Center right"
+					},
+					{
+						"value": "bottom-left",
+						"label": "Bottom left"
+					},
+					{
+						"value": "bottom-center",
+						"label": "Bottom center"
+					},
+					{
+						"value": "bottom-right",
+						"label": "Bottom right"
+					}
+				],
+				"default": "center-center"
+			},
+		
+		
+		
+		
+			{
+				"type": "header",
+				"content": "Promo 1 Alignment - Mobile"
+			},
+			{
+				"type": "range",
+				"id": "text_width_mobile-1",
+				"label": "Width",
+				"min": 40,
+				"max": 100,
+				"step": 5,
+				"unit": "%",
+				"default": 100
+			},
+			{
+				"type": "range",
+				"id": "text_padding_top_mobile-1",
+				"label": "Padding top",
+				"min": 0,
+				"max": 200,
+				"step": 5,
+				"unit": "px",
+				"default": 0
+			},
+			{
+				"type": "range",
+				"id": "text_padding_bottom_mobile-1",
+				"label": "Padding bottom",
+				"min": 0,
+				"max": 200,
+				"step": 5,
+				"unit": "px",
+				"default": 0
+			},
+			{
+				"type": "range",
+				"id": "text_padding_left_mobile-1",
+				"label": "Padding left",
+				"min": 0,
+				"max": 200,
+				"step": 5,
+				"unit": "px",
+				"default": 0
+			},
+			{
+				"type": "range",
+				"id": "text_padding_right_mobile-1",
+				"label": "Padding right",
+				"min": 0,
+				"max": 200,
+				"step": 5,
+				"unit": "px",
+				"default": 0
+			},
+			{
+				"type": "select",
+				"id": "text_alignment_mobile-1",
+				"label": "Text alignment",
+				"options": [
+					{
+						"value": "left",
+						"label": "Left"
+					},
+					{
+						"value": "center",
+						"label": "Center"
+					},
+					{
+						"value": "right",
+						"label": "Right"
+					}
+				],
+				"default": "center"
+			},
+			{
+				"type": "select",
+				"id": "text_position_mobile-1",
+				"label": "Text position",
+				"options": [
+					{
+						"value": "top-left",
+						"label": "Top left"
+					},
+					{
+						"value": "top-center",
+						"label": "Top center"
+					},
+					{
+						"value": "top-right",
+						"label": "Top right"
+					},
+					{
+						"value": "center-left",
+						"label": "Center left"
+					},
+					{
+						"value": "center-center",
+						"label": "Center"
+					},
+					{
+						"value": "center-right",
+						"label": "Center right"
+					},
+					{
+						"value": "bottom-left",
+						"label": "Bottom left"
+					},
+					{
+						"value": "bottom-center",
+						"label": "Bottom center"
+					},
+					{
+						"value": "bottom-right",
+						"label": "Bottom right"
+					}
+				],
+				"default": "center-center"
+			},
+			
+			
+			
+			
+			
+			
+			
+			{
+				"type": "header",
+				"content": "Promo 2"
+			},
+			{
+				"type": "image_picker",
+				"id": "image-2",
+				"label": "Image",
+				"info": "1200x900 jpg recommended"
+			},
+			{
+				"type": "image_picker",
+				"id": "image-mobile-2",
+				"label": "Image (mobile)",
+				"info": "700x700 jpg recommended"
+			},
+			{
+				"type": "text",
+				"id": "heading-2",
+				"label": "Heading"
+			},
+			{
+				"type": "url",
+				"id": "button-link-2",
+				"label": "Link"
+			},
+			{
+				"id": "button-text-2",
+				"type": "text",
+				"label": "Button text",
+				"default": "Shop Now",
+				"info": "Visible only if a link is chosen"
+			},
+			{
+				"type": "color",
+				"id": "text-color-2",
+				"label": "Text color",
+				"default": "#ffffff"
+			},
+			{
+				"type": "color",
+				"id": "button-color-2",
+				"label": "Button background",
+				"default": "#000000"
+			},
+			{
+				"type": "color",
+				"id": "button-text-color-2",
+				"label": "Button text",
+				"default": "#fff"
+			},
+			{
+				"type": "header",
+				"content": "Promo 1 Alignment - Desktop"
+			},
+			{
+				"type": "range",
+				"id": "text_width-2",
+				"label": "Width",
+				"min": 40,
+				"max": 100,
+				"step": 5,
+				"unit": "%",
+				"default": 100
+			},
+			{
+				"type": "range",
+				"id": "text_padding_top-2",
+				"label": "Padding top",
+				"min": 0,
+				"max": 200,
+				"step": 5,
+				"unit": "px",
+				"default": 0
+			},
+			{
+				"type": "range",
+				"id": "text_padding_bottom-2",
+				"label": "Padding bottom",
+				"min": 0,
+				"max": 200,
+				"step": 5,
+				"unit": "px",
+				"default": 0
+			},
+			{
+				"type": "range",
+				"id": "text_padding_left-2",
+				"label": "Padding left",
+				"min": 0,
+				"max": 200,
+				"step": 5,
+				"unit": "px",
+				"default": 0
+			},
+			{
+				"type": "range",
+				"id": "text_padding_right-2",
+				"label": "Padding right",
+				"min": 0,
+				"max": 200,
+				"step": 5,
+				"unit": "px",
+				"default": 0
+			},
+			{
+				"type": "select",
+				"id": "text_alignment-2",
+				"label": "Text alignment",
+				"options": [
+					{
+						"value": "left",
+						"label": "Left"
+					},
+					{
+						"value": "center",
+						"label": "Center"
+					},
+					{
+						"value": "right",
+						"label": "Right"
+					}
+				],
+				"default": "center"
+			},
+			{
+				"type": "select",
+				"id": "text_position-2",
+				"label": "Text position",
+				"options": [
+					{
+						"value": "top-left",
+						"label": "Top left"
+					},
+					{
+						"value": "top-center",
+						"label": "Top center"
+					},
+					{
+						"value": "top-right",
+						"label": "Top right"
+					},
+					{
+						"value": "center-left",
+						"label": "Center left"
+					},
+					{
+						"value": "center-center",
+						"label": "Center"
+					},
+					{
+						"value": "center-right",
+						"label": "Center right"
+					},
+					{
+						"value": "bottom-left",
+						"label": "Bottom left"
+					},
+					{
+						"value": "bottom-center",
+						"label": "Bottom center"
+					},
+					{
+						"value": "bottom-right",
+						"label": "Bottom right"
+					}
+				],
+				"default": "center-center"
+			},
+		
+		
+		
+		
+			{
+				"type": "header",
+				"content": "Promo 2 Alignment - Mobile"
+			},
+			{
+				"type": "range",
+				"id": "text_width_mobile-2",
+				"label": "Width",
+				"min": 40,
+				"max": 100,
+				"step": 5,
+				"unit": "%",
+				"default": 100
+			},
+			{
+				"type": "range",
+				"id": "text_padding_top_mobile-2",
+				"label": "Padding top",
+				"min": 0,
+				"max": 200,
+				"step": 5,
+				"unit": "px",
+				"default": 0
+			},
+			{
+				"type": "range",
+				"id": "text_padding_bottom_mobile-2",
+				"label": "Padding bottom",
+				"min": 0,
+				"max": 200,
+				"step": 5,
+				"unit": "px",
+				"default": 0
+			},
+			{
+				"type": "range",
+				"id": "text_padding_left_mobile-2",
+				"label": "Padding left",
+				"min": 0,
+				"max": 200,
+				"step": 5,
+				"unit": "px",
+				"default": 0
+			},
+			{
+				"type": "range",
+				"id": "text_padding_right_mobile-2",
+				"label": "Padding right",
+				"min": 0,
+				"max": 200,
+				"step": 5,
+				"unit": "px",
+				"default": 0
+			},
+			{
+				"type": "select",
+				"id": "text_alignment_mobile-2",
+				"label": "Text alignment",
+				"options": [
+					{
+						"value": "left",
+						"label": "Left"
+					},
+					{
+						"value": "center",
+						"label": "Center"
+					},
+					{
+						"value": "right",
+						"label": "Right"
+					}
+				],
+				"default": "center"
+			},
+			{
+				"type": "select",
+				"id": "text_position_mobile-2",
+				"label": "Text position",
+				"options": [
+					{
+						"value": "top-left",
+						"label": "Top left"
+					},
+					{
+						"value": "top-center",
+						"label": "Top center"
+					},
+					{
+						"value": "top-right",
+						"label": "Top right"
+					},
+					{
+						"value": "center-left",
+						"label": "Center left"
+					},
+					{
+						"value": "center-center",
+						"label": "Center"
+					},
+					{
+						"value": "center-right",
+						"label": "Center right"
+					},
+					{
+						"value": "bottom-left",
+						"label": "Bottom left"
+					},
+					{
+						"value": "bottom-center",
+						"label": "Bottom center"
+					},
+					{
+						"value": "bottom-right",
+						"label": "Bottom right"
+					}
+				],
+				"default": "center-center"
+			}
+			
+		],
+		"presets": [
+			{
+				"name": "Double CTA",
+				"category": "Image"
+			}
+		]
+}
+{% endschema %}

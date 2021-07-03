@@ -1,0 +1,230 @@
+{%if checkout %}
+<div class="checkout__upsell" checkout-upsell-body>
+</div>
+{%endif%}
+<script>
+  var clicked_last_option = false;
+  {%if checkout %}
+  	  $(document).on('page:load', function () {
+  {%else%}
+      $('body').on('ajaxCart.afterCartLoad', function (e, cart) {
+          if(cart.item_count ==0){
+            return false;
+          }
+  {%endif%}
+    //detect step Shopify.Checkout.step
+    var current_upsell_items = [];
+    //random function
+    function get_random_item(list) {
+      return list[Math.floor((Math.random()*list.length))];
+    }
+    //get products
+    var upsell_products;
+    function get_upsell_items(){
+      $.ajax({
+          url:	"/collections/best-sellers?view=JSON",
+          type:	'GET'
+      })
+      .done(function(data) {
+          upsell_products = $.parseJSON(data);
+          pick_upsell_items();
+      })
+      .fail(function(data) {});
+    }
+    
+    //pick 3 items to show
+    function pick_upsell_items(){
+      let $upsellWrap = $(".checkout__upsell");
+      for (var i = 0; i < upsell_products.length; i++) {
+        debugger;
+        let current_upsell_items_length = $(".checkout__upsell_item").length
+        if(current_upsell_items_length == 3){
+          break;
+        }
+        var upsell_item = get_random_item(upsell_products);
+        if($(".checkout__upsell_item[data-id='"+upsell_item.id+"']").length == 0 && $(".product[data-product-id='"+upsell_item.id+"']").length == 0){
+          var variants_list = "";
+          if(upsell_item.variants.length > 1){
+
+            variants_list += "<select class='cui_variants_list' style='display:none' data-variants-size='"+upsell_item.option_size+"'><option data-variant-id data-variant-price data-variant-img value='' data-option1='' data-option2=''></option>";
+            for (var j = 0; j < upsell_item.variants.length; j++) {
+              if(upsell_item.variants[j].inventory > 1){
+                variants_list += "<option data-variant-id='"+upsell_item.variants[j].id+"' data-variant-price='"+upsell_item.variants[j].price+"' data-variant-img='"+upsell_item.variants[j].image+"' value='"+upsell_item.variants[j].title+"' data-inventory='"+upsell_item.variants[j].inventory+"' data-option1='"+upsell_item.variants[j].option1+"' data-option2='"+upsell_item.variants[j].option2+"' data-option3='"+upsell_item.variants[j].option3+"'>"+upsell_item.variants[j].title+"</option>";
+              }
+            }
+            variants_list += "</select>";
+            let options_list = "<div class='options_list'>";
+            if(upsell_item.product_swatch_color != null){
+              options_list += upsell_item.product_swatch_color;
+            }
+            if(upsell_item.product_swatch_size != null){
+              options_list += upsell_item.product_swatch_size;
+            }
+            options_list += "</div>";
+            $upsellWrap.append("<div class='checkout__upsell_item' data-id='"+upsell_item.id+"'><div class='cui_img'><img src='"+upsell_item.featured_image+"'></div><div class='cui_description'><div class='cui_close__icon'><svg class='icon icon-close' xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 14 14' style=' width: 11px; opacity: 0.56; '> <title>Icon Close</title> <g fill='none'> <g> <path stroke='#5b5b5b' stroke-width='2' d='M1.8 2.4L12.2 12.6'></path> <path stroke='#5b5b5b' stroke-width='2' d='M2 12.3L12.3 2.1'></path> </g> </g> </svg></div> <div class='text'> <p>"+upsell_item.title+"</p><p class='cui_price'>"+upsell_item.price+"</p> </div><div class='cui_cta' data-variant-id='0' data-variant-qty='"+upsell_item.variants[0].inventory+"' js-upsell-cta>ADD</div></div>"+variants_list+options_list+"</div>")
+          }else{
+            $upsellWrap.append("<div class='checkout__upsell_item' data-id='"+upsell_item.id+"'><div class='cui_img'><img src='"+upsell_item.featured_image+"'></div><div class='cui_description'><div class='cui_close__icon'><svg class='icon icon-close' xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 14 14' style=' width: 11px; opacity: 0.56; '> <title>Icon Close</title> <g fill='none'> <g> <path stroke='#5b5b5b' stroke-width='2' d='M1.8 2.4L12.2 12.6'></path> <path stroke='#5b5b5b' stroke-width='2' d='M2 12.3L12.3 2.1'></path> </g> </g> </svg></div> <div class='text'> <p>"+upsell_item.title+"</p><p class='cui_price'>"+upsell_item.price+"</p> </div><div class='cui_cta' data-variant-id='"+upsell_item.variants[0].id+"' data-variant-qty='"+upsell_item.variants[0].inventory+"' js-upsell-cta>ADD</div></div></div>")
+          }
+
+        }
+      }
+      $upsellWrap.insertBefore(".order-summary__section--discount")
+    }
+    get_upsell_items();
+  })
+      // close icon - event
+    $(document).on('click', ".cui_close__icon", function() {
+      $(this).parent(".cui_description").siblings(".options_list").hide();
+      $(this).parents(".checkout__upsell_item").removeClass("expanded-view");
+      $(this).siblings(".cui_cta").attr("data-variant-id","");     
+      $(this).hide();
+    })
+    
+    
+    // add to cart - event
+    $(document).on('click', "[js-upsell-cta]", function() {
+      if(parseInt($(this).attr("data-variant-id")) > 1 && $(event.target).hasClass("cui_cta") || clicked_last_option == true){
+        jQuery.ajax({
+          type: 'POST',
+          url: '/cart/add.js',
+          data: {
+            quantity: 1,
+            id: $(this).attr("data-variant-id")
+          },
+          dataType: 'json',           
+          success: function() {
+            // success
+            {%if checkout %}
+             window.location.reload(true);
+            {%else%}
+            ajaxCart.load();
+            
+            {%endif%}
+          },
+          error: function() {
+            alert('Please select an option first.');
+          }
+        });
+      }else{
+
+        let $item = $(this).parents(".checkout__upsell_item");
+        $item.find(".options_list").show();
+        $item.addClass("expanded-view");        
+        {%-comment-%}
+        //autoselect-feature
+        //let pre_select_option1 = $item.find(".cui_variants_list option").first().attr("data-option1");
+        //let pre_select_option2 = $item.find(".cui_variants_list option").first().attr("data-option2");
+        //$item.find("input[value='"+pre_select_option1+"']").parent().addClass("element-selected");
+        //$item.find("input[value='"+pre_select_option2+"']").parent().addClass("element-selected");
+        {%-endcomment-%}
+        $item.find(".cui_variants_list").change();
+        
+        $(this).siblings(".cui_close__icon").css("display", "flex");
+      }
+    })
+    
+    $(document).on('change', ".cui_variants_list", function(e) {
+//       e.preventDefault();
+//       e.stopImmediatePropagation();
+      var cui_item = $(this).parents(".checkout__upsell_item");
+      var variants_size = $(this).attr("data-variants-size");
+      if(variants_size > 1){
+        //check inventory if at least one option is selected
+        var is_option1_selected = cui_item.find('[data-option-index="0"] .element-selected').length > 0 ? cui_item.find('[data-option-index="0"] .element-selected') : 0;        
+
+        if(is_option1_selected != 0){
+        	cui_item.find(".crossed-out").show();
+          }else{
+            cui_item.find(".swatch:first-of-type .crossed-out").show();
+          }
+          $(this).find("option").each(function(){
+            let $this = $(this);
+            if($this.attr("data-option1").length > 0){
+              cui_item.find("input[value='"+$this.attr("data-option1")+"']").next().find(".crossed-out").hide();
+            }
+            if($this.attr("data-option2").length > 0 && is_option1_selected != 0){
+              var current_selected_option1 = is_option1_selected.find("input").attr("value");
+              if(current_selected_option1.length > 0){
+                if(current_selected_option1 == $this.attr("data-option1")){
+                  cui_item.find("input[value='"+$this.attr("data-option2")+"']").next().find(".crossed-out").hide();
+                }
+              }else{
+              	debugger;
+              }
+            }
+          });
+      }else{
+        //check inventory
+        cui_item.find(".crossed-out").show();
+        $(this).find("option").each(function(){
+          let $this = $(this);
+          if($this.attr("data-option1").length > 0){
+            cui_item.find("input[value='"+$this.attr("data-option1")+"']").next().find(".crossed-out").hide();
+          }
+        });
+      }
+      if(this.value.length != 0){
+        $swatch_element = $(this).parent();
+        var $selected_option = $(this).children("option:selected");
+        cui_item.find(".cui_img img").attr("src",$selected_option.attr("data-variant-img"));
+        cui_item.find(".cui_price").html($selected_option.attr("data-variant-price"));
+        cui_item.find(".cui_cta").attr("data-variant-id",$selected_option.attr("data-variant-id"));
+        cui_item.find(".upsell-swatch.element-selected .crossed-out").each(function(){
+          if($(this).css("display") == "none"){
+            $(this).parent().prev().prop( "checked", true );
+          }
+        })
+      }else{
+        cui_item.find(".cui_cta").attr("data-variant-id","0");
+        //check if there are element-selected but with cross-out visible
+        cui_item.find(".upsell-swatch.element-selected .crossed-out").each(function(){
+          if($(this).css("display") == "block"){
+            $(this).parent().prev().prop( "checked", false );
+          }
+        })
+      }   
+
+      // fire the ATC button if it clicked the last option
+      if(clicked_last_option == true){
+      	$(this).parents(".checkout__upsell_item").find(".cui_variants_list").hide();
+      	$(this).parents(".checkout__upsell_item").find("[js-upsell-cta]").html("...").click();
+      }     
+    })
+    
+     
+    /*Upsell sizes click event*/
+    $(document).on("click", ".upsell-swatch input",function(e){
+      
+      //checking if cross is visible
+      if($(this).parent(".swatch-element").find(".crossed-out").is(":visible")){
+         e.preventDefault();
+        return;
+      }
+      $swatch_element = $(this).parent();
+      $swatch_element.parents(".swatch").find(".upsell-swatch").removeClass("element-selected");
+      $swatch_element.addClass("element-selected");
+      
+      //update variant dropdown
+      var options_size = $swatch_element.parents(".options_list").find(".element-selected input").length;
+      var option_counter = 0;
+      var selected_option = "";
+      $swatch_element.parents(".options_list").find(".element-selected input").each(function(){
+        let option_value = $(this).val();
+        option_counter ++;
+        if(options_size > 1){
+          if(option_counter != options_size){
+            option_value += " / ";
+          }
+        }
+        selected_option += option_value;
+      })
+      //detect if it's last option
+      if($(this).parents(".options_list").find(".swatch:last-of-type").html() == $(this).parents(".swatch").html()){
+         clicked_last_option = false; //temporary turned off auto add switch to true to turn it on       
+      }else{
+         clicked_last_option = false;
+      }
+      console.log("selected option: "+selected_option);
+      $(this).parents(".checkout__upsell_item").find(".cui_variants_list").val(selected_option).change(); 
+    });
+</script>

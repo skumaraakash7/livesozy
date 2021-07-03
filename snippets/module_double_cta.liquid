@@ -1,0 +1,329 @@
+<!-- snippets/module_double_cta.liquid -->
+
+<section class="homepage-double-cta index-section no-fouc module-{{ section.id }}" data-section-id="{{ section.id }}">
+
+	<div class="homepage-double-cta-left">
+		{% if section.settings.button-link-1 != blank  %}
+			<a href="{{ section.settings.button-link-1 }}">
+		{% endif %}
+			<div class="custom-module-content">
+				{% if section.settings.heading-1 != blank %}
+					<h2 class="custom-module-title">{{ section.settings.heading-1 | escape }}</h2>
+				{% endif %}
+			
+				{% if section.settings.button-link-1 != blank and section.settings.button-text-1 != blank %}
+					<p>
+						<a class="custom-module-button" href="{{ section.settings.button-link-1 }}">
+							{{ section.settings.button-text-1 | escape }}
+						</a>
+					</p>
+				{% endif %}
+			</div>
+		{% if section.settings.button-link-1 != blank  %}
+			</a>
+		{% endif %}
+		
+		<div class="banner-image-desktop mobile-hidden tablet-hidden">
+			{% if section.settings.button-link-1 != blank  %}
+				<a href="{{ section.settings.button-link }}">
+			{% endif %}
+				{% if section.settings.image-1 %}
+					<img class="lazy" data-src="{{ section.settings.image-1.src | img_url: '1200x900', crop: 'center' }}" class="fullwidth" alt="{{ section.settings.image-1.alt }}" />
+				{% endif %}
+			{% if section.settings.button-link-1 != blank  %}
+				</a>
+			{% endif %}
+		</div>
+		<div class="banner-image-mobile desktop-hidden">
+			{% if section.settings.button-link-1 != blank  %}
+				<a href="{{ section.settings.button-link-1 }}">
+			{% endif %}
+				{% if section.settings.image-mobile-1 %}
+					<img class="lazy" data-src="{{ section.settings.image-mobile-1.src | img_url: '700x700', crop: 'center' }}" class="fullwidth" alt="{{ section.settings.image-mobile-1.alt }}"/>
+				{% endif %}
+			{% if section.settings.button-link-1 != blank  %}
+				</a>
+			{% endif %}
+		</div>
+	</div>
+	
+	<div class="homepage-double-cta-right">
+		{% if section.settings.button-link-2 != blank  %}
+			<a href="{{ section.settings.button-link-2 }}">
+		{% endif %}
+			<div class="custom-module-content">
+				{% if section.settings.heading-2 != blank %}
+					<h2 class="custom-module-title">{{ section.settings.heading-2 | escape }}</h2>
+				{% endif %}
+			
+				{% if section.settings.button-link-2 != blank and section.settings.button-text-2 != blank %}
+					<p>
+						<a class="custom-module-button" href="{{ section.settings.button-link-2 }}">
+							{{ section.settings.button-text-2 | escape }}
+						</a>
+					</p>
+				{% endif %}
+			</div>
+		{% if section.settings.button-link-2 != blank  %}
+			</a>
+		{% endif %}
+		
+		<div class="banner-image-desktop mobile-hidden tablet-hidden">
+			{% if section.settings.button-link-2 != blank  %}
+				<a href="{{ section.settings.button-link-2 }}">
+			{% endif %}
+				{% if section.settings.image-2 %}
+					<img src="{{ section.settings.image-2.src | img_url: '1200x900', crop: 'center' }}" class="fullwidth" alt="{{ section.settings.image-2.alt }}" />
+				{% endif %}
+			{% if section.settings.button-link-2 != blank  %}
+				</a>
+			{% endif %}
+		</div>
+		<div class="banner-image-mobile desktop-hidden">
+			{% if section.settings.button-link-2 != blank  %}
+				<a href="{{ section.settings.button-link-2 }}">
+			{% endif %}
+				{% if section.settings.image-mobile-2 %}
+					<img src="{{ section.settings.image-mobile-2.src | img_url: '700x700', crop: 'center' }}" class="fullwidth" alt="{{ section.settings.image-mobile-2.alt }}"/>
+				{% endif %}
+			{% if section.settings.button-link-2 != blank  %}
+				</a>
+			{% endif %}
+		</div>
+	</div>
+	
+</section>
+<div class="clear"></div>
+
+<style>
+	
+	.module-{{ section.id }} .homepage-double-cta-left .custom-module-content {
+		position: absolute;
+		
+		width: {{ section.settings.text_width-1 }}%;
+		
+		padding-top: {{ section.settings.text_padding_top-1 }}px;
+		padding-bottom: {{ section.settings.text_padding_bottom-1 }}px;
+		padding-left: {{ section.settings.text_padding_left-1 }}px;
+		padding-right: {{ section.settings.text_padding_right-1 }}px;
+		text-align: {{ section.settings.text_alignment-1 }};
+		
+		{% if section.settings.text_position-1 == "top-left" %}
+			top: 0;
+			left: 0;
+		{% elsif section.settings.text_position-1 == "top-center" %}
+			top: 0;
+			left: 50%;
+			transform: translate(-50%, 0);
+		{% elsif section.settings.text_position-1 == "top-right" %}
+			top: 0;
+			right: 0;
+		{% elsif section.settings.text_position-1 == "center-left" %}
+			top: 50%;
+			left: 0;
+			transform: translate(0, -50%);
+		{% elsif section.settings.text_position-1 == "center-center" %}
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+		{% elsif section.settings.text_position-1 == "center-right" %}
+			top: 50%;
+			right: 0;
+			transform: translate(0, -50%);
+		{% elsif section.settings.text_position-1 == "bottom-left" %}
+			bottom: 0;
+			left: 0;
+		{% elsif section.settings.text_position-1 == "bottom-center" %}
+			bottom: 0;
+			left: 50%;
+			transform: translate(-50%, 0);
+		{% elsif section.settings.text_position-1 == "bottom-right" %}
+			bottom: 0;
+			right: 0;
+		{% endif %}
+	}
+	
+	.module-{{ section.id }} .homepage-double-cta-left p.custom-module-pretitle,
+	.module-{{ section.id }} .homepage-double-cta-left h2.custom-module-title {
+		color: {{ section.settings.text-color-1 }};
+		text-align: {{ section.settings.text_alignment-1 }};
+	}
+	
+	.module-{{ section.id }}  .homepage-double-cta-left a.custom-module-button {
+		color: {{ section.settings.button-text-color-1 }};
+		background-color: {{ section.settings.button-color-1 }};
+	}
+	
+	@media screen and (max-width: 740px) {
+		
+		.module-{{ section.id }}  .homepage-double-cta-left .custom-module-content {
+			position: absolute;
+		
+			width: {{ section.settings.text_width_mobile-1 }}%;
+		
+			padding-top: {{ section.settings.text_padding_top_mobile-1 }}px;
+			padding-bottom: {{ section.settings.text_padding_bottom_mobile-1 }}px;
+			padding-left: {{ section.settings.text_padding_left_mobile-1 }}px;
+			padding-right: {{ section.settings.text_padding_right_mobile-1 }}px;
+			text-align: {{ section.settings.text_alignment_mobile-1 }};
+		
+			{% if section.settings.text_position_mobile-1 == "top-left" %}
+				top: 0;
+				left: 0;
+			{% elsif section.settings.text_position_mobile-1 == "top-center" %}
+				top: 0;
+				left: 50%;
+				transform: translate(-50%, 0);
+			{% elsif section.settings.text_position_mobile-1 == "top-right" %}
+				top: 0;
+				right: 0;
+			{% elsif section.settings.text_position_mobile-1 == "center-left" %}
+				top: 50%;
+				left: 0;
+				transform: translate(0, -50%);
+			{% elsif section.settings.text_position_mobile-1 == "center-center" %}
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+			{% elsif section.settings.text_position_mobile-1 == "center-right" %}
+				top: 50%;
+				right: 0;
+				transform: translate(0, -50%);
+			{% elsif section.settings.text_position_mobile-1 == "bottom-left" %}
+				bottom: 0;
+				left: 0;
+			{% elsif section.settings.text_position_mobile-1 == "bottom-center" %}
+				bottom: 0;
+				left: 50%;
+				transform: translate(-50%, 0);
+			{% elsif section.settings.text_position_mobile-1 == "bottom-right" %}
+				bottom: 0;
+				right: 0;
+			{% endif %}
+		}
+	
+		.module-{{ section.id }} .homepage-double-cta-left p.custom-module-pretitle,
+		.module-{{ section.id }} .homepage-double-cta-left h2.custom-module-title {
+			text-align: {{ section.settings.text_alignment_mobile-1 }};
+		}
+		
+	}
+	
+</style>
+
+<style>
+	
+	.module-{{ section.id }} .homepage-double-cta-right .custom-module-content {
+		position: absolute;
+		-2
+		width: {{ section.settings.text_width-2 }}%;
+		
+		padding-top: {{ section.settings.text_padding_top-2 }}px;
+		padding-bottom: {{ section.settings.text_padding_bottom-2 }}px;
+		padding-left: {{ section.settings.text_padding_left-2 }}px;
+		padding-right: {{ section.settings.text_padding_right-2 }}px;
+		text-align: {{ section.settings.text_alignment-2 }};
+		
+		{% if section.settings.text_position-2 == "top-left" %}
+			top: 0;
+			left: 0;
+		{% elsif section.settings.text_position-2 == "top-center" %}
+			top: 0;
+			left: 50%;
+			transform: translate(-50%, 0);
+		{% elsif section.settings.text_position-2 == "top-right" %}
+			top: 0;
+			right: 0;
+		{% elsif section.settings.text_position-2 == "center-left" %}
+			top: 50%;
+			left: 0;
+			transform: translate(0, -50%);
+		{% elsif section.settings.text_position-2 == "center-center" %}
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+		{% elsif section.settings.text_position-2 == "center-right" %}
+			top: 50%;
+			right: 0;
+			transform: translate(0, -50%);
+		{% elsif section.settings.text_position-2 == "bottom-left" %}
+			bottom: 0;
+			left: 0;
+		{% elsif section.settings.text_position-2 == "bottom-center" %}
+			bottom: 0;
+			left: 50%;
+			transform: translate(-50%, 0);
+		{% elsif section.settings.text_position-2 == "bottom-right" %}
+			bottom: 0;
+			right: 0;
+		{% endif %}
+	}
+	
+	.module-{{ section.id }} .homepage-double-cta-right p.custom-module-pretitle,
+	.module-{{ section.id }} .homepage-double-cta-right h2.custom-module-title {
+		color: {{ section.settings.text-color-2 }};
+		text-align: {{ section.settings.text_alignment-2 }};
+	}
+	
+	.module-{{ section.id }}  .homepage-double-cta-right a.custom-module-button {
+		color: {{ section.settings.button-text-color-2 }};
+		background-color: {{ section.settings.button-color-2 }};
+	}
+	
+	@media screen and (max-width: 740px) {
+		
+		.module-{{ section.id }}  .homepage-double-cta-right .custom-module-content {
+			position: absolute;
+		
+			width: {{ section.settings.text_width_mobile-2 }}%;
+		
+			padding-top: {{ section.settings.text_padding_top_mobile-2 }}px;
+			padding-bottom: {{ section.settings.text_padding_bottom_mobile-2 }}px;
+			padding-left: {{ section.settings.text_padding_left_mobile-2 }}px;
+			padding-right: {{ section.settings.text_padding_right_mobile-2 }}px;
+			text-align: {{ section.settings.text_alignment_mobile-2 }};
+		
+			{% if section.settings.text_position_mobile-2 == "top-left" %}
+				top: 0;
+				left: 0;
+			{% elsif section.settings.text_position_mobile-2 == "top-center" %}
+				top: 0;
+				left: 50%;
+				transform: translate(-50%, 0);
+			{% elsif section.settings.text_position_mobile-2 == "top-right" %}
+				top: 0;
+				right: 0;
+			{% elsif section.settings.text_position_mobile-2 == "center-left" %}
+				top: 50%;
+				left: 0;
+				transform: translate(0, -50%);
+			{% elsif section.settings.text_position_mobile-2 == "center-center" %}
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+			{% elsif section.settings.text_position_mobile-2 == "center-right" %}
+				top: 50%;
+				right: 0;
+				transform: translate(0, -50%);
+			{% elsif section.settings.text_position_mobile-2 == "bottom-left" %}
+				bottom: 0;
+				left: 0;
+			{% elsif section.settings.text_position_mobile-2 == "bottom-center" %}
+				bottom: 0;
+				left: 50%;
+				transform: translate(-50%, 0);
+			{% elsif section.settings.text_position_mobile-2 == "bottom-right" %}
+				bottom: 0;
+				right: 0;
+			{% endif %}
+		}
+	
+		.module-{{ section.id }} .homepage-double-cta-right p.custom-module-pretitle,
+		.module-{{ section.id }} .homepage-double-cta-right h2.custom-module-title {
+			text-align: {{ section.settings.text_alignment_mobile-2 }};
+		}
+		
+	}
+	
+</style>
+

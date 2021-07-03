@@ -1,0 +1,203 @@
+:root{
+  --font: 'brandon-grotesque', sans-serif;
+  --main_text_color: #5A5959;
+  --links_text: #C56E6F;
+  --color_dividers: #D9D9D9;
+  --background_light: #FFF8F5;
+}
+
+    .sizing_page h1, .sizing_page h2, .sizing_page h3,
+    .sizing_page p, .sizing_page a, .sizing_page span,
+    .sizing_page table th, .sizing_page table td{
+      font-family: var(--font);
+        color: var(--main_text_color);
+          }
+
+    .shipping_page a{
+      color: var(--links_text);
+        }
+
+    #breadcrumb{
+      opacity: 0;
+    }
+    
+    .sizing_page a:hover{
+      opacity: 0.8;
+    }
+    
+    @media(max-width: 1023px){
+      .gridlock .row{
+        width: 90%;
+      }
+    }
+
+    /*-------------------*/
+    /*HEADER SECTION*/
+    /*-------------------*/
+    
+    .size_page__header{
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .size_page__header h1{
+      font-weight: 500;
+      font-size: 36px;
+      line-height: 51px;
+      position: relative;
+      display: block;
+      max-width: 265px;      
+      width: 100%;
+      margin: 0 auto;
+      margin-bottom: 25px;
+      text-transform: uppercase;
+    }
+    
+    .size_page__header h1:after{
+      content:'';
+      position: absolute;
+      bottom: 0;
+      left: 0;   
+      width: 100%;
+      height: 25px;
+      z-index: -1;
+      background: var(--background_light);        
+    }
+    
+    @media(max-width: 1023px){
+      .size_page__header h1{
+        margin-top: 40px;
+        margin-bottom: 62px;
+      }
+    }
+    
+    @media(max-width: 700px){
+      .size_page__header h1{
+        font-size: 30px;
+        line-height: 43px;
+      }
+    }
+    
+    .header__main_description  p{
+      margin-bottom: 25px;
+      text-align: left;
+      font-size: 18px;
+      line-height: 28px;
+    }
+    
+    
+    /*-------------------*/
+    /*TABLE SECTION*/
+    /*-------------------*/
+    
+    .size_page__table{
+      width: 100%;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    .rg-table{
+      margin-top: 48px;
+      display: inline-table;
+    }
+    
+    @media(max-width: 768px){
+      .rg-table{
+        margin-top: 20px;
+      }
+    }
+    
+    .rg-table .rg-header{
+      display: none;
+    }
+    
+    .rg-table thead tr{
+      position: relative !important;
+      top:unset !important;
+      left: unset !important;
+    }
+    
+    .rg-table thead tr th{
+      text-align: center;
+      font-size: 16px;
+      line-height: 28px;
+      font-weight: 500;
+      padding: 15px 10px;
+      color: var(--links_text);        
+      border: 1px solid var(--color_dividers);
+      background-color: var(--background_light);
+    }
+    
+    @media(max-width: 768px){
+      .rg-table thead tr th{
+        font-size:14px;
+      }
+    }
+    
+    .rg-table thead tr th:first-child{
+      color: var(--main_text_color);
+    }
+    
+    .rg-table tbody td{
+      font-size: 16px;
+      line-height: 28px;
+      text-align: center;
+      font-weight: 500;
+      padding: 16px 10px;
+      border: 1px solid var(--color_dividers);
+    }
+    
+    @media(max-width: 768px){
+      .rg-table tbody td{
+        font-size:14px;
+      }
+    }
+    
+    .table__moreInfo{
+      margin-top: 15px;
+    }
+    
+    .table__moreInfo p, .table__moreInfo a{
+      font-size: 18px;
+      line-height: 28px;
+    }   
+    
+    .table__moreInfo a{
+      text-decoration: underline;
+      color: var(--links_text);
+    }
+    
+
+    /*-------------------*/
+    /*FOOTER SECTION*/
+    /*-------------------*/
+    
+    .size_page__footer{
+      max-width: 800px;
+      width: 100%;
+      margin: 0 auto;
+      margin-top: 78px;
+      margin-bottom: 80px;
+      padding-top: 45px;
+      text-align: center;
+      border-top: 1px solid var(--color_dividers);        
+    }
+    
+    @media(max-width: 700){
+      .size_page__footer{
+        margin-top: 50px;
+        margin-bottom: 43px;
+      }
+    }
+    
+    .size_page__footer p, .size_page__footer a{
+      font-size: 18px;
+      line-height: 28px;
+    }
+    
+    .size_page__footer a{
+      display: block;
+      text-decoration: underline;
+      color: var(--links_text);
+    }

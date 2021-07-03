@@ -1,0 +1,16 @@
+{% assign grcap_anchor_page_content = '<span class="grcap_anchor_page">' | append: page.content | append: '</span>' %}
+</div><!-- End container -->
+
+<div class="gridlock-fluid">
+  <div class="row">
+    <div class="row">
+      <div class="section-title desktop-12 mobile-3">
+        <h1>{{ page.title }}</h1>
+      </div>
+      {% include 'hypervisual' %}
+      <div class="rte"><span class='gc_autolink_page'>{{ grcap_anchor_page_content }}</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="row"><!-- restart container -->

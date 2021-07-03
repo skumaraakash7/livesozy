@@ -1,0 +1,18 @@
+<script>
+  $(document).ready(function(){
+    
+    $(document).on('click', ".btn-buynow", function(){
+      $(".additional_checkout_buttons").css("display", "block");
+      $(".additional_checkout_buttons").css("opacity", "1");
+      
+      $(".cart__checkout").hide();
+      $(".ajaxcart-checkout-href").css("display","block");
+      $(this).hide();
+    })
+
+
+    
+  })
+
+
+</script>

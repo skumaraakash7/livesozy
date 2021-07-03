@@ -1,0 +1,295 @@
+$min: min-width;
+$max: max-width;
+@mixin at-query ($constraint_, $viewport1_, $viewport2_:null) {
+  $constraint: $constraint_; $viewport1: $viewport1_; $viewport2: $viewport2_;
+  @if type-of($constraint_) == number {
+    $viewport1 : $constraint_; $viewport2 : $viewport1_; $constraint : null;
+  }
+  @if $constraint == $min {
+    @media screen and ($min: $viewport1) {
+      @content;
+    }
+  } @else if $constraint == $max {
+    @media screen and ($max: $viewport1) {
+      @content;
+    }
+  } @else {
+    @media screen and ($min: $viewport1) and ($max: $viewport2) {
+      @content;
+    }
+  }
+} 
+
+$small: 740px;
+$medium: 769px; 
+$x-large: 1024px;
+
+$brandom: brandon-grotesque,sans-serif;
+
+$color_mainlight: #F4EEEF;
+
+$color_mainlightop: #fff8f5;
+
+/*COLOR THEME SOSY*/
+
+$color_btn_hover: #C56E6F;
+
+$color_btn: #BA5253;
+
+
+/*COLOR THEME GENERAL*/
+$color_gray: #f8f8f8;
+
+$color_dark_gray:  #919191;
+
+$color_border_gray: #D9D9D9;
+
+$color_stars-yotpo: #3D3D3D;
+
+$color_active_input: #5A5959;
+
+
+.collection-carousel{
+  .slick-arrow{
+    opacity: 0!important;
+    transition-delay: 3s;
+    transition: opacity 0s;
+  }
+  &:hover{
+    .slick-arrow{
+      opacity: 1!important;
+      transition-delay: 0s;
+    }  
+  }
+  img{
+    margin: 0 !important;
+  }
+
+  .slick-list.draggable{
+    &:first-child{
+      @include at-query($max, $small){
+        padding-right: 20%;
+      }
+    }
+  }
+
+  .product {
+    margin-bottom: 0px !important;
+  }
+  
+  .lazyOwl{
+
+    &:first-child{
+      @include at-query($max, $medium){
+        margin-left: 65px;
+      }            
+    }  
+
+    .product-link{ 
+      
+      .featured{
+        width: 100% !important;
+      }
+      
+      .product_form{
+        background-color: transparent !important;
+        padding-bottom: 20px;
+
+        padding: 20px 0px 9px 0px!important;
+
+        .swatch{
+          padding-left: 20px;
+          @include at-query($max, $medium){
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding-left: 0px;
+          }
+
+          .header{
+            display: none;
+          }
+
+          label{
+            border-radius: 0px!important;
+          }
+
+          .content{        
+
+            .swatch-element, .swatch-element-related{  
+              margin: 0 2px 0 0;
+
+              @include at-query($max, $medium){
+                margin: 0px 4px 0px 0px;
+                &:last-of-type{
+                  margin-right: 0px !important;
+                }
+              }      
+
+              .label-for-Color{
+                border-radius: 50% !important;
+              }
+
+
+              &.swatch-element.soldout label{
+                opacity: 1 !important;
+              }         
+
+              &.swatch-element-related.soldout label{
+                opacity: 1 !important;
+              }   
+
+              &.swatch-element-related.color input:checked+label{ border: 2px solid #fff !important; }
+
+              input:checked+label{
+                -webkit-box-shadow: 0px 0px 0px 1px $color_active_input !important;
+                -moz-box-shadow: 0px 0px 1px 1px $color_active_input !important;
+                box-shadow: 0px 0px 0px 1px $color_active_input !important;
+                border: none !important;
+              }
+
+              input:checked+.variant-color-White{
+                position: relative;           
+
+                &:after{
+                  display: block;
+                  content: '';
+                  background: transparent;
+                  height: 28px;
+                  width: 28px;
+                  border: 2px solid $color_border_gray;
+                  border-radius: 100%;
+                }
+              }
+
+              input + label{
+                background-color: white;
+                color: $color_active_input;                
+                font-family: $brandom;
+                font-size: 12px;
+                font-weight: bold; 
+
+                //border: none !important;         
+
+                &:hover{
+                  border: 1px solid $color_active_input;
+                }
+              }
+
+              label{
+                width: 34px !important;
+                min-width: 34px !important;
+                height: 34px !important;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                cursor: pointer;
+                /*                 width: 30px !important;
+                min-width: 30px !important;
+                height: 30px !important;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                cursor: pointer; */  
+
+                &.long-text{
+                  width: auto !important;
+                }
+                &.label-for-Size{
+                  border-radius: 0px!important;
+                }
+              }
+            }
+          }
+        }
+      }
+
+      .product-form-variants-size-1{
+        display: block !important;
+        padding: 14px !important;
+      }
+    }
+
+    .product_form{
+      @include at-query($max,'1024px'){
+        display: none !important;
+      }
+    }
+
+    .product-details{
+      margin-top: 0px !important;
+      a{
+        .yotpo{
+          margin-top: 10px !important;
+          margin-bottom: 0px !important;
+
+          @include at-query($max, '1024px'){
+            margin-top: 0px !important;
+          }
+        }
+
+        h3{
+          @include at-query($max, '1024px'){
+            text-decoration: none !important;
+          }
+        }
+      }
+
+      .form--quick-atc{
+        @include at-query($max, '1024px'){
+          display: none !important;
+        }
+      }
+    }
+    
+    .swatch .crossed-out{
+      display: none !important;
+      margin: 0 auto;
+      width: 80% !important;
+      height: 80%!important;
+      top: 0px;
+      left: 0px;
+    }
+  }
+
+  /*Arrows*/
+  .arrow-angle{
+    width: 2%;
+    display: block;
+    top: 35% !important;
+    transform: translateY(-50%);
+    position: absolute;
+
+    @include at-query($max, '1200px'){
+      width: 3%;          
+    }
+
+    img{
+      width: 100% !important;
+      display: block;
+      margin: 0 !important;
+    }
+  }
+
+  .left-arrow{
+    left: -35px;
+    transform: rotate(-180deg);
+    @include at-query($max, '1300px'){
+      left: -25px;
+    }
+  }
+
+  .right-arrow{
+    right: -35px;
+    @include at-query($max, '1300px'){
+      right: -25px;
+    }
+  }
+
+  /*.slick-track*/
+  .slick-track{
+    @include at-query($max, '1024px'){
+      display: flex !important;          
+    }
+  }
+}

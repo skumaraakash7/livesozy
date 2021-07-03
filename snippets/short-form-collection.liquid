@@ -1,0 +1,45 @@
+{%comment%}Flag to carousel products{%endcomment%}
+{%assign productForRelated = flag-carousel-listing | default:false %}
+
+<form action="/cart/add" method="post" data-money-format="{{ shop.money_format }}" class="product_form{% if product.variants.size > 1 or product.options.size > 1 %} with_variants{% endif %} product-form-{{ product.id }}" id="AddToCartForm" data-product="{{ product | json | escape }}" data-product-id="{{ product.id }}">
+	
+	{% if product.options.size > 1 %}
+		{% if product.available %}
+            {% include 'swatch' with 'Color', productForRelated %}
+            {% include 'swatch' with 'Size', productForRelated %}
+		{% endif %}
+		<div class="select">
+			<select id="product-select-{{ product.id }}" name='id'>
+				{% for variant in product.variants %}
+				<option {%if variant.available%}js-available{%endif%} {% if variant == product.selected_or_first_available_variant %} selected="selected" {% endif %} data-sku="{{ variant.sku }}" value="{{ variant.id }}" data-color-value="{{variant.option1}}">{{ variant.title }} - {{ variant.price | money }}</option>
+				{% endfor %}
+			</select>
+		</div>
+	{% elsif product.options.size == 1 and product.variants.size > 1 %}
+		{% if product.available and product.variants.size > 1 %}
+			{% include 'swatch' with 'Color', productForRelated %}
+		{% endif %}
+		<div class="select">
+			<label>{{ product.options[0] }}</label>
+			<select id="product-select-{{ product.id }}" name='id'>
+				{% for variant in product.variants %}
+					<option {%if variant.available%}js-available{%endif%} {% if variant == product.selected_or_first_available_variant %} selected="selected" {% endif %} data-sku="{{ variant.sku }}" value="{{ variant.id }}" data-color-value="{{variant.option1}}">{{ variant.title }} - {{ variant.price | money }}</option>
+				{% endfor %}
+			</select>
+		</div>
+	{% else %}
+		<div class="what-is-it">
+			{% if product.options.first != 'Title' %}
+				<label>{{ product.options.first }}:</label>{% for variant in product.variants %}<span class="it-is">{{ variant.option1 | escape }}</span>{% endfor %}
+			{% endif %}
+		</div>
+		<div class="product-variants"></div><!-- product variants -->	
+		<input	type="hidden" id="{{ variant.id }}" name="id" data-sku="{{ variant.sku }}" value="{{ product.variants[0].id }}" />		
+	{% endif %}
+</form>
+
+{% if product.variants.size > 1 or product.options.size > 1 %}
+	<script type="application/json" id="ProductJson-{{ product.id }}">
+		{{ product | json }}
+	</script>
+{% endif %}

@@ -1,0 +1,118 @@
+  {%for block in section.blocks %}
+  {%if block.settings.collection == collection.handle%}
+	<div class="collection-block-seo">
+      {%if block.settings.title_1 != blank%}
+      <h2>{{block.settings.title_1}}</h2>
+      {%endif%}
+      {%if block.settings.text_1 != blank%}
+      <p>{{block.settings.text_1}}</p>
+      {%endif%}
+
+      <div read-more-content>
+        {%if block.settings.title_2 != blank or block.settings.text_2 != blank%}
+        	<div read-more-link>Read more</div>
+        {%endif%}
+      {%if block.settings.title_2 != blank%}
+      <h2>{{block.settings.title_2}}</h2>
+      {%endif%}
+      {%if block.settings.text_2 != blank%}
+      <p>{{block.settings.text_2}}</p>
+      {%endif%}
+      {%if block.settings.title_3 != blank%}
+      <h2>{{block.settings.title_3}}</h2>
+      {%endif%}
+      {%if block.settings.text_3 != blank%}
+      <p>{{block.settings.text_3}}</p>
+      {%endif%}
+      {%if block.settings.title_4 != blank%}
+      <h2>{{block.settings.title_4}}</h2>
+      {%endif%}
+      {%if block.settings.text_4 != blank%}
+      <p>{{block.settings.text_4}}</p>
+      {%endif%}
+      {%if block.settings.title_5 != blank%}
+      <h2>{{block.settings.title_5}}</h2>
+      {%endif%}
+      {%if block.settings.text_5 != blank%}
+      <p>{{block.settings.text_5}}</p>
+      {%endif%}
+      </div>
+    </div>
+  	{%break%}
+  {%endif%}
+  {%endfor%}
+{% schema %}
+  {
+    "name": "Collection Block Seo",
+    "settings": [],
+	"blocks": [
+      {
+      "name": "Copy Block",
+      "type": "copy_block",
+      "settings": [
+          {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+          },
+          {
+              "type":"text",
+              "id":"title_1",
+              "label":"Title 1"
+          },
+          {
+              "type":"textarea",
+              "id":"text_1",
+              "label":"Paragraph 1"
+          },
+          {
+              "type":"text",
+              "id":"title_2",
+              "label":"Title 2"
+          },
+          {
+              "type":"textarea",
+              "id":"text_2",
+              "label":"Paragraph 2"
+          },          
+		  {
+              "type":"text",
+              "id":"title_3",
+              "label":"Title 3"
+          },
+          {
+              "type":"textarea",
+              "id":"text_3",
+              "label":"Paragraph 3"
+          },
+          {
+              "type":"text",
+              "id":"title_4",
+              "label":"Title 4"
+          },
+          {
+              "type":"textarea",
+              "id":"text_4",
+              "label":"Paragraph 4"
+          },
+          {
+              "type":"text",
+              "id":"title_5",
+              "label":"Title 5"
+          },
+          {
+              "type":"textarea",
+              "id":"text_5",
+              "label":"Paragraph 5"
+          }
+       ] 
+      }
+	]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

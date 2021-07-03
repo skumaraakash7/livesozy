@@ -1,0 +1,31 @@
+<div id="pagination" class="desktop-12 mobile-3"> 
+  {%comment%}
+  	<span class="count">{% if template != 'list-collections' %}{{ 'general.pagination.showing_items' | t }}{% endif %} {{ paginate.current_offset | plus: 1 }}-{% if paginate.next %}{{ paginate.current_offset | plus: paginate.page_size }}{% else %}{{ paginate.items }}{% endif %} {{ 'general.pagination.of' | t }} {{ paginate.items }}.</span>
+  {%endcomment%}
+
+  {% if paginate.previous %}
+  	<a class="pagination__arrow-btn prev" href="{{ paginate.previous.url }}"><img src="https://cdn.shopify.com/s/files/1/3012/3948/files/back-arrow.svg">PREVIOUS</a>
+  {% endif %}
+  
+  {%if paginate.previous.url == null%}  
+    {%unless paginate.items <  paginate.page_size%}
+    	<span class="pagination__arrow-btn mobile_edition"><img src="https://cdn.shopify.com/s/files/1/3012/3948/files/back-arrow.svg"> PREVIOUS</span>
+    {%endunless%}  
+  {%endif%} 
+
+  {% for part in paginate.parts %}
+    {% if part.is_link %} 
+        <a href="{{part.url }}" class="pagination__link">{{ part.title }}</a>    
+    {% else %}
+      {% if part.title == '&hellip;' %}
+      <span class="pagination__divider">{{ part.title }}</span>
+      {% else %}
+      <span class="current pagination__link">{{ part.title }}</span>
+      {% endif %}
+    {% endif %}
+  {% endfor %}
+
+  {% if paginate.next %}
+  	<a class="pagination__arrow-btn next" href="{{ paginate.next.url }}">NEXT<img src="https://cdn.shopify.com/s/files/1/3012/3948/files/next-arrow.svg"></a>
+  {% endif %}
+</div>

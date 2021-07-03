@@ -1,0 +1,22 @@
+{% assign grcap_anchor_product_content = '<span class="grcap_anchor_product">' | append: product.description | append: '</span>' %}
+<!-- /snippets/yotpo-star-rating.liquid -->
+{%comment%} NOT USED ANYMORE
+<div class="yotpo bottomLine {%if product.metafields.yotpo.bottomline contains "Write a review"%}spacer-write{%endif%}" data-product-id="{{ product.id }}">
+	{%- if product.metafields.yotpo.bottomline != blank -%}  
+        {%unless product.metafields.yotpo.bottomline contains "Write a review"%}
+  			{{ product.metafields.yotpo.bottomline | replace: "</a>","</span>" | replace: '<a',"<span"}}
+        {%endunless%}
+    {%-endif-%}
+</div>
+{%endcomment%}
+<div class="yotpo bottomLine"
+    data-appkey="J53RkYbPOdnX4Qf11g1mqLGvdfuGkko5udAy5CuG"
+    data-domain="{{shop.permanent_domain | escape }}"
+    data-product-id="{{ product.id }}"
+    data-product-models="{{ product.id }}"
+    data-name="{{ product.title | escape }}"
+    data-url="{{ shop.url }}{{ product.url }}"
+    data-image-url="{{ product.featured_image | product_img_url: 'large' |replace: '?', '%3F' | replace: '&','%26'}}"
+    data-description="{{ grcap_anchor_product_content | escape }}"
+    data-bread-crumbs="{% for tag in product.tags %}{{ tag | escape }};{% endfor %}">
+</div>

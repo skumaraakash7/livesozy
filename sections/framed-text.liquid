@@ -1,0 +1,62 @@
+<div class="framed-text-section">
+  <div class="internal-frame">
+    <h3>{{section.settings.title}}</h3>
+    <p>{{section.settings.paragraph}}</p>
+    <a href="{{section.settings.cta_url}}">{{section.settings.cta_txt}}</a>
+  
+  </div>
+</div>
+
+
+<style>
+  .internal-frame{
+    background-color: {{section.settings.bg_color}};
+  }
+
+</style>
+
+
+{% schema %}
+  {
+    "name": "Framed Text",
+    "settings": [
+      {
+      "type":"color",
+      "id":"bg_color",
+      "label":"Background Color"
+      },
+      {
+      "type":"textarea",
+      "id":"title",
+      "label":"Title"
+      },
+      {
+      "type":"textarea",
+      "id":"paragraph",
+      "label":"Paragraph"
+      },
+      {
+      "type":"text",
+      "id":"cta_txt",
+      "label":"CTA Text"
+      },
+      {
+      "type":"url",
+      "id":"cta_url",
+      "label":"CTA URL"
+      }
+	],
+    "presets": [
+      {
+        "name": "Framed Text",
+        "category": "Home Page"
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

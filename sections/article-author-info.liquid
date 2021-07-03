@@ -1,0 +1,104 @@
+<script>
+var blog_authors = {
+{%for block in section.blocks%}
+  'author:{{block.settings.author_tag}}': {
+  		name: '{{block.settings.author_name}}',
+		featured_image: '{{block.settings.author_photo | img_url: "master"}}',
+		bio: '{{block.settings.author_bio}}',
+		facebook: '{{block.settings.facebook_url}}',
+  		instagram: '{{block.settings.instagram_url}}',
+  		twitter: '{{block.settings.twitter_url}}',
+  		website: '{{block.settings.website_url}}'
+	}{%unless forloop.last == true %},{%endunless%}
+{%endfor%}
+};
+  
+  
+  $(document).ready(function(){ 
+    $("[data-author-tag]").each(function(){
+      var tag_name = $(this).attr("data-author-tag");
+      var author = blog_authors[tag_name];
+      
+      $(".author-pic").attr("src",author.featured_image);
+      $(".author-name").text(author.name);
+      $(".author-name-blog").text("BY " + author.name)
+      $(".author-bio").text(author.bio);
+      if(author.website.length > 0){
+        $(".author__website-link").attr("href",author.website).show();    
+      }
+      if(author.twitter.length > 0){
+        $(".author__twitter-link").attr("href",author.twitter).show();    
+      }
+      if(author.instagram.length > 0){
+        $(".author__instagram-link").attr("href",author.instagram).show();    
+      }
+      if(author.facebook.length > 0){
+        $(".author__facebook-link").attr("href",author.facebook).show();    
+      }
+    })
+  })
+  
+  
+</script>
+
+{% schema %}
+  {
+    "name": "Authors Info",
+    "settings": [],
+	"blocks":[
+		{
+			"type":"author",
+			"name":"Author",
+			"settings":[
+				{
+					"type":"text",
+					"id":"author_tag",
+					"label":"Author Tag"
+				},
+				{
+					"type":"text",
+					"id":"author_name",
+					"label":"Author Name"
+				},
+                {
+                    "type":"image_picker",
+                    "id":"author_photo",
+                    "label":"Author Photo"
+                },
+				{
+					"type":"textarea",
+					"id":"author_bio",
+					"label":"Author Bio"
+				},
+				{
+					"type":"url",
+					"id":"website_url",
+					"label":"Website URL"
+				},
+				{
+					"type":"url",
+					"id":"facebook_url",
+					"label":"Facebook URL"
+				},
+				{
+					"type":"url",
+					"id":"instagram_url",
+					"label":"Instagram URL"
+				},
+				{
+					"type":"url",
+					"id":"twitter_url",
+					"label":"Twitter URL"
+				}
+			]
+		
+		}
+	]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

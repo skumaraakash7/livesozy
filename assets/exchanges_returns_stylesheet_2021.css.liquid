@@ -1,0 +1,295 @@
+:root{
+  --font: brandon-grotesque,sans-serif;
+    --main_color_text:#5A5959; 
+    --second_color_text: #3D3D3D;
+    --links_color: #C56E6F;
+    --light_background: #FFF8F5; 
+    --input_border: #919191;
+  }
+
+
+    h1,h2,h3,p,li,label,input,textarea{
+      font-family: var(--font) ;
+        color: var(--main_color_text) ;       
+   }
+    a{
+     font-family: var(--font) ;
+    }
+    .gridlock .row{
+      width: 100%;
+    }
+    
+    #breadcrumb{
+      display: none;
+    }
+    
+
+    /*---------------*/
+   	     /*HEADER*/
+    /*---------------*/
+
+    .exchanges_returns__header{
+      text-align: center;
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 auto;      
+      margin-top: 95px;
+    }
+
+    @media(max-width: 999px){
+      .exchanges_returns__header{
+        max-width: 96%;
+        margin-top: 35px;
+      }
+    }    
+
+    .exchanges_returns__header h1{
+      font-size: 36px;
+      line-height: 51px;	
+      display: block;
+      max-width: 455px;
+      margin: 0 auto;
+      margin-bottom: 48px;
+      background: linear-gradient(to top, #FFF8F5 40%, transparent 45%);
+      background-repeat: no-repeat;
+      background-position: 0px bottom;  
+    }
+
+    @media(max-width: 700px){
+      .exchanges_returns__header h1{
+        font-size: 28px;
+        line-height: 43px;
+        margin-bottom: 33px;
+        background: linear-gradient(to top, #FFF8F5 50%, transparent 25%);
+      }
+    }
+
+    /*-----------------------*/
+    	/*RETURNS SNIPPET*/
+    /*-----------------------*/
+
+    .exchange_returns_snippet{      
+      margin-top:100px;
+      position: relative;
+    }    
+
+    @media(max-width: 729px){
+      .exchange_returns_snippet{ 	     
+        margin-top: 33px;
+      }
+    }
+    
+    .exchange_returns_snippet .snippet__internal{
+      max-width: 1140px;
+      margin: 0 auto;
+      position: relative;
+      display: flex;    
+      align-items: center;
+    }
+
+    @media(max-width: 729px){     
+      .exchange_returns_snippet .snippet__internal{
+        flex-direction: column;               
+      }   
+    }
+
+    .exchange_returns_snippet .snippet_img{        
+      width: 50%;      
+    }
+    
+    @media(max-width:1200px){
+      .exchange_returns_snippet .snippet_img{
+        padding: 2%;
+      }
+    }    
+
+    @media(max-width: 729px){  
+      .exchange_returns_snippet .snippet_img{
+        width: 100%;
+        padding:0%;
+      }
+    }
+
+    .exchange_returns_snippet .snippet_img img{
+      display: block;
+      width: 100%;
+    } 
+
+    .exchange_returns_snippet .copy{
+      width: 50%;      
+      text-align: center;
+    }
+
+    @media(max-width: 729px){     
+      .exchange_returns_snippet .copy{
+        width: 100%;
+        padding-top:38px;        
+      }      
+    }   
+
+    .exchange_returns_snippet .copy h2{
+      font-size: 24px;
+      line-height: 28px;
+      margin-bottom: 20px;
+      color: var(--second_color_text);
+    }
+    
+    @media(max-width: 730px){
+      .exchange_returns_snippet .copy h2{
+        margin-bottom: 25px;
+      }
+    }
+
+    .exchange_returns_snippet .copy h2 span{
+      display: block;
+    }    
+
+    .exchange_returns_snippet .copy p{
+      max-width: 375px;
+      margin: 0 auto;
+      font-size: 18px;
+      line-height: 28px;
+    }
+
+    @media(max-width: 730px){
+      .exchange_returns_snippet .copy p{
+        max-width: 90%;
+        line-height: 24px;
+      }
+    }
+
+    .exchange_returns_snippet .copy a{
+      display: block;
+      margin: 0 auto;
+      margin-top: 40px;
+      width: 292px;
+      padding: 16px 0px;
+      font-size: 16px;
+      line-height: 23px;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      border: 2px solid #C56E6F;
+      color: var(--links_color);        
+   }
+    .exchange_returns_snippet .copy a:hover{
+      background: var(--links_color);
+      color: #fff;    
+    }
+    @media(max-width: 730px){
+      .exchange_returns_snippet .copy a{
+        max-width: 90%;
+        width: 100%;
+        margin-top:  53px;
+        margin-bottom: 65px;
+      }
+    }
+    
+    /*-----------------------*/
+    	/*POLICY SECTION*/
+    /*-----------------------*/
+    
+    .exchange_returns__policy{
+      background: var(--light_background);
+    }
+    
+    .exchange_returns__policy .policy__internal{
+      max-width: 1100px;
+      width: 100%;
+      margin: 0 auto;   
+      margin-top: 107px;
+      padding: 125px 0px;
+      padding-bottom: 99px;
+    }
+    
+    @media(max-width: 1200px){
+      .exchange_returns__policy .policy__internal{
+        width: 90%;
+      }
+    }
+    
+    @media(max-width: 730px){
+      .exchange_returns__policy .policy__internal{
+        margin-top: 15px;
+        padding-top: 70px;
+        padding-bottom:57px;
+        width: 85%;
+      }    
+    }
+    
+    .policy__internal h2, .policy__internal p, .policy__internal li{
+      color: var(--second_color_text);
+    }
+    
+    .policy__internal h2{
+      font-size: 36px;
+      line-height: 28px;
+      text-align: center;
+      text-transform: uppercase;
+      font-weight:  400;   
+      margin-bottom: 35px;
+    }
+    
+    .policy__internal h2 span{
+      display: none;
+    }
+    
+    @media(max-width: 730px){
+      .policy__internal h2{
+        font-size: 24px;
+        line-height: 28px;
+        margin-bottom: 18px;
+      }    
+      
+      .policy__internal h2 span{
+        display: block;
+      }      
+    }   
+       
+    .policy__internal p, .policy__internal li{
+      font-size: 18px;
+      line-height: 28px;
+    }
+
+    .policy__internal p{
+      padding-top: 18px;
+    }
+    
+    .policy__internal .policy__questions{
+      text-align: center;
+      max-width: 600px;
+      width: 100%;
+      margin: 0 auto;      
+    }
+    
+    .policy__internal .policy__questions .divider{
+      display: block;
+      max-width: 454px;
+      width: 100%;     
+      border-top:1px solid black; 
+      margin: 0 auto;
+      margin-top: 68px;
+      margin-bottom: 56px;
+    }
+    
+    @media(max-width: 730px){
+      .policy__internal .policy__questions .divider{
+        max-width: 185px;
+        margin-top:  50px;
+        margin-bottom: 53px;
+      }
+    }
+    
+    .policy__internal .policy__questions h3{
+      font-size: 24px;
+      line-height: 28px;
+      font-weight: 400;
+    }
+    
+    .policy__internal .policy__questions p{
+      margin-bottom: 3px;
+    }
+
+    
+    .policy__internal .policy__questions ul{
+      list-style: none;
+    }

@@ -1,0 +1,160 @@
+{{'sozy-babes-portal.scss.css' | asset_url | stylesheet_tag }}
+{%if customer %}
+  {%unless customer.tags contains 'SozyBabeProgram' %}
+    <script> 
+      window.location.href = "https://livesozy.com/pages/sozy-babes"; 
+    </script>
+  {%endunless%}
+{%else%}
+    <script> 
+      window.location.href = "https://livesozy.com/account/login?checkout_url=https://livesozy.com/pages/sozy-babes-ambassador"; 
+    </script>
+{%endif%}
+
+<section class="sozyAmbassadorPage__header">
+  <picture>
+    <source media="(min-width: 768px)" srcset="https://cdn.shopify.com/s/files/1/3012/3948/files/ambassDesktop.png?v=1613168862" />    
+    <source media="(min-width: 0px)" srcset="https://cdn.shopify.com/s/files/1/3012/3948/files/ambassMob.png?v=1613168862" />
+    <img  src="https://cdn.shopify.com/s/files/1/3012/3948/files/ambassDesktop.png?v=1613168862">
+  </picture>
+  
+  <h1>WELCOME BACK!</h1>
+</section>
+
+<section class="sozyAmbassadorPage__topCopy">
+  <div class="titleDivider__pink"></div>
+  <h2>My Sozy Babe Portal</h2>
+  <p>As a Sozy Brand Ambassador, you’ll enjoy awesome discounts, free products, rewards and an engaging community of empowered women!</p>
+</section>
+
+<section class="foreverPerks innerWhiteBorder">
+  <div class="foreverPerks__wrapper">
+    <div class="foreverPerks-copy">
+      <h2>YOUR FOREVER PERK</h2>
+      <h3>30% OFF</h3>
+      <p>YOUR CODE:  <span>SOZYBABE30</span></p>
+      <a href="/collections/best-sellers">SHOP NOW</a>
+    </div>
+    <div class="foreverPerks-image">
+      <img src="https://cdn.shopify.com/s/files/1/3012/3948/files/foreverPerks.jpg">
+    </div>
+  </div>
+</section>
+
+<section class="uploadContent">
+  <div class="uploadContent__wrapper">
+    <div class="uploadContent-image">
+      <img src="https://cdn.shopify.com/s/files/1/3012/3948/files/uploadContent.jpg">
+    </div>
+    <div class="uploadContent-copy">
+      <h2>UPLOAD YOUR CONTENT FOR A CHANCE TO WIN</h2>
+  	  <div class="titleDivider__pink"></div>
+      <p>Submit content and every submission counts as an entry to win! <br>
+        <br>
+        Prizes include:<br>
+$75 Sozy Gift Card weekly<br>
+$500 Sozy Gift Card monthly<br>
+5+ Day Trip for 2 quarterly<br>
+        <br>
+      *The winners of the giveaways will be featured as Babe of the week/month/quarter</p>
+      <a href="https://livesozy.com/submit">UPLOAD CONTENT</a>
+    </div>
+  </div>
+</section>
+
+<section class="earningMoney innerWhiteBorder">
+  <div class="earningMoney__wrapper">
+    <div class="earningMoney__copy">
+      <h2>Start earning money <span></span> for your referrals!</h2>
+      <p>As a Sozy Ambassador, <span></span> you can enjoy awesome perks like:</p>
+      <ul>
+        <li>15% commissions on qualifying purchases </li>
+        <li> Free product</li>
+        <li>And a sweet 10% discount for your friends + family!</li>
+      </ul>
+      <div class='button_container'>
+        <a href="https://sozy.refersion.com/?oid=60299">SIGN UP</a>
+        <a href='https://sozy.refersion.com/affiliate/login'>LOGIN</a>
+      </div>
+    </div>
+    <div class="earningMoney__img">
+      <img src="https://cdn.shopify.com/s/files/1/3012/3948/files/money_img.png?v=1618009862">
+    </div>
+  </div>
+</section>
+
+<section class='socialMediaGroups'>
+
+  <div class='socialMediaGroups__wrapper'>
+
+    <div class='socialMediaGroups__img'>
+      <img src='https://cdn.shopify.com/s/files/1/3012/3948/files/social.png?v=1618242483'>
+    </div>
+
+    <div class='socialMediaGroups__copy'>
+      <h2>Want to get more involved?</h2>
+      <div class="titleDivider__pink"></div>
+      <p>Join our exclusive Sozy Baby Brand Ambassador <span></span>      groups for all the best content!</p>
+      
+      <div class='socialMediaGroups__social'>
+        <a target="_blank" href='https://www.facebook.com/groups/sozybabes/'><i class="fa fa-facebook fa-2x" aria-hidden="true"></i></a>
+        <a target="_blank" href='https://www.instagram.com/sozybabes/'><i class="fa fa-instagram fa-2x" aria-hidden="true"></i></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+{%capture accordion_icon%}
+<div class="accordion--icon">
+  <svg class="minus--icon" width="20" height="1" viewBox="0 0 20 1" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <line x1="-4.0277e-08" y1="0.5" x2="20" y2="0.499998" stroke="#5A5959"/>
+  </svg>
+  <svg class="plus--icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <line x1="9.5" y1="20" x2="9.5" y2="-7.15256e-07" stroke="#5A5959"/>
+    <line x1="-4.0277e-08" y1="9.5" x2="20" y2="9.5" stroke="#5A5959"/>
+  </svg>
+</div>
+{%endcapture%}
+
+<section class="sozyAmbassadorPage__faq">
+  <div class="sozyAmbassadorPage__faq-wrapper">
+    <h2>QUESTIONS?</h2>
+    <div class="accordion-wrapper">
+      <div class="accordion--variant-selector" data-accordion>
+        <h4>Can I share my personal discount code with family & friends?{{accordion_icon}}</h4>
+        <div class="accordion--content">
+          Please note that Sozy Babe Ambassadors should refrain from posting their personal use discount code online, on social media
+          or sharing it with friends and family. Ambassadors violating our program rules will be removed from the program. Don't worry though! You can
+          share your commission discount code with them and get a commission everytime they purchase!
+        </div>
+      </div>
+      <div class="accordion--variant-selector" data-accordion>
+        <h4>How do I get free Sozy swag?{{accordion_icon}}</h4>
+        <div class="accordion--content">
+          It's easy! Submit awesome content as often as you can! Refer friends to be a Sozy Ambassador! Post, share, like, 
+          comment and engage with the brand to earn rewards! And if you ever have any questions on how to get more involved don't hesitate to reach out! 
+        </div>
+      </div>
+      <div class="accordion--variant-selector" data-accordion>
+        <h4>How can I be featured on Sozy socials?{{accordion_icon}}</h4>
+        <div class="accordion--content">
+          You can submit your content above in our content submission portal anytime! 
+          Our team will look over your content and select the images that fit the feed the best. 
+          The more quality content you submit, the better chance to get featured!
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+</section>
+<script>
+      $(document).on('click', '[data-accordion] h4', function(e) {
+          let $parent = $(this).parent();
+          if($parent.hasClass('expanded')){    
+            $("[data-accordion]").removeClass("expanded");
+          } else {
+            $("[data-accordion]").removeClass("expanded");
+            $parent.addClass("expanded");    
+          }  
+    });
+</script>

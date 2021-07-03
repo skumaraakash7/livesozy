@@ -1,0 +1,72 @@
+{% comment %}
+	{% if section.settings.show-sku %}
+		<span class="variant-sku"></span>
+	{% endif %}
+{% endcomment %}
+<form action="/cart/add" method="post" data-money-format="{{ shop.money_format }}" class="product_form{% if product.variants.size > 1 or product.options.size > 1 %} with_variants{% endif %} product-form-{{ product.id }}" id="AddToCartForm" data-product="{{ product | json | escape }}" data-product-id="{{ product.id }}">
+	
+	{% if product.options.size > 1 %}
+		{% if product.available %}
+			{% include 'swatch' with 'Color' %}
+			{% include 'swatch' with 'Size' %}
+		{% endif %}
+		<div class="select">
+			<select id="product-select-{{ product.id }}" name='id'>
+				{% for variant in product.variants %}
+				<option {%if variant.available%}js-available{%endif%} {% if variant == product.selected_or_first_available_variant %} selected="selected" {% endif %} data-sku="{{ variant.sku }}" value="{{ variant.id }}" data-color-value="{{variant.option1}}">{{ variant.title }} - {{ variant.price | money }}</option>
+				{% endfor %}
+			</select>
+		</div>
+	{% elsif product.options.size == 1 and product.variants.size > 1 %}
+		{% if product.available and product.variants.size > 1 %}
+			{% include 'swatch' with 'Color' %}
+		{% endif %}
+		<div class="select">
+			<label>{{ product.options[0] }}</label>
+			<select id="product-select-{{ product.id }}" name='id'>
+				{% for variant in product.variants %}
+					<option {%if variant.available%}js-available{%endif%} {% if variant == product.selected_or_first_available_variant %} selected="selected" {% endif %} data-sku="{{ variant.sku }}" value="{{ variant.id }}" data-color-value="{{variant.option1}}">{{ variant.title }} - {{ variant.price | money }}</option>
+				{% endfor %}
+			</select>
+		</div>
+	{% else %}
+		<div class="what-is-it">
+			{% if product.options.first != 'Title' %}
+				<label>{{ product.options.first }}:</label>{% for variant in product.variants %}<span class="it-is">{{ variant.option1 | escape }}</span>{% endfor %}
+			{% endif %}
+		</div>
+		<div class="product-variants"></div><!-- product variants -->	
+		<input	type="hidden" id="{{ variant.id }}" name="id" data-sku="{{ variant.sku }}" value="{{ product.variants[0].id }}" />		
+	{% endif %}
+	
+	
+	
+	
+	
+	{% if product.available %}
+		<div class="product-add">
+			<div class="quantity-wrapper clearfix">
+				 <label for="quantity">Quantity</label> 
+				<input min="1" type="number" class="quantity" name="quantity" value="1" />
+            </div>
+			<div class="add-wrapper clearfix">
+              <input type="submit" name="button" class="add" id="AddToCart" value="{% if product.tags contains 'Pre-order' %}PRE-ORDER{% else %}{{ 'products.product.add_to_cart' | t }}{% endif %}" />              
+              {% unless current_variant.available %}
+              	<a class="klaviyo-bis-trigger" href="#" style="display:none">Notify Me When Available</a>
+              {% endunless %}  
+          	</div>
+            <div class="message-container">
+              <p style="font-size: 100%;"><span>10% of profit supports survivors of sexual violence.</span> <a href="https://livesozy.com/pages/about-us"> Learn More. </a></p>
+            </div>
+		</div>
+	{% endif %}
+  
+  {% if product.tags contains 'Discontinued' %}<input type="hidden" name="properties[_final-sale]" value="true" />{% endif %}
+  {% if product.tags contains 'Pre-order' %}<input type="hidden" name="properties[_preorder]" value="true" />{% endif %}  
+</form>
+
+{% if product.variants.size > 1 or product.options.size > 1 %}
+	<script type="application/json" id="ProductJson-{{ product.id }}">
+		{{ product | json }}
+	</script>
+{% endif %}

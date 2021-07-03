@@ -1,0 +1,111 @@
+<a class="show mobile-3" href="#"><i class="fa fa-bars fa-2x" aria-hidden="true"></i></a>
+
+<div class="desktop-2 tablet-6 mobile-3" id="aside">
+  <div id="sidebar">
+
+    {% if collection.image %}
+    {{ collection.image.src | collection_img_url: 'compact' | img_tag: collection_title }}
+    {% endif %}
+
+    {% if section.settings.sort_by %}
+    <label>{{ 'collections.sorting.title' | t }}</label>
+    <div>
+      <select id="sort-by" class="styled-select">
+        <option value="manual">{{ 'collections.sorting.featured' | t }}</option>
+        <option value="price-ascending">{{ 'collections.sorting.price_ascending' | t }}</option>
+        <option value="price-descending">{{ 'collections.sorting.price_descending' | t }}</option>
+        <option value="title-ascending">{{ 'collections.sorting.az' | t }}</option>
+        <option value="title-descending">{{ 'collections.sorting.za' | t }}</option>
+        <option value="created-ascending">{{ 'collections.sorting.date_ascending' | t }}</option>
+        <option value="created-descending">{{ 'collections.sorting.date_descending' | t }}</option>
+        <option value="best-selling">{{ 'collections.sorting.best_selling' | t }}</option>
+      </select>
+    </div>
+    {% endif %}
+
+
+
+    {% comment %}
+    Include block settings for collection template to add sidebar menus
+    {% endcomment %}
+
+    {% for block in section.blocks %}
+     {% if block.type == 'vendor_list' %}
+      {% if collection.handle == "all" %}
+      <ul>
+        <label>{{ 'collections.general.shop_by_designer' | t }}</label>
+        {% for product_vendor in shop.vendors %}
+        <li>{{ product_vendor | link_to_vendor  }}</li>
+        {% endfor %}
+      </ul>
+      {% else %}
+      <ul>
+        <label>{{ 'collections.general.shop_by_designer' | t }}</label>
+        {% for product_vendor in collection.all_vendors %}
+        <li class="{{ product_vendor | handelize }}">{{ product_vendor | link_to_vendor }}</li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+    {% else %}
+
+    <ul class="sidebar-accordion" {{ block.shopify_attributes }}>
+      <label>{{ block.settings.title }}</label>
+      {% for link in linklists[block.settings.side_nav].links %}
+        {% if link.links != blank %}
+          <li class="extend has_sub_menu" aria-haspopup="true" aria-expanded="false"><a href="{{ link.url }}">{{ link.title }}</a></li>
+            <ul class="extended-submenu">
+              {% for sub_link in link.links %}
+                <li><a href="{{ sub_link.url }}">{{ sub_link.title }}</a></li>
+              {% endfor %}
+            </ul>
+
+        {% else %}
+          <li>{{ link.title | link_to: link.url }}</li>
+          {% endif %}
+      {% endfor %}
+    </ul>
+
+    {% endif %}
+
+    {% endfor %}
+
+
+
+
+
+  </div>
+
+  <script>
+    Shopify.queryParams = {};
+    if (location.search.length) {
+      for (var aKeyValue, i = 0, aCouples = location.search.substr(1).split('&'); i < aCouples.length; i++) {
+        aKeyValue = aCouples[i].split('=');
+        if (aKeyValue.length > 1) {
+          Shopify.queryParams[decodeURIComponent(aKeyValue[0])] = decodeURIComponent(aKeyValue[1]);
+        }
+      }
+    }
+    jQuery('#sort-by')
+    .val('{{ collection.sort_by | default: collection.default_sort_by  }}')
+         .bind('change', function() {
+      Shopify.queryParams.sort_by = jQuery(this).val();
+      location.search = jQuery.param(Shopify.queryParams);
+    });
+  </script>
+
+  {% if section.settings.sticky-sidebar %}
+  <script>
+
+    if($(window).width() > 980){
+
+      $('#sidebar').stickySidebar({
+
+        sidebarTopMargin: 100,
+        footerThreshold: 100
+
+      });
+    };
+  </script>
+  {% endif %}
+
+</div>

@@ -1,0 +1,112 @@
+<div class="text-image-columns-container">
+  {%for block in section.blocks%}
+    <div class="text-image-internal">
+      <div class="text-col {%if block.settings.left_alignment == true%}text-left-alignment{%elsif block.settings.right_alignment == true%}text-right-alignment{%endif%}">
+        <h3>{{block.settings.title}}</h3>
+        <p>{{block.settings.paragraph}}</p>
+        <a href="{{block.settings.cta_url}}">{{block.settings.cta_text}}</a>
+      </div>
+      <div class="img-col {%if block.settings.left_alignment == true%}text-left-alignment{%elsif block.settings.right_alignment == true%}text-right-alignment{%endif%}">
+        <picture class="lazy" data-loader="picture">
+          <data-src media="(min-width: 768px)" srcset="{{block.settings.img_desk | img_url: "master"}}"></data-src>
+          <data-src media="(min-width: 0px)" srcset="{{block.settings.img_mob | img_url: "master"}}"></data-src>
+          <data-img src="{{block.settings.img_desk | img_url: "master"}}"></data-img>
+        </picture>
+      </div>
+    </div>
+  {%endfor%}
+
+
+
+</div>
+ 
+
+{% schema %}
+  {
+    "name": "Text & Image",
+    "settings": [
+
+	],
+
+	"blocks":[
+	
+		{
+			"type":"image",
+			"name": "Text Block",
+			"settings":[
+			      {
+      "type": "header",
+      "content": "Text"
+      },
+      {
+      "type":"textarea",
+      "id":"title",
+      "label":"Title"
+      },
+      {
+      "type":"textarea",
+      "id":"paragraph",
+      "label":"Paragraph"
+      },
+      {
+      "type":"url",
+      "id":"cta_url",
+      "label":"CTA URL"
+      },
+      {
+      "type":"text",
+      "id":"cta_text",
+      "label":"CTA Text"
+      },
+      {
+      "type": "header",
+      "content": "Images"
+      },
+      {
+      "type":"image_picker",
+      "id":"img_desk",
+      "label":"Desktop Image (768x768)"
+      },
+      {
+      "type":"image_picker",
+      "id":"img_mob",
+      "label":"Mobile Image (596x596)"
+      },
+      {
+         "type":      "checkbox",
+         "id":        "left_alignment",
+         "label":     "Image Alignment Left",
+         "default":   false         
+      },
+      {
+         "type":      "checkbox",
+         "id":        "right_alignment",
+         "label":     "Image Alignment Right",
+         "default":   false         
+      }
+
+
+			]
+		}
+		
+
+
+	],
+
+
+
+
+    "presets": [
+      {
+        "name": "Text & Image",
+        "category": "Home Page"
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

@@ -1,0 +1,466 @@
+<script>
+var product_pdp = {{ product | json }};
+var _products = _products || []; 
+_products.push({
+    id: {{ product.id }},
+    handle: {{ product.handle | json }},
+    json: product_pdp
+  });
+</script>
+<div itemscope_ itemtype="http://schema.org/Product" id="product-{{ product.id }}" 
+	class="product-page product-template" data-product-id="{{ product.id }}" 
+	data-section-id="{{ section.id }}" data-enable-history-state="true" data-section-type="product-section">
+	
+	<meta itemprop="url" content="{{ shop.url }}{{ product.url }}">
+	<meta itemprop="image" content="{{ product.featured_image.src | img_url: 'grande' }}">
+	
+	<div class="clear"></div>
+	
+  	<div class="product-data-container">
+  
+	{% comment %} ###### PRODUCT PHOTOS ###### {% endcomment %}
+	<div id="product-photos" class="desktop-7 mobile-3">
+      <div class="desktop">
+		{% if product.available %}
+			{% if product.compare_at_price > product.price %}
+				<div class="final-sale">
+					<img src="{{ 'final-sale.png' | asset_url }}" alt="{{ 'products.product.sale' | t }}" />
+				</div>
+			{% endif %}
+		{% endif %}
+        
+        {% if product.tags contains 'Pre-order' %}
+        <div class="final-sale">
+          <img src="{{ 'pre-order.png' | asset_url }}" alt="" />
+        </div>
+        {% endif %}
+		
+		{% assign colors = '' %}
+		{% for variant in product.variants %}
+			{% assign colors = colors | append: variant.options[0] | append: '_' %}
+		{% endfor %}
+		
+		{% assign colorsArr = colors | split: '_' | uniq %}
+		
+		{% assign featured_alt = product.selected_or_first_available_variant.option1 %}
+		
+		{% assign featured_image = product.selected_or_first_available_variant.featured_image | default: product.featured_image %}
+		
+
+		
+		{% for color in colorsArr %}
+			{% if product.images.size > 1 %} 
+			<div class="sets_slider{% if featured_alt == color %} {{ color | handle }} shownow{%else%} {{ color | handle }} hide{% endif %} desktop-2 images-size-{{ product.images.size }}" id="thumbnail-gallery">	 
+				{% if product.images.size > 4 %}<div class="thumbnail-slider">{% endif %}
+				{% for image in product.images %}
+					{% if image.alt == color %}
+						<div class="slide {{ color }} xxx-{{ forloop.length }}">
+							<a href="{{ image | product_img_url: 'master' }}" data-image-id="{{ image.id }}" class="clicker-thumb">
+								<img class="thumbnail" src="{{ image | product_img_url: 'master' }}" data-image-id="{{ image.id }}" alt="{{ image.alt | escape }}" data-image-id="{{ image.id }}" />
+							</a>
+						</div>
+					{% endif %}
+				{% endfor %}
+				{% if product.images.size > 4 %}</div>{% endif %}
+			</div>
+			{% endif %}
+		{% endfor %}
+        
+
+        <div id="product-main-image" class="{% if product.images.size > 1 %}desktop-10{% else %}desktop-12{% endif %} main-product-image">
+          <img id="{{ product.id }}" data-image-id="{{ image.id }}" src="{{ featured_image | img_url: 'master' }}" alt='{{ image.alt | escape }}' title="{{ product.title }}"/>
+        </div>
+
+        
+      </div>
+
+      <script>
+        var _productImages = [];
+        {% for color in colorsArr %}
+          var images = [];
+          {% for image in product.images %}
+            {% if image.alt == color %}
+              images.push('{{ image.src | img_url: 'x1080' }}');
+            {% endif %}
+          {% endfor %}
+        
+        _productImages.push({
+          color: '{{ color }}',          
+          images: images
+        });
+        {% endfor %}
+      </script>
+      
+      <div class="mobile">
+        {%if product.images.size > 1 %}
+        <div class="mobile-carousel">
+          {% for image in product.images %}
+            {% if image.alt == product.selected_or_first_available_variant.option1 %}
+            <div class="carousel-cell">
+              <img class="lozad" src="{{ image | img_url: 'x480' }}" data-src="{{ image | img_url: 'x900' }}" />
+          	</div>
+          	{% endif %}
+          {% endfor %}
+        </div>
+         {%else%}
+          <div id="product-main-image" class="{% if product.images.size > 1 %}desktop-10{% else %}desktop-12{% endif %} main-product-image">
+            <img id="{{ product.id }}" data-image-id="{{ image.id }}" src="{{ featured_image | img_url: 'master' }}" alt='{{ image.alt | escape }}' title="{{ product.title }}"/>
+          </div>
+        {%endif%}
+      </div>
+	</div>
+	
+	{% comment %} ###### PRODUCT DETAILS ###### {% endcomment %}
+	<div id="product-right" class="desktop-5 mobile-3">
+		<div class="product-details-wrapper">
+          {%comment%}
+			{% if collection %} 
+				<div class="desktop-1 right mobile-hide">
+					{% if collection.previous_product %}
+						{{ '<i class="icon-angle-left icon-2x"></i>' | link_to: collection.previous_product }}
+					{% endif %}
+					&nbsp;
+					{% if collection.next_product %}
+						{{ '<i class="icon-angle-right icon-2x"></i>' | link_to: collection.next_product }}
+					{% endif %}
+				</div>
+			{% endif %}
+          {%endcomment%}
+          
+			<div id="product-description">
+                           
+              {% include 'yotpo-star-rating' %}
+              <h1 itemprop="name">{{ product.title }}</h1>			
+			
+				{% if section.settings.product-vendor %}
+					<h3>{{ 'products.product.designer' | t }}: {{ product.vendor }}</h3>
+				{% endif %}
+				<div itemprop="offers" itemscope_ itemtype="http://schema.org/Offer">
+					<p id="product-price">
+						{% if product.available %}
+							{% if product.compare_at_price > product.price %}
+								<span class="product-price" itemprop="price">{{ product.price | money }}</span>&nbsp;<span class="tstat was">{{ product.compare_at_price | money }}</span>
+							{% else %}
+								<span class="product-price" itemprop="price">{{ product.price | money }}</span>
+							{% endif %}
+						{% else %}
+							<span class="product-price" itemprop="price">{{ 'products.product.sold_out' | t }}</span>
+						{% endif %}
+					</p>
+				
+					<meta itemprop="priceCurrency" content="{{ shop.currency }}">
+					<link itemprop="availability" href="http://schema.org/{% if product.available %}InStock{% else %}OutOfStock{% endif %}">
+				
+					{% if section.settings.product-note != blank %}
+						<p class="product-note">
+							{{ section.settings.product-note | escape }}
+						</p>
+					{% endif %}
+				
+					{% include 'short-form' %}
+				</div>
+			
+				<div class="clear"></div>
+			
+				<div class="rte">
+					<div class="tabs">
+						{% if product.metafields.tab1.title %}
+						<div class="tab">
+							<div class="tab-title"><h2 class="">{{ product.metafields.tab1.title }}</h2></div>
+							<div class="tab-content" style="display:block">{{ product.metafields.tab1.content }}</div>
+						</div>
+						{% endif %}
+						{% if product.metafields.tab2.title %}
+						<div class="tab">
+							<div class="tab-title"><h2 class="collapsed">{{ product.metafields.tab2.title }}</h2></div>
+							<div class="tab-content">{{ product.metafields.tab2.content }}</div>
+						</div>
+						{% endif %}
+						{% if product.metafields.tab3.title %}
+						<div class="tab">
+							<div class="tab-title"><h2 class="collapsed">{{ product.metafields.tab3.title }}</h2></div>
+							<div class="tab-content">
+								{{ product.metafields.tab3.content }}
+								
+								{% if section.settings.show-sku %}
+									<p>{{ 'products.product.product_code' | t }} <span class="variant-sku"></span></p>
+								{% endif %}
+							</div>
+						</div>
+						{% endif %}
+						{% if product.metafields.tab4.title %}
+						<div class="tab">
+							<div class="tab-title"><h2 class="collapsed">{{ product.metafields.tab4.title }}</h2></div>
+							<div class="tab-content">{{ product.metafields.tab4.content }}</div>
+						</div>
+						{% endif %}
+						{% if product.metafields.tab5.title %}
+						<div class="tab">
+							<div class="tab-title"><h2 class="collapsed">{{ product.metafields.tab5.title }}</h2></div>
+							<div class="tab-content">{{ product.metafields.tab5.content }}</div>
+						</div>
+						{% endif %}
+                        <div class="tab">
+                          <div class="tab-title"><h2 class="collapsed">Our Cause</h2></div>
+                          <div class="tab-content">
+                            <p>To support women in need. With every Sozy purchase we are collectively making a difference in the world, with 10% of profit supporting survivors of sexual violence and an additional 10% of profit supporting other charitable and environmental initiatives. 
+                              <a href="/pages/about-us">Learn More</a>
+                            </p>
+                          </div>
+                        </div>
+
+                        <div class="tab">
+                          <div class="tab-title"><h2 class="collapsed">Returns</h2></div>
+                          <div class="tab-content">
+                            <p>We know that you will love what you ordered but if something doesn't work out, we will gladly accept unworn, unwashed, or defective merchandise for return or exchange within 30 days from the shipping date. Unless you are processing an exchange, $5 will be deducted from your refund for return shipping. Original shipping costs are non-refundable. <strong>Items purchased outside of the United States are not eligible for returns due to customs issues.</strong> "Final Sale” means the specified items are not eligible for return or exchange.</p>
+                             <p>Read our full return policy <a href="/pages/exchanges-returns">here</a>.</p>
+                          </div>
+                        </div>
+					</div>
+				</div>
+			
+				<div class="clear"></div>
+			
+				{% comment %}
+					<div class="desc">
+						{% include 'social' with product %}
+					</div>
+				{% endcomment %}
+			</div>
+		</div>
+	</div>
+	
+  
+  	</div>
+  
+  
+	<div class="clear"></div>
+	
+	{% for block in section.blocks %}
+		<div {{ block.shopify_attributes }}>
+			
+			{% if block.type == 'trust_icons' %}
+				{% include 'module_trust_icons' %}
+				<div class="clear"></div>
+			{% endif %}
+			
+			{% if block.type == 'related_products' %}
+					{% include 'related-products' %}
+				<div class="clear"></div>
+			{% endif %}
+			
+		</div>
+	{% endfor %}
+	
+	{% include 'hypervisual' %}
+	
+	{% comment %}
+		{% if collection %}
+			<div id="product-navigation" class="desktop-12 mobile-3">
+				<span class="backto">
+					{{ 'products.product.back_to' | t }} {{ collection.title | link_to: collection.url }}
+				</span>
+			</div>
+		{% endif %}
+	{% endcomment %}
+
+</div>
+
+<script type="text/javascript">
+  var _productSettings = (function() {
+    return {
+      zoom: {{ section.settings.enable-zoom }}
+    };
+  })();
+</script>
+
+{% schema %}
+{
+		"name": "Product Page",
+		"settings": [
+			{
+				"type": "checkbox",
+				"id": "enable-zoom",
+				"label": "Enable image zoom",
+				"default": true
+			},
+			{
+				"type": "select",
+				"id": "thumbnails",
+				"label": "Image thumbnail position",
+				"options": [
+					{
+						"value": "left",
+						"label": "Left"
+					},
+					{
+						"value": "right",
+						"label": "Right"
+					}
+				]
+			},
+			{
+				"type": "checkbox",
+				"id": "product-vendor",
+				"label": "Show vendor"
+			},
+			{
+				"type": "checkbox",
+				"id": "show-sku",
+				"label": "Show variant SKU",
+				"default": true
+			},
+			{
+				"type": "text",
+				"id": "product-note",
+				"label": "Product page note"
+			}
+		],
+		"blocks": [
+			
+			
+			{
+				"type": "trust_icons",
+				"name": "Trust icons",
+				"limit": 1,
+				"settings": [
+					{
+						"type": "color",
+						"id": "bgd_color",
+						"label": "Background"
+					},
+					{
+						"type": "text",
+						"id": "title",
+						"label": "Title"
+					},
+					{
+						"type": "image_picker",
+						"id": "icon_1",
+						"label": "Icon 1",
+						"info": "600 x 600px .png (recommended)"
+					},
+					{
+						"type": "image_picker",
+						"id": "icon_2",
+						"label": "Icon 2",
+						"info": "600 x 600px .png (recommended)"
+					},
+					{
+						"type": "image_picker",
+						"id": "icon_3",
+						"label": "Icon 3",
+						"info": "600 x 600px .png (recommended)"
+					},
+					{
+						"type": "image_picker",
+						"id": "icon_4",
+						"label": "Icon 4",
+						"info": "600 x 600px .png (recommended)"
+					},
+					{
+						"type": "image_picker",
+						"id": "icon_5",
+						"label": "Icon 5",
+						"info": "600 x 600px .png (recommended)"
+					}
+				]
+			},
+			
+			
+			
+			{
+				"type": "related_products",
+				"name": "Related products",
+				"limit": 1,
+				"settings": [
+					{
+						"type": "paragraph",
+						"content": "This section has no editable options."
+					}
+				]
+			}
+			
+			
+			
+		]
+	}
+{% endschema %}
+
+<style>
+	
+	{% if section.settings.thumbnails == 'left' %}
+		.main-product-image.desktop-10 { float: right! important; }
+	{% endif %}
+	
+	{% unless section.settings.show-sku %}
+		.variant-sku { display: none; }
+	{% endunless %}
+	
+	{% unless section.settings.enable-zoom %}
+		img.zoomImg { display: none! important; }
+	{% endunless %}
+	
+</style>
+<script src="https://a.klaviyo.com/media/js/onsite/onsite.js"></script>
+<script>
+    var klaviyo = klaviyo || [];
+    klaviyo.init({
+      account: "NYFx8m",
+      platform: "shopify"
+    });
+    klaviyo.enable("backinstock",{ 
+    trigger: {
+      product_page_text: "NOTIFY ME WHEN AVAILABLE",
+      product_page_class: "btn",
+      product_page_text_align: "center",
+      product_page_margin: "0px",
+      replace_anchor: true
+    },
+    modal: {
+     headline: "{product_name}",
+     body_content: "Register to receive a notification when this item comes back in stock.",
+     email_field_label: "Email",
+     button_label: "NOTIFY ME WHEN AVAILABLE",
+     subscription_success_label: "You're in! We'll let you know when it's back.",
+     footer_content: '',
+     additional_styles: "@import url('https://use.typekit.net/pjc1tta.css');@import url('{{ 'klaviyo_additional_styles.css' | asset_url}}');",
+     font_family: "brandon-grotesque, sans-serif",
+     drop_background_color: "#000",
+     background_color: "#fff",
+     text_color: "#222", 
+     button_text_color: "#fff",
+     button_background_color: "#CB5E62",
+     close_button_color: "#ccc",
+     error_background_color: "#fcd6d7",
+     error_text_color: "#C72E2F",
+     success_background_color: "#d3efcd",
+     success_text_color: "#1B9500"
+    }
+  });
+</script>
+<script>
+	$(document).ready(function(){
+		$('.swatch-element.color').click(function(){
+		var x = $(this).data("color");
+			$(".sets_slider").removeClass("shownow");
+			$(".sets_slider").addClass("hide");
+			$(".sets_slider."+x).removeClass("hide");
+			$(".sets_slider."+x).addClass("shownow");
+			
+			$(".sets_slider."+x+" .thumbnail-slider1 .slide:first-child a").trigger("click");
+		});
+		
+//		 $(".sets_slider."+x+" .thumbnail-slider1").bxSlider({
+//				 mode: "vertical",
+//				 minSlides: 4,
+//				 slideMargin: 10,
+//				 infiniteLoop: false,
+//				 pager: false,
+//				 prevText: "",
+//				 nextText: "",
+//				 hideControlOnEnd: true
+//		 });
+	});
+</script>
+

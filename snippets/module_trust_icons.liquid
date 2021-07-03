@@ -1,0 +1,61 @@
+<!-- snippets/module_trust_icons.liquid -->
+<div class="custom-module module-trust-icons module-{{ block.id }} clearfix desktop-hidden">
+	
+	{% if block.settings.title != blank %}
+		<h4 class="custom-h4">{{ block.settings.title | escape | upcase }}</h4>
+	{% endif %}
+	
+	<div class="module-trust-icons-items carousel" data-flickity='{ "freeScroll": true, "contain": true, "prevNextButtons": false, "pageDots": false, "wrapAround": true }'>
+		{%- for i in (1..5) -%}
+			{% capture temp_icon %}icon_{{ i }}{% endcapture %}
+		
+			{%- if block.settings[temp_icon] != blank -%}
+				<div class="carousel-cell">
+					<img src="{{ block.settings[temp_icon] | img_url: '600x' }}" alt="{{ block.settings[temp_icon].alt }}" />
+				</div>
+			{%- endif -%}
+		{%- endfor -%}
+	</div>
+	
+</div>
+
+<div class="custom-module module-trust-icons module-{{ block.id }} clearfix mobile-hidden">
+	
+	{% if block.settings.title != blank %}
+		<h4 class="custom-h4">{{ block.settings.title | escape | upcase }}</h4>
+	{% endif %}
+	
+	<div class="module-trust-icons-items carousel" data-flickity='{ "freeScroll": false, "contain": true, "prevNextButtons": false, "pageDots": false, "wrapAround": false, draggable: false }'>
+		{%- for i in (1..5) -%}
+			{% capture temp_icon %}icon_{{ i }}{% endcapture %}
+		
+			{%- if block.settings[temp_icon] != blank -%}
+				<div class="carousel-cell">
+					<img src="{{ block.settings[temp_icon] | img_url: '600x' }}" alt="{{ block.settings[temp_icon].alt }}" />
+				</div>
+			{%- endif -%}
+		{%- endfor -%}
+	</div>
+	
+</div>
+
+<style>
+	
+	.module-{{ block.id }} {
+		background: {{ block.settings.bgd_color }};
+	}
+	
+	@media screen and (max-width: 740px) {
+		
+		.module-{{ block.id }} {
+			background: white;
+		}
+		
+		.module-trust-icons-items .carousel-cell {
+			background: {{ block.settings.bgd_color }};
+		}
+		
+	}
+	
+</style>
+

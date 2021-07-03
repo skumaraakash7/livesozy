@@ -1,0 +1,66 @@
+<div class="collection-double-cta">
+{%for block in section.blocks%}
+	{%if block.type =="cta_section"%}
+  	<div class="coll-cta-card">
+      <picture>
+        <source media="(min-width: 768px)" srcset="{{block.settings.desk_img | img_url: "master"}}">
+        <source media="(min-width: 0px)" srcset="{{block.settings.mob_img | img_url: "master"}}">
+        <img src="{{block.settings.desk_img | img_url: "master"}}">
+      </picture>
+      <div class="cta-text-container">
+        <h2>{{block.settings.cta_title}}</h2>
+        <a href="{{block.settings.cta_url}}">{{block.settings.cta_text}}</a>
+      </div>
+  	</div>
+	{%endif%}
+{%endfor%}
+</div>
+{% schema %}
+  {
+    "name": "Collection Double CTA",
+    "settings": [],
+	"blocks":[
+
+      {
+      "type":"cta_section",
+      "name": "CTA Blocks",
+      "limit": 2,
+      "settings":[
+      {
+      "type":"image_picker",
+      "id":"desk_img",
+      "label":"Desktop Image (700x600)"
+      },
+      {
+      "type":"image_picker",
+      "id":"mob_img",
+      "label":"Mobile Image (414x540)"
+      },
+      {
+      "type":"textarea",
+      "id":"cta_title",
+      "label":"Title"
+      },
+      {
+      "type":"textarea",
+      "id":"cta_text",
+      "label":"CTA Text"
+      },
+      {
+      "type":"url",
+      "id":"cta_url",
+      "label":"CTA URL"
+      }
+      ]
+      }
+
+
+	]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

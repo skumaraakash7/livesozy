@@ -1,0 +1,49 @@
+<div class="stickybar gridlock">
+  <div class="row">
+    <div class="desktop-7">
+      <div class="item-title">
+        {% comment %}
+        <span class="title">{{ product.title }}</span><br>
+        {% endcomment %}
+        <span class="variant">{{ product.variants.first.title }}</span>
+        <span class="change"><a href="#AddToCartForm" id="change-option">(change option)</a></span>
+      </div>
+    </div>
+    <div class="desktop-5">
+      <div class="item-right">
+        {% comment %}
+        <div class="item-price">{{ product.price | money }}</div>
+        {% endcomment %}
+        <div class="item-action">
+          <div id="btn-action">Add to cart</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+$(document).ready(function() {
+  $("#change-option").click(function() {
+    let target = $(this).attr("href");
+    $('html,body').stop().animate({
+      scrollTop: $(target).offset().top - 20
+    }, 1000);
+    event.preventDefault();
+  });
+  $("#btn-action").click(function() {
+    $("#AddToCartForm").submit();
+  });
+
+  if($(window).width() < 741){
+    $(window).scroll(function() {
+        var position = $('#AddToCart').offset();
+        if($(window).scrollTop() > position.top) {
+            $('.stickybar').addClass("open");
+        }else{
+            $('.stickybar').removeClass("open");
+        }
+    });
+  }
+});
+</script>

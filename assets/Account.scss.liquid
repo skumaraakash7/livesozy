@@ -1,0 +1,376 @@
+$min: min-width;
+$max: max-width;
+@mixin at-query ($constraint_, $viewport1_, $viewport2_:null) {
+  $constraint: $constraint_; $viewport1: $viewport1_; $viewport2: $viewport2_;
+  @if type-of($constraint_) == number {
+    $viewport1 : $constraint_; $viewport2 : $viewport1_; $constraint : null;
+  }
+  @if $constraint == $min {
+    @media screen and ($min: $viewport1) {
+      @content;
+    }
+  } @else if $constraint == $max {
+    @media screen and ($max: $viewport1) {
+      @content;
+    }
+  } @else {
+    @media screen and ($min: $viewport1) and ($max: $viewport2) {
+      @content;
+    }
+  }
+} 
+
+$small: 740px;
+$medium: 769px; 
+$x-large: 1024px;
+
+
+
+/*---------------------------*/
+/*Colors & fonts*/
+/*---------------------------*/
+$main_color: #C56E6F;
+$body_text_color: #3d3d3d;
+$body_text_second_color: #5A5959;
+$accent_color: rgba(254, 221, 208, 0.8);
+$accent_color_ligth: #FFF8F5;
+$ligth_grey:#C4C4C4;
+$grey: #919191;
+$brandon: brandon-grotesque,sans-serif;
+
+/*---------------------------*/
+/*General Styles*/
+/*---------------------------*/
+div,h1,h2,h3,p,a,span,li{
+  font-family: $brandon;
+}
+
+.acc-wraprigth__form{
+  display: none;
+}
+
+.active{
+  display: block;
+  background: none !important;
+}
+
+.active img{
+  border: none !important;
+}
+
+
+div#content {
+  width: 100%!important;
+}
+
+#breadcrumb{
+  display: none !important;
+}
+
+
+label{
+  display: none !important;
+}   
+
+input{
+  border: 1px solid $grey !important;      
+  border-radius: 2px !important;
+  padding: 13px 0px !important;
+  margin-bottom: 14px !important;
+}
+
+input::placeholder{
+  font-size: 14px !important;
+  line-height: 20px !important;
+  color: $body_text_second_color !important;
+}
+
+.button{      
+  padding: 15px 0px !important; 
+  border: none !important;
+  border-radius: 2px !important;
+  font-size: 16px !important;
+  line-height: 23px !important;       
+  letter-spacing: 0.05em !important;
+  font-weight: 500 !important;
+}
+
+
+/*-----------------------*/
+/*Content*/
+/*-----------------------*/
+.acc-wrapper {
+  display: flex;
+
+  @include at-query($max, '1000px'){
+    flex-direction: column-reverse;
+  }
+}
+
+.acc-wrapleft {
+  width: 50%;
+  background-image: url('https://cdn.shopify.com/s/files/1/3012/3948/files/cody-board-YW5EjYFYjfs-unsplash_1.jpg');
+  background-size: cover;
+  background-position: center;
+  padding: 6vw;
+
+  @include at-query($max, '1000px'){
+    width:100%;
+    margin-top: 100px;
+  }
+}
+
+.acc-wrapleftcontent {
+  background: #FFF8F5;
+  text-align: center;
+  padding: 3vw 6vw;
+
+  @include at-query($max, '600px'){
+    padding: 3vw;
+  }
+  
+  h2 {
+    font-weight: 400;
+    font-size: 2.2vw;
+    color: #3D3D3D;
+    margin-bottom: 1.2vw;
+    letter-spacing: 0px;
+    line-height: 1.1;
+    @include at-query($max, '1000px'){
+      max-width: 90%;
+      margin: 0 auto;
+      font-size: 30px;
+      line-height: 36px;
+      margin-bottom: 20px;
+    }
+  }
+
+  p {
+    font-weight: 400;
+    font-size: 1vw;
+    color: #3D3D3D;     
+
+    @include at-query($max, '1000px'){
+      font-size: 15px;
+      line-height: 26px;
+    }
+  }
+}
+
+
+.acc-wrapleftlogos {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 2vw 0;
+}
+
+.acc-wrapleftlogoitem {
+  width: 50%;
+  padding: 1.2vw 0;
+  
+  @include at-query($max, '700px'){
+    padding: 15px 0;    
+  }
+}
+
+img.acc-wrapleftlogoimg {
+  transform: scale(1.4);
+  @include at-query($max, '600px'){
+    transform: scale(1.2);
+  }
+}
+
+
+/*FORMS CSS*/
+.acc-wrapright{
+  width: 50%;
+  padding-top: 6vw;
+
+  @include at-query($max, '1000px'){
+    width:100%;
+  }
+
+  /*navigation*/
+  .acc-wrapright__formsNavigation{
+    display: flex;
+    margin: 0 auto;
+    max-width: 400px;
+
+    @include at-query($max, $x-large){
+      justify-content: center;      
+    }
+
+    .formsNavigation__tab{      
+      position: relative;
+      color: $body_text_color;
+      font-size: 30px;
+      line-height: 43px;
+      font-weight: 600;
+      padding: 0px 20px;
+      cursor:pointer;
+
+      @include at-query($max, $x-large){
+        padding: 0px 10px;
+      }      
+
+      &:first-child{
+        border-right: 1px solid $ligth_grey;
+      }
+
+      &.active{       
+        &:after{
+          content:"";
+          position: absolute;
+          bottom: -4px;
+          left: 50%;
+          transform: translate(-50%);
+          width: 84%;
+          border: 3px solid $accent_color_ligth;
+        }
+      }
+    }
+  }
+
+  /*Forms Headline Text*/
+  .acc-wrapright__headlineText{
+    font-size: 18px;
+    line-height: 24px;
+    color: $body_text_second_color;
+    text-align: center;
+    max-width: 305px;
+    margin: 32px auto;
+  }
+
+  /*Forms Log Icons*/
+  .signInForm__icons{
+    max-width: 300px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .signInForm__icon{
+      height: 60px;
+      width: 60px;
+      border: 2px solid $accent_color_ligth;
+      border-radius: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;     
+      margin: 0px 10px;
+      img{
+        max-width: 35px;
+        max-height: 35px;
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
+    }
+  }
+
+  /*Sign In Form*/
+  .signInForm__main_form{
+    max-width: 400px;
+    margin: 0 auto;
+    margin-top: 30px;
+
+    @include at-query($max, $x-large){
+      width: 90%;
+    }
+
+    #forgot_password{
+      text-align: center;
+      margin-top: 16px;
+      margin-bottom: 0px;
+
+      a{
+        color: $body_text_second_color !important;
+        font-size: 18px;
+        line-height: 36px;  
+        &:hover{
+          color:$main_color !important;
+        }
+      }
+    }
+
+    #create_account{
+      font-size: 18px;
+      line-height: 36px;
+      color: $body_text_second_color;
+      text-align: center;
+      span{
+        color:$main_color;
+        text-decoration: underline;   
+        cursor: pointer;
+        &:hover{
+          color: $accent_color_ligth;
+        }
+      }
+    }
+  }
+
+  /*Recover Password Form*/
+  #recover-password{
+    max-width: 400px;
+    width: 100%;
+    margin: 0 auto;    
+    margin-top: 40px;
+    float: none;    
+
+    @include at-query($max, '1000px'){
+      width: 90%;
+    }
+    
+    h2{
+      letter-spacing: 0px;      
+    }
+
+    p, span{
+      font-size: 18px;
+    }
+  }
+
+  /*Create Account Form*/  
+  .createAccount__mainForm{
+    max-width: 400px;
+    margin: 0 auto;
+    margin-top:30px;
+
+    @include at-query($max, $x-large){
+      width: 90%;
+    }
+
+    #first_name, #last_name{
+      display: inline-block;
+      max-width: 50%;
+      
+      @include at-query($max, '700px'){
+        max-width: 49%;
+      }
+      
+      input{
+        max-width: 100%;
+        width: 100%;
+      }
+    }
+
+    #last_name input{
+      margin-left: 5px;
+      @include at-query($max, '700px'){
+        margin-left: 3px;
+      }
+    }
+
+    #createAccount__message{
+      font-size: 14px;
+      line-height: 18px;
+      color: $body_text_second_color;
+      text-align: center;
+      margin: 3px auto 14px auto;      
+      span{
+        display: block;
+      }
+    } 
+  }  
+
+}

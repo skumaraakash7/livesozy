@@ -1,0 +1,122 @@
+{% assign grcap_anchor_product_content = '<span class="grcap_anchor_product">' | append: product.description | append: '</span>' %}
+{{ 'pdp2020.scss.css' | asset_url | stylesheet_tag}}
+
+
+{% include 'shogun-products', content: product %}
+{{product.metafields.shogun.above}}
+{% section 'product-template' %}
+<script text="text/javascript">
+  var _learnq = _learnq || [];
+
+  var item = {
+    Name: {{ product.title|json }},
+    ProductID: {{ product.id|json }},
+    Categories: {{ product.collections|map:'title'|json }},
+    ImageURL: "https:{{ product.featured_image.src|img_url:'grande' }}",
+    URL: "{{ shop.secure_url }}{{ product.url }}",
+    Brand: {{ product.vendor|json }},
+    Price: {{ product.price|money|json }},
+    CompareAtPrice: {{ product.compare_at_price_max|money|json }}
+  };
+
+  _learnq.push(['track', 'Viewed Product', item]);
+  _learnq.push(['trackViewedItem', {
+    Title: item.Name,
+    ItemId: item.ProductID,
+    Categories: item.Categories,
+    ImageUrl: item.ImageURL,
+    Url: item.URL,
+    Metadata: {
+      Brand: item.Brand,
+      Price: item.Price,
+      CompareAtPrice: item.CompareAtPrice
+    }
+  }]);
+  
+    document.querySelector('.add-wrapper').addEventListener('click',function (){
+    _learnq.push(['track', 'Added to Cart', item]);
+  });
+</script>
+<!--Start Stamped.io Auto Installation--><div id="stamped-main-widget" class="stamped-main-widget" data-widget-style="standard" data-product-id="{{ product.id }}" data-name="{{ product.title | escape }}" data-url="{{ shop.url }}{{ product.url }}" data-image-url="{{ product.featured_image | product_img_url: "large" |replace: '?', '%3F' | replace: '&','%26'}}" data-description="{{ grcap_anchor_product_content | escape }}" data-product-sku="{{product.handle}}">{{ product.metafields.stamped.reviews }}</div><!--End Stamped.io Auto Installation--><div class="yotpo yotpo-main-widget" data-product-id="{{ product.id }}" data-name="{{ product.title | escape }}" data-url="{{ shop.url }}{{ product.url }}" data-image-url="{{ product.featured_image | product_img_url: 'large' |replace: '?', '%3F' | replace: '&amp;','%26'}}" data-description="{{ grcap_anchor_product_content | escape }}" data-price="{{ variant.price | money_without_currency }}" data-currency="{{ shop.currency }}"></div>
+
+
+
+{{product.metafields.shogun.below}}
+
+<script type="text/javascript">
+  var _product = (function() {
+    var product = {{ product | json }};
+    var variants = [];
+    {% for variant in product.variants %}
+    variants.push({{ variant | json }});
+    {% endfor %}
+    product.variants = variants;
+    
+    return product;
+  })();
+  
+  
+  $(document).ready(function(){    
+
+    setTimeout(function(){
+      $(".yotpo-nav-wrapper").each(function(){
+
+        var rev_txt = $(this).find(".yotpo-reviews-nav-tab-sum").text();
+        var qst_txt = $(this).find(".yotpo-nav-tab-sum").text();
+
+        if(rev_txt != ""){
+          var text = rev_txt.replace("(", " ");
+          text = text.replace(")", " ");
+          $(this).find(".yotpo-reviews-nav-tab-sum").text(text);
+        }
+
+        if(qst_txt != ""){
+          var text = qst_txt.replace("(", " ");
+          text = text.replace(")", " ");
+          $(this).find(".yotpo-nav-tab-sum").text(text);
+        }
+
+      })
+    }, 4000)
+
+  })
+  // yotpo customization re-order
+    $(document).ready(function(){    
+    setTimeout(function(){
+      $(".yotpo-nav-wrapper").each(function(){
+         
+        var rev_txt = $(this).find(".yotpo-reviews-nav-tab-sum").text();
+        var qst_txt = $(this).find(".yotpo-nav-tab-sum").text();
+
+        if(rev_txt != ""){
+          var text = rev_txt.replace("(", " ");
+          text = text.replace(")", " ");
+          $(this).find(".yotpo-reviews-nav-tab-sum").text(text);
+        }
+
+        if(qst_txt != ""){
+          var text = qst_txt.replace("(", " ");
+          text = text.replace(")", " ");
+          $(this).find(".yotpo-nav-tab-sum").text(text);
+        }
+
+      });
+      
+      $(".yotpo-display-wrapper").each(function(){
+        $("form .write-form").insertBefore(".yotpo-nav-content");       
+      })
+      
+      // re order form input fields
+      $write_review_wrapper = $(".write-review-wrapper");
+      $write_review_wrapper.find(".yotpo-footer").insertBefore($write_review_wrapper.find(".yotpo-mandatory-explain"));
+      $ask_question_wrapper = $(".write-question-wrapper");
+      $ask_question_wrapper.find(".yotpo-footer").insertBefore($ask_question_wrapper.find(".yotpo-mandatory-explain"));
+      // add a selected state when clicking write review or ask question buttons
+      $(".write-review-button.write-button, .write-question-button").on("click",function(){
+        $(".write-review-button.write-button, .write-question-button").removeClass("active");
+        $(this).addClass("active");
+      })
+    }, 4000)
+  })
+</script>
+

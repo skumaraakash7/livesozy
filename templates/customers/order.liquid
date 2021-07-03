@@ -1,0 +1,149 @@
+{{'customer_stylesheet.css' | asset_url | stylesheet_tag}}
+{%render 'account_header'%}
+
+  <div class="section-title customer_order">
+    <h1>{{ 'customer.order.title' | t }} {{ order.name }}</h1>
+  </div>
+
+<div id="customer-wrapper" class="desktop-12 mobile-3">
+  
+  {% if order.cancelled %}
+  <div id="order_cancelled" class="flash notice">
+    <h5 id="order_cancelled_title">{{ 'customer.order.cancelled' | t }} <span class="note">{{ order.cancelled_at | date: "%B %d, %Y %I:%M%p" }}</span></h5>
+    {%if  customer.order.cancelled_reaso != blank%}
+    <span class="note">{{ 'customer.order.cancelled_reason' | t }}</span>
+    {%endif%}
+  </div>
+  {% endif %}
+ 
+  <div class="order_header__grid">  
+    <section class="order_header__shipping_returns">   
+      <h3>Shipped to</h3>
+      <div class="shipped__grid">
+        {% if order.shipping_address %}
+        <div id="order_shipping" class="desktop-6 table-3 mobile-3"> 
+          <p>{{ order.shipping_address.name }}</p>
+          <p>{{ order.shipping_address.company }}</p>
+          <p>{{ order.shipping_address.street }}</p>
+          <p>{{ order.shipping_address.city }}, {{ order.shipping_address.province }}</p>
+          <p>{{ order.shipping_address.country }} {{ order.shipping_address.zip }}</p>
+          <p>{{ order.shipping_address.phone }}</p>         
+        </div>
+        {% endif %}
+        <a class="shipped__tracking_btn" href="{{order.order_status_url}}">View Tracking Info</a>
+      </div>       
+    </section>
+     
+    <section class="order_header__returns">
+      <h3>Need to return something</h3>
+      <p>Returns are easy! Just start a return by clicking the button below.</p>
+      <a href="https://exchanges.sivanaspirit.com/#/">Start A return or Exchange</a>
+    </section>
+  </div> 
+
+  <div class="order__table_details">
+    <table id="order_details">
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th>Item Price</th>
+          <th>Quantity</th>
+          <th>Total Price</th>     
+        </tr>
+      </thead>
+      <tbody>
+        {% for line_item in order.line_items %}
+        <tr id="{{ line_item.id }}" class="{% cycle 'odd', 'even' %}">
+          <td class="product">
+            <a href="{{ line_item.product.url }}" class="img_pdp_url">
+              {% if line_item.image %}
+              <img src="{{line_item.image  | img_url:"master"}}">
+              {%- else -%}
+              {{ 'product-1' | placeholder_svg_tag: 'placeholder--image order-item-placeholder' }}
+              {%- endif -%}
+            </a>
+            
+            <span class="order-item-title">
+              <a href="{{ line_item.url }}">
+                {%- if line_item.gift_card -%}
+                {{ line_item.title }}
+                {%- else -%}
+                {{ line_item.product.title }}
+                {%- endif -%}
+              </a>
+              {%- unless line_item.variant.title == 'Default Title' or line_item.gift_card -%}
+              <span class="order-item-options">
+                {{ line_item.variant.title }}
+              </span>
+              {%- endunless -%}
+              <a href="{{line_item.url}}#reviews-link" class="writte_review">Write A Review</a>
+            </span>
+
+          </td>      
+          <td class="money">{{ line_item.price | money }}</td>
+          <td class="quantity center">{{ line_item.quantity }}</td>
+          <td class="total money center">{{ line_item.quantity | times: line_item.price | money }}</td>
+        </tr>
+        {% endfor %}
+      </tbody> 
+    </table>    
+  </div>
+  
+  <div class="order_details__footer">
+    <div id="order_address" class="group">
+      <div id="order_payment">
+        <h3>{{ 'customer.order.billing_address' | t }}</h3>
+        <p><span class="note">{{ 'customer.order.payment_status' | t }}:</span> <span class="status_{{ order.financial_status }}">{{ order.financial_status_label }}</span></p>
+        <div class="address note">
+          <p>{{ order.billing_address.name }}</p>
+          <p>{{ order.billing_address.company }}</p>
+          <p>{{ order.billing_address.street }}</p>
+          <p>{{ order.billing_address.city }}, {{ order.billing_address.province }}</p>
+          <p>{{ order.billing_address.country }} {{ order.billing_address.zip }}</p>
+          <p>{{ order.billing_address.phone }}</p>
+        </div>
+      </div> 
+    </div>
+    
+    <div id="order_summary" class="group">
+      <h3>Order Summary</h3>
+
+      <div class="order-footer-item">
+        <span class="order-footer-label">
+          Sub Total
+        </span>
+        <span class="order-footer-value">
+          <span class="money">
+            {{ order.subtotal_price | money }}
+          </span>
+        </span>
+      </div>
+      {% for tax_line in order.tax_lines %}
+      <div class="order-footer-item">
+        <span class="order-footer-label">
+          {% assign tax_rate = tax_line.rate | times: 100 %}
+          Tax {{tax_rate }}%
+        </span>
+        <span class="order-footer-value">
+          <span class="money">
+            {{ tax_line.price | money }}
+          </span>
+        </span>
+      </div>
+      {% endfor %}
+
+
+      <div class="order-footer-item total_summary">
+        <span class="order-footer-label ">
+          TOTAL
+        </span>
+        <span class="order-footer-value">
+          <span class="money">
+            {{ order.total_price | money }}
+          </span>
+        </span>
+      </div>      
+    </div>
+  </div>
+
+</div>

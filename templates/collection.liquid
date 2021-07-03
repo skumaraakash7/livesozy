@@ -1,0 +1,12 @@
+{% include 'banners_collection' %}
+
+{% assign has_collection_banner = false %}
+{% if has_banner %}
+	{% assign has_collection_banner = true %}
+{% endif %}
+
+<div id="content" class="row content-row">
+	{% section 'collection-template' %}
+</div>
+{%section 'collection-block-seo'%}
+{%section 'collection-double-cta'%}

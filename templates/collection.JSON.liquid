@@ -1,0 +1,43 @@
+{%- layout none %}
+{%- paginate collection.products by 30 %}
+  [{%- for product in collection.products -%}
+	{%- if product.available -%}
+    {% assign productHasSizeOption = false %}
+    {% assign productHasColorOption = false %}
+
+    {% for option in product.options %}
+    {% assign option_index = forloop.index0 %}
+    {% assign option_id = 'option' | append: forloop.index %}
+    {% assign option_name = option %}
+    {% assign downcased_option = option | downcase %}
+    {% if downcased_option contains 'color' or downcased_option contains 'colour' %}
+    {% assign productHasColorOption = true %}
+    {% endif %}
+    {% if downcased_option contains 'size' %}
+    {% assign productHasSizeOption = true %}
+    {% endif %}
+    {% endfor %}
+    {% if productHasColorOption %}
+    {% capture product_swatch_color%}
+    	{% include 'swatch_upsell' with product, swatch: 'Color' %}
+    {% endcapture %}
+    {% endif %}
+
+    {% if productHasSizeOption %}
+	{% capture product_swatch_size%}
+    	{% include 'swatch_upsell' with product, swatch: 'Size' %}
+	{% endcapture %}
+    {% endif %}
+	{
+  	"title": "{{ product.title }}",
+	"price": "{{product.price_max | money}}",
+	"id": {{product.id}},
+	"product_swatch_color": {{product_swatch_color | json}},
+	"product_swatch_size": {{product_swatch_size | json}},
+	"option_size": {{product.options_with_values.size}},
+	"featured_image": "{{ product.featured_image | img_url: 'compact'}}",
+    "variants": [{% for variant in product.variants %}{"option1": "{{variant.option1}}","option2": "{{variant.option2}}","option3": "{{variant.option3}}","price": "{{variant.price | money}}","title": "{{variant.title}}","image":"{{ variant.image | img_url: 'compact'}}","id": {{ variant.id }},"inventory": {{ variant.inventory_quantity }}}{%unless forloop.last == true %},{%endunless%}{% endfor %}]
+	}{%- unless forloop.last -%},{%- endunless -%}{%- endif -%}
+	{%- endfor -%}
+  ]
+{%- endpaginate -%}

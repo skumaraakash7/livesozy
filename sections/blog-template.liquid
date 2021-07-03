@@ -1,0 +1,263 @@
+{% assign grcap_anchor_article_content = '<span class="grcap_anchor_article">' | append: article.content | append: '</span>' %}
+{{ 'blog-article-page.css' | asset_url | stylesheet_tag }}
+<div data-section-id="{{ section.id }}">
+
+  {% if section.settings.image != blank %}
+  {%- assign image_size = '1920x' -%}
+  {%- assign img_url = section.settings.image | img_url: image_size -%}
+  <div class="collection-banner">
+    <img src="{{ img_url }}">
+  </div>
+  {% endif %}   
+
+  <div id="content" class="row  blog-template-container">
+
+    <div class="section-title">
+      <h1>{{section.settings.page_title}}</h1>
+      <div class="section-title-linklist">
+        <ul class="linklist">
+          <li class="link">
+            <a href="https://livesozy.com/blogs/live-sozy">
+              <img class="mob_img" src="https://cdn.shopify.com/s/files/1/3012/3948/files/all.png?v=1625086424">
+              ALL             
+            </a>          
+          </li>
+          {%- for tag in blog.all_tags -%}       
+          {%- if tag contains 'category:' -%}      
+          <li class="link">
+            {%assign category_raw = tag | split:'category:'%}
+            {%assign category = category_raw[1]%}
+            <a href="{{ blog.url }}/tagged/{{ tag | handle }}">
+              {%case category%}
+              {%when 'BEAUTY'%}
+              <img class="mob_img" src="https://cdn.shopify.com/s/files/1/3012/3948/files/beauty.png?v=1625086423">
+              {%when "FASHION"%}
+              <img class="mob_img" src="https://cdn.shopify.com/s/files/1/3012/3948/files/fashion.png?v=1625086423">
+              {%when "FOOD"%}
+              <img class="mob_img" src="https://cdn.shopify.com/s/files/1/3012/3948/files/food.png?v=1625086423">
+              {%when "HOME"%}
+              <img class="mob_img" src="https://cdn.shopify.com/s/files/1/3012/3948/files/home.png?v=1625086423">
+              {%when "RELATIONSHIPS"%}
+              <img class="mob_img" src="https://cdn.shopify.com/s/files/1/3012/3948/files/relationships.png?v=1625086423">
+              {%when "ROAD TRIP"%}
+              <img class="mob_img" src="https://cdn.shopify.com/s/files/1/3012/3948/files/road_trip.png?v=1625086423">
+              {%when "ZODIAC & ASTROLOGY"%}
+              <img class="mob_img" src="https://cdn.shopify.com/s/files/1/3012/3948/files/zodiac.png?v=1625086423"> 
+              {%endcase%}
+              {{ tag | replace: 'category:'}}
+            </a>
+          </li>
+          {%- endif -%}
+          {%- endfor -%}
+        </ul>
+      </div>
+    </div>    
+
+    {% if section.settings.text != blank %}
+    <div id="collection-description" class="desktop-12 tablet-6 mobile-3"> 
+      <div class="rte">    
+        {{ section.settings.text }}
+      </div>  
+    </div>  
+    {% endif %}
+    {% paginate blog.articles by 48 %}
+    	{%assign current_number_page = paginate.current_page%}
+    {% endpaginate %}
+	{%unless request.path contains '/tagged/' or current_number_page > 1%}
+    <div class="featured-articles-container">
+      <h2>Featured</h2>
+      <div class="featured-articles-grid">
+        {%for block in section.blocks%}
+        {%if block.type == "article"%}      		 
+        {% assign article = articles[block.settings.article] %}
+        <a class="featured-article-card" href="{{article.url}}">
+          <img src="{{article.image | img_url:"master"}}">
+          {%for tag in article.tags%}
+            {%if tag contains 'category:'%}
+              {%assign article_category = tag | split: 'category:'%}
+              {%assign article_category = article_category[1]%}
+              {%break%}
+            {%endif%}
+          {%endfor%}
+          <p class="art-category">{%if article_category%}{{article_category}}{%else%}{{blog.title}}{%endif%}</p>
+          <p class="art-title">{{article.title}}</p>
+
+          {%-if article.excerpt != blank-%}
+          <p class="art-excerpt">{{article.excerpt}}</p>
+          {%-else-%}
+          <p class="art-excerpt">{{grcap_anchor_article_content |replace:"<p> </p>",""| strip_html | truncate: 90 |replace:"  ",""}}</p>
+          {%-endif-%}  
+          
+    
+          {%assign author_tag = ""%}
+          {%for tag in article.tags%}
+          {%if tag contains 'author:'%}
+          {%assign author_tag = tag%}
+          {%break%}
+          {%endif%}
+          {%endfor%}  
+
+          {%if author_tag != blank%}
+          <div class="art-author" data-author-tag="{{author_tag}}"> 
+            <div class="container-author-pic" style="display:none">
+              <img class="author-pic"src="">
+            </div>            
+            <p class="author-name-blog">BY {{author_tag | replace:'author:',''| replace:'_',' '}}</p>
+          </div>
+          {%else%}        
+          <p class="by-author">BY {{article.author}}</p>         
+          {%endif%}  
+          
+        </a>        
+        
+        {%endif%}
+        {%endfor%}
+      </div>
+    </div>
+	{%endunless%}
+    
+    <div class="latest-stories-container">
+      {%if current_number_page == 1%}
+        <h2>
+          {%-if request.path contains '/tagged/'-%}
+              {%assign tag_title = request.path | split:'/tagged/category-' %}
+              {{tag_title[1] | camelcase}}
+          {%-else-%}
+             Latest Stories
+          {%-endif-%}
+        </h2>
+      {%endif%}
+      {% paginate blog.articles by 48 %}
+      <ul id="blog-articles" class="{% if section.settings.blog-sidebar %}desktop-8 {% else %}desktop-12 {% endif %}tablet-4 mobile-3">       
+        {% for article in blog.articles  %}
+        {% include 'article-loop' %}
+        {% endfor %}
+      </ul>
+      {% include 'pagination' %}
+      {% endpaginate %}
+    </div>
+
+
+
+
+    {%comment%}
+    {% paginate blog.articles by 50 %}
+    {% if section.settings.blog-sidebar %}
+    <div id="blog-sidebar" class="desktop-2 tablet-2 mobile-3">
+      {% if section.settings.recent-posts %}
+      <h4>{{ section.settings.recent-title }}</h4>
+      <ul id="blog-recent">
+        {% for article in blog.articles %}
+        <li>{{ article.title | link_to: article.url }}</li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+      {% if section.settings.post-tags %}
+      <h4>{{ section.settings.tags-title }}</h4>
+      <ul id="blog-tags">
+        {% for tag in blog.tags %}
+        <li><a href="{{ blog.url }}/tagged/{{ tag | handle }}">{{ tag }}</a></li>
+        {% endfor %}
+      </ul> 
+      {% endif %}
+      {% if section.settings.show-facebook-like %}        
+      <div id="facebook-card">
+        <h4>{{ section.settings.facebook-title }}</h4>
+        <div class="fb-like-box" data-href="{{ settings.facebook_url }}" data-colorscheme="light" data-show-faces="false" data-header="false" data-stream="false" data-show-border="false"></div> 
+      </div>
+      {% endif %}
+
+    </div>
+    {% endif %}
+    <ul id="blog-articles" class="{% if section.settings.blog-sidebar %}desktop-8 {% else %}desktop-12 {% endif %}tablet-4 mobile-3">
+      {% for article in blog.articles  %}
+      {% include 'article-loop' %}
+      {% endfor %}
+    </ul>
+    <div class="clear"></div>
+    {% include 'pagination' %}
+    {% endpaginate %}
+    {%endcomment%}
+
+
+  </div>
+</div>
+{% schema %}
+  {
+    "name": "Blog",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Image"
+      },
+      {
+          "type":"textarea",
+          "id":"page_title",
+          "label":"Page Title"
+      },
+      {
+        "id": "text",
+        "type": "richtext",
+        "label": "Text",
+        "default": "<p>Add some descriptive text to your all collections page.</p>"
+     },
+      {
+        "type": "checkbox",
+        "id": "blog-sidebar",
+        "label": "Show sidebar",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "recent-posts",
+        "label": "Show recent posts",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "recent-title",
+        "label": "Recent posts title",
+        "default": "Explore"
+      },
+      {
+        "type": "checkbox",
+        "id": "post-tags",
+        "label": "Show tags",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "tags-title",
+        "label": "Blog tags title",
+        "default": "Categories"
+      },
+      {
+        "type": "checkbox",
+        "id": "show-facebook-like",
+        "label": "Show Facebook like box",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "facebook-title",
+        "label": "Facebook title",
+        "default": "Connect"
+      }
+    ],
+
+	"blocks":[
+      {
+		"type":"article",
+		"name":"Featured Articles",
+		"settings":[
+			{
+				"type":"article",
+				"id":"article",
+				"label":"Article"
+			}
+		]
+      }
+	]
+  }
+{% endschema %}

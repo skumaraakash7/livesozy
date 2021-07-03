@@ -1,0 +1,163 @@
+{{'contact_us_stylesheet_2021.css' | asset_url | stylesheet_tag}}
+
+<section class='contact_us__header'>
+  <h1>HOW CAN WE HELP?</h1>
+  <p>Please email us with any questions you might have - we are here to help. </p>
+  
+  <div class="header__copy">    
+    <ul>
+      <li>Send us a message: info@livesozy.com</li>
+      <li>Monday - Friday 10AM-2PM PST </li>
+      <li>Give us a call: 760.503.7194 </li>
+    </ul>
+    <div class="header__links">
+      <a href="https://exchanges.livesozy.com/#/">Go to Exchanges & Returns </a>
+      {%comment%}
+      <span> • </span>
+      <a href="#faq_link">Check out our FAQs</a>
+      {%endcomment%}
+    </div>
+  </div>
+</section>
+
+
+<section  class="contact_us__form">
+  {%form 'contact'%}
+  {{ form.errors | default_errors }}
+  {% if form.posted_successfully? %}
+  <div class="contact_us__thank-you">
+    <h3>THANK YOU FOR YOUR MESSAGE.</h3>
+    <p>We will be in touch with you soon!</p>
+  </div>
+  {% endif %}
+  <div id="name_container">
+    <div id="container_first_name" class="clearfix large_form">
+      <label for="first_name">{{ 'customer.register.first_name' | t }}</label>
+      <input type="text" value="" name="contact[first_name]" id="first_name"  size="30" required/>
+    </div>
+
+    <div id="container_last_name" class="clearfix large_form">
+      <label for="last_name" >{{ 'customer.register.last_name' | t }}</label>
+      <input type="text" value="" name="contact[last_name]" id="last_name"  size="30" required/>
+    </div>
+  </div>
+  
+  <div id="contact_container">
+    <div id="container_email" class="clearfix large_form">
+      <label for="email" >{{ 'customer.register.email' | t }}</label>
+      <input type="email" value="" name="contact[email]" id="email"  size="30" required/>
+    </div>  
+
+    <div id="container_order" class="clearfix large_form">
+      <label for="order_number" class="login">Order # (optional)</label>
+      <input type="text" value="" name="contact[order_number]" id="order_number"  size="30"/>
+    </div>
+  </div>
+
+  <div id="email_content">
+    <div id="container_subject" class="clearfix large_form">
+      <label for="subject" >Subject</label>
+      <input type="text" value="" name="contact[subject]" id="subject"  required/>
+    </div>
+
+    <div id="container_message" class="clearfix large_form">
+      <label for="message">Message</label>
+      <textarea value="" name="contact[message]" id="message"  required></textarea>
+    </div>
+  </div>
+  
+  <input type="submit" value="SUBMIT" id="submit"> 
+  {%endform%}
+
+</section>
+
+<section class="exchange_returns_snippet">
+  <div class="snippet__internal">
+    <div class="snippet_img">
+      <img src="https://cdn.shopify.com/s/files/1/3012/3948/files/foreverPerks.jpg">
+    </div>  
+    <div class="copy">
+      <h2>LOOKING TO EXCHANGE <span></span> OR RETURN?</h2>
+      <p>We’ll help you get started!  Just have your order number and shipping zip code in hand. 
+        You’ll find your order number in your Sozy Order Confirmation 
+        email or Packing Slip. Got it? Then lets get started!
+      </p>
+      <a href="https://exchanges.livesozy.com/#/">GET STARTED</a>
+    </div>
+  </div>
+</section>
+
+<div id="faq_link"></div>
+<section class="contact_us__faq">
+  <div class="faq__container">  
+    <h2>FAQS</h2>
+
+    <div class="faq__accordion">
+
+      <div class="tab">
+        <h3>You are always out of my size? </h3>
+        <div class="tab_content">
+          <p>We launch all our new products in very limited quantity! The benefit of this is it allows us to launch a ton
+            of awesome cute new fits every month for you. The downside though is they can sell out very quickly and because 
+            many of our patterns and fabrics are limited edition they sometimes cannot be restocked! 
+            If you have an eye on a piece, get it while you can!! 
+          </p>        
+
+        </div>
+
+      </div>
+
+      <div class="tab">
+        <h3 >Oops! I ordered the wrong item!!</h3>
+        <div class="tab_content">
+          <p>We ship our orders super fast at our warehouse which allows us to get your package to you as soon as we 
+            can which is awesome! Unfortunately, the downside to that is that we are not always able to make any changes 
+            to an order once it has been placed before it ships. But the good news is we have free exchanges so there are 
+            no return shipping fees if you are processing an exchange! When your package arrives, please use our online 
+            return portal to return your package and exchange it for a different size/color 
+          </p> 
+        </div>
+      </div>
+
+      <div class="tab">
+        <h3>Why hasn't my refund been sent to me yet?</h3>
+        <div class="tab_content">
+          <p>Once we receive your return back at our warehouse, it will typically take 1-3 business days to physically
+            process the return. Once the return is physically processed you will get a refund confirmation email. 
+            Please allow an additional 3-5 business days from that point (depending on your bank) for the funds to 
+            appear on your bank account! If you still don't see it, please reach out to us via the contact form 
+            above so we can do more digging! 
+          </p>
+        </div>
+      </div>
+
+      <div class="tab">
+        <h3>Where are your products made? </h3>
+        <div class="tab_content">
+          <p>Right here in the USA, specifically Los Angeles!! Sozy is also Female Founded, 1% for the Planet, 
+            Climate Neutral, B Corporation Certified, one tree planted with every order, and 10% of profit
+            supports survivors of sexual violence! 
+          </p>
+        </div>
+      </div> 
+    </div>
+  </div>
+</section>
+
+<script>
+  $(document).ready(function(){
+  
+    $("h3").on("click",function(){
+      
+      if($(this).hasClass("active_faq")){
+        $(this).removeClass("active_faq");
+      }else{
+        $("h3").removeClass("active_faq");
+        $(this).addClass("active_faq");
+      }
+
+
+    })
+  })
+
+</script>

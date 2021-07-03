@@ -1,0 +1,126 @@
+{%capture checkout_brand_icons_html%}
+<div class="brandicons__wrapper">
+  <div class="brandicons__row">
+    <img src="https://cdn.shopify.com/s/files/1/3012/3948/files/FemaleFounded.png">
+    <img src="https://cdn.shopify.com/s/files/1/3012/3948/files/USA-Made.png">
+    <img src="https://cdn.shopify.com/s/files/1/3012/3948/files/1percent.png">
+  </div>
+  <div class="brandicons__row">
+    <img src="https://cdn.shopify.com/s/files/1/3012/3948/files/CertifiedBCorp.png">
+    <img src="https://cdn.shopify.com/s/files/1/3012/3948/files/ClimateNeutral.png">
+    <img src="https://cdn.shopify.com/s/files/1/3012/3948/files/OneTreePlanted.png">
+  </div>
+</div>
+{%endcapture%}
+<script>
+  $(document).on("page:load page:change",function() { 
+      /*function to hide progress section*/
+    function hideProgressSection(){     
+      $('.progess-bar').fadeOut(1500);              
+    }
+    
+    /* insert brand icons */
+    let brandicons_target = window.innerWidth <= 1024 ? ".step__footer" : ".order-summary__section--total-lines";
+    $('{{checkout_brand_icons_html | strip_newlines}}').insertAfter(brandicons_target);
+
+    /*---------------- Free shipping -------------------*/
+    function updateShippingBar(){
+      var cart_discount = parseFloat($("[data-checkout-discount-amount-target]").attr("data-checkout-discount-amount-target"))/100 > 0 ? parseFloat($("[data-checkout-discount-amount-target]").attr("data-checkout-discount-amount-target"))/100 : 0;
+      var cart_current_price = (parseFloat($("[data-checkout-subtotal-price-target]").attr("data-checkout-subtotal-price-target"))/100)-cart_discount;
+      var free_shipping_amount =  {{settings.free_shipping_amount}} ;
+      if(cart_current_price >= free_shipping_amount){          
+        $(".progress-info").html("CONGRATS! YOU HAVE UNLOCKED FREE SHIPPING!");    
+        $(".progress-info").addClass("more-space");
+        $(".progess-bar .progress").css("width","100%");     
+        hideProgressSection();
+      }else{
+        // free shipping locked
+        let amount_left = (free_shipping_amount - cart_current_price).toFixed(2);
+        $(".progress-info").html('ALMOST THERE! ADD <span class="price_content"></span> TO UNLOCK FREE SHIPPING!');
+        $('.progess-bar').show();
+        $(".progress-info .price_content").html("$"+amount_left);
+        let amount_percentage = (cart_current_price / free_shipping_amount)*100;
+        amount_percentage = amount_percentage + "%";
+        $(".progess-bar .progress").css("width",amount_percentage);
+        $(".progess-bar .progress").css("transition","transition: all 0.4s");
+      }
+    }
+    {% if checkout.order == nil  %}
+    updateShippingBar();
+    {% endif %}
+  })
+  $(document).on("page:load",function() { 
+    
+//     $(".section--remember-me").addClass("shown-if-js");
+    
+//     $(".section--remember-me").insertAfter(".step__footer");
+
+    /*NAVBAR*/
+    if($(window).width() < 1024){
+      $("nav").insertAfter(".banner");
+    }
+
+    /*---------------- Breadcrumb -------------------*/
+    $(".breadcrumb__item ").each(function(index){
+      let index_n = index+1;  
+      $(this).append("<span class='step-number'>0"+ index_n + "</span>");
+    });
+    /*---------------- TIMER -------------------*/
+
+    var totalTime = 600; // Amout of time (sec)
+    var halfTime = Math.floor(totalTime / 2);
+    function FirstTimeRunTimer(){
+      var now = $.now(); // First time on page
+      Cookies.set('firstTime', now, {
+        expires: 1,
+        path: '/'
+      });
+      Cookies.set('cdTime', totalTime, {
+        expires: 1,
+        path: '/'
+      });
+      var runTimer = Cookies.get('cdTime');
+    }
+    if (!Cookies.get('cdTime')) {
+      FirstTimeRunTimer();
+    } else {
+      var currentTime = $.now();
+      var usedTime = (currentTime - Cookies.get('firstTime')) / 1000; // Calculate and convert into seconds
+      var runTimer = Cookies.get('cdTime') - usedTime;
+    }
+    // if timer expired
+    if(runTimer < 0){
+      FirstTimeRunTimer();
+    }
+
+    $('#cd').countdown({
+      until: runTimer,
+      compact: true,
+      onExpiry: EndCountdown,
+      onTick: Callbacks,
+      format: 'MS'
+    });
+
+    function Callbacks(periods) {
+      if ($.countdown.periodsToSeconds(periods) === halfTime) {
+        $('#cd').addClass('halfway');
+      }
+      else if ($.countdown.periodsToSeconds(periods) <= 0) {
+        EndCountdown();
+      }
+    }
+
+    function EndCountdown() {
+      $('#cd').removeClass('halfway').addClass('ended');
+      $('.timer-container').hide();
+    }
+    
+    /*Timer Position on Mobile*/
+    if($(window).width() <= 1024 ){
+      $(".timer-container").insertBefore(".container-progess-bar");
+    }
+
+
+  });
+
+</script>

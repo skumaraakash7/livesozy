@@ -1,0 +1,60 @@
+<section class="size_page__header">
+  <h1>{{section.settings.title}}</h1>
+  <div class="header__main_description">
+    {{section.settings.main_description}}
+  </div>
+</section>
+
+<section class="size_page__table">
+  {{section.settings.table}}
+  
+  <div class="table__moreInfo">
+    {{section.settings.more_info}}
+  </div>
+</section>
+
+<section class="size_page__footer">
+  {{section.settings.footer_text}}
+</section>
+
+{% schema %}
+  {
+    "name": "Sizing Page ~ Conf",
+    "settings": [
+      {
+        "type":"text",
+        "id":"title",
+        "label":"Title"
+      },
+      {
+        "type":"textarea",
+        "id":"main_description",
+        "label":"Main Description"
+      },
+      {
+        "type":"textarea",
+        "id":"table",
+        "label":"Table",
+        "info":"Paste HTML table"	
+      },
+      {
+        "type":"textarea",
+        "id":"more_info",
+        "label":"More Info"
+      },
+      {
+		"type":"textarea",
+      	"id":"footer_text",
+     	"label":"Contact Info"
+      }	
+
+
+	]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

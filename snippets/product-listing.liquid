@@ -1,0 +1,114 @@
+<script type="text/javascript">
+  var product = {{ product | json }};
+  var variants = [];
+  var images = [];
+  var _products = _products || []; 
+  {% for variant in product.variants %}
+  variants.push({{ variant | json }});
+  {% endfor %}
+  product.variants = variants;
+
+  {% for image in product.images %}
+  images.push({
+    src: '{{ image | img_url: 'x800' }}',
+    alt: '{{ image.alt | escape}}'
+  });
+  {% endfor %}
+  product.images = images;
+
+  product.url = '{{ shop.url }}/collections/{{ collection.handle }}/products/{{ product.handle }}';
+
+  _products.push({
+    id: {{ product.id }},
+    handle: {{ product.handle | json }},
+    json: product
+  });
+</script>
+{%comment%}Flag to carousel products{%endcomment%}
+{%assign flag-carousel-listing = flag-carousel%}
+<div class="ci">
+  
+  
+  {% if product.tags contains 'Discontinued' %}
+  <div class="final-sale">
+    <img src="{{ 'final-sale.png' | asset_url }}" alt="{{ 'products.product.sale' | t }}" />
+  </div>
+  {% endif %}
+  {% if product.tags contains 'Pre-order' %}
+  <div class="final-sale">
+    <img src="{{ 'pre-order.png' | asset_url }}" alt="" />
+  </div>
+  {% endif %}
+  
+	{% if product.available %}
+		{% for col in product.collections %}
+			{% if col.handle == 'new' %}
+				<div class="new icn">{{ 'products.general.new' | t }}</div>
+			{% endif %}
+		{% endfor %}
+		
+		{% comment %}
+			{% if product.price < product.compare_at_price %}
+				<div class="sale-item icn">{{ 'products.general.sale' | t }}</div>
+			{% endif %}
+		{% endcomment %}
+	{% else %}
+		<div class="so icn">{{ 'products.general.sold' | t }}</div>
+  {% endif %}
+
+  <a class="product-link"  onclick="javascript: return false;"   href="{{ product.url | within: collection }}" title="{{ product.title | escape }}">
+
+    {% assign prod_image = product.selected_or_first_available_variant.image.src %}
+    {% if prod_image == null %}
+    {% assign prod_image = product.featured_image.src %}
+    {% endif %}
+    <div class="reveal">
+      <img class="featured" src="{{ prod_image | product_img_url: '500x' }}" alt="{{ prod_image.alt | escape }}" />
+      {% if settings.image-flip and product.images.size > 1 %}
+      <div class="hidden hover-carousel" data-product-id="{{ product.id }}" data-hover-index="{{ prod_image.position }}" data-href="{{ product.url | within: collection }}">
+      </div>
+      {% endif %}
+    </div>
+
+    {% include 'short-form-collection',flag-carousel-listing %}
+  </a>
+
+  
+  
+  
+</div>
+
+<div class="product-info"> 
+	{% if settings.quickview %}
+		<a class="fancybox.ajax product-modal" rel="nofollow" href="{{ product.url }}?view=quick">{{ 'products.general.quick_view' | t }}</a>
+	{% endif %}
+</div> 
+
+<div class="product-details">
+  <a href="{{ product.url | within: collection }}"> 
+    {% include 'yotpo-star-rating-collection' %}
+    <h3>{{ product.title }}</h3>
+    {% if settings.vendor %}<h4>{{ product.vendor }}</h4>{% endif %}
+
+    <!-- fixed code by USAMA -->
+    <div class="price">
+      {% if product.variants.first.price < product.variants.first.compare_at_price %}
+      <div class="onsale" style="color: #C66E6F !important">{{ product.price | money }}</div>
+      <div class="was-listing as">{{ product.compare_at_price | money }}</div>
+      {% else %}
+      <div class="onsale">{{ product.price | money }}</div>
+      {% endif %}	
+    </div>
+    <!-- end usama fixed code -->
+  </a>
+	
+  <form method="post" action="/cart/add" class="form--quick-atc" id="form--quick-atc-{{ product.id }}">
+    <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" />
+    <input min="1" type="hidden" id="quantity" name="quantity" value="1"/>
+    {% if product.tags contains 'Discontinued' %}<input type="hidden" name="properties[_final-sale]" value="true" />{% endif %}   
+    {% comment %}SV 29.01{% endcomment %}
+	{% if product.tags contains 'Pre-order' %}<input type="hidden" name="properties[_preorder]" value="true" />{% endif %}
+    <input type="submit" value="{% if product.tags contains 'Pre-order' %}PRE-ORDER{% else %}Add to cart{% endif %}" class="btn" />
+  </form>
+	
+</div>

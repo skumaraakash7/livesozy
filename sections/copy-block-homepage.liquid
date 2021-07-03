@@ -1,0 +1,105 @@
+{%if section.settings.enable_section == true%}
+<div class="copy-block-homepage">
+  <h2>{{section.settings.title_1}}</h2>
+  <p>{{section.settings.paragraph_1}}</p>
+  {%if section.settings.title_2 != blank %}
+    <h2 class="read-more">{{section.settings.title_2}}</h2>
+  {%endif%}
+  {%if section.settings.paragraph_2 != blank %}
+    <p class="read-more">{{section.settings.paragraph_2}}</p>
+  {%endif%}
+    {%if section.settings.title_3 != blank %}
+    <h2 class="read-more">{{section.settings.title_3}}</h2>
+  {%endif%}
+  {%if section.settings.paragraph_3 != blank %}
+    <p class="read-more">{{section.settings.paragraph_3}}</p>
+  {%endif%}
+    {%if section.settings.title_4 != blank %}
+    <h2 class="read-more">{{section.settings.title_4}}</h2>
+  {%endif%}
+  {%if section.settings.paragraph_4 != blank %}
+    <p class="read-more">{{section.settings.paragraph_4}}</p>
+  {%endif%}
+  <a href="#" class="read-more-expand">{{section.settings.link_text}}</a>
+</div>
+
+<script>
+  $(document).ready(function(){
+    $("#shopify-section-copy-block-homepage").insertBefore(".footer-icons-container");
+    $(".copy-block-homepage a.read-more-expand").on("click",function(e){
+        e.preventDefault();
+    	$(".copy-block-homepage").toggleClass("show-readmore");
+      if($(".copy-block-homepage").hasClass("show-readmore")){
+        $(this).html("Read less");
+      }else{
+        $(this).html("Read more");
+      }
+    }) 
+  });
+</script>
+{%endif%}
+
+{% schema %}
+  {
+    "name": "Home Page SEO Copy",
+    "settings": [
+        {
+          "type":"checkbox",
+          "id":"enable_section",
+          "label":"Enable SEO Copy",
+          "default":false
+        },
+		{
+			"type":"text",
+			"id":"title_1",
+			"label":"Title 1"
+		},
+		{
+			"type":"textarea",
+			"id":"paragraph_1",
+			"label":"Paragraph Block 1"
+		},
+		{
+			"type":"text",
+			"id":"title_2",
+			"label":"Title 2"
+		},
+		{
+			"type":"textarea",
+			"id":"paragraph_2",
+			"label":"Paragraph Block 2"
+		},
+		{
+			"type":"text",
+			"id":"title_3",
+			"label":"Title 3"
+		},
+		{
+			"type":"textarea",
+			"id":"paragraph_3",
+			"label":"Paragraph Block 3"
+		},
+		{
+			"type":"text",
+			"id":"title_4",
+			"label":"Title 4"
+		},
+		{
+			"type":"textarea",
+			"id":"paragraph_4",
+			"label":"Paragraph Block 4"
+		},
+	    {
+			"type":"text",
+			"id":"link_text",
+			"label":"Link Text"
+		}
+	]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

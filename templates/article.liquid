@@ -1,0 +1,302 @@
+{% assign grcap_anchor_article_content = '<span class="grcap_anchor_article">' | append: article.content | append: '</span>' %}
+{{ 'blog-article-page.css' | asset_url | stylesheet_tag }}
+{{ 'aricle-productsCarousel.scss.css' | asset_url | stylesheet_tag}}
+
+{%comment%}JS Products for carosuel
+<script type="text/javascript">
+  var _product = (function() {
+    var product = {{ product | json }};
+    var variants = [];
+    {% for variant in product.variants %}
+    variants.push({{ variant | json }});
+    {% endfor %}
+    product.variants = variants;
+
+    return product;
+  })();
+</script>
+{%endcomment%}
+
+
+
+{%if canonical_url == 'https://livesozy.com/blogs/live-sozy/attachment-styles-in-relationships'%}
+<style>
+  #blog-article iframe{
+    height: 700px;
+  }
+  
+  @media(max-width: 600px){
+    #blog-article iframe{
+      height: 400px;
+    }
+  }
+</style>
+{%endif%}
+
+
+
+
+{%assign author_tag = ""%}
+{%for tag in article.tags%}
+{%if tag contains 'author:'%}
+{%assign author_tag = tag%}
+{%break%}
+{%endif%}
+{%endfor%}
+
+{%comment%} ------- SHORTCODES --------- {%endcomment%}
+{%if grcap_anchor_article_content contains '[carousel="'%}
+{% assign carousel_shortcodes = grcap_anchor_article_content | split: '[carousel="' %}
+{% assign carousel_shortcodes = carousel_shortcodes[1] | split: '"]' %}
+{% assign carousel_collection_handle = carousel_shortcodes[0] %}
+{%assign flag-carousel = true%}
+{%assign shortcode_replace_carousel = '[carousel="'|append:carousel_collection_handle|append:'"]'%} 
+{%capture carousel_html%}
+<div id="shopify-section-collection-template" class="related">
+  <h3 class="section_title">SHOP SOZY</h3>
+  <div class="collection-carousel">
+    {% for product in collections[carousel_collection_handle].products %}
+    <div class="product lazyOwl {% if section.settings.products_per_row	== 2 %}desktop-6{% cycle ' first', ' last' %}{% elsif section.settings.products_per_row	== 3 %}desktop-4{% cycle ' first', '', ' last' %}{% elsif section.settings.products_per_row == 4 %}desktop-3{% cycle ' first', '', '', ' last' %}{% endif %} tablet-half mobile-full" id="prod-{{ product.id }}" data-alpha="{{ product.title }}"	data-price="{{ product.price }}">
+      {% include 'product-listing' with product: product, flag-carousel %}
+    </div>
+    {% endfor%}
+  </div>
+</div>
+{%endcapture%}
+{%endif%}
+
+{%if grcap_anchor_article_content contains '[related_article="'%}
+{%assign related_shortcodes = grcap_anchor_article_content | split: '[related_article="'%}
+{%assign related_shortcodes = related_shortcodes[1] | split: '"]'%}
+{%assign related_article_handle = related_shortcodes[0]%}
+{%assign shortcode_replace_related_article = '[related_article="'|append:related_article_handle|append:'"]'%}
+{%capture related_article_html%}
+<div data-related-article="{{related_article_handle}}"></div>
+{%endcapture%}
+{%endif%}
+ 
+
+
+{%if grcap_anchor_article_content contains '[related-posts-handles="'%}
+{%assign post_shortcodes = grcap_anchor_article_content | split: '[related-posts-handles="'%}
+{%assign post_shortcodes = post_shortcodes[1] | split: '"]' %}
+{%assign shortcode_replace_post = '[related-posts-handles="'|append:post_shortcodes[0]|append:'"]'%}
+{%assign post_shortcodes = post_shortcodes[0] | split: ","%}
+{%capture related_post_html%}
+<div class="related-posts-container">
+  <h2>You might also like</h2>
+  <div class="related-posts-cards">
+    {%for post in post_shortcodes%}
+    {%assign blog = articles[post]%}
+    <div class="post-card">
+      <a href="{{blog.url}}">
+        <img class="pc-img" src="{{blog.image | img_url: "master"}}">
+        <p class="art-category">LIVE SOZY</p>
+        <h3 class="art-title">{{ blog.title }}</h3>
+      </a>
+    </div>
+    {%endfor%}
+  </div>
+</div>
+{%endcapture%}
+{%endif%}
+
+
+ 
+
+{%for tag in article.tags%}
+  {%if tag contains 'category:'%}
+	{%assign article_category_tag = tag%}
+    {%assign article_category = tag | split: 'category:'%}
+    {%assign article_category = article_category[1]%}
+  	{%break%}
+  {%endif%}
+{%endfor%}
+<div class="articleHeader">
+  <p class="articleHeader__artCategory">
+    {%if article_category%}
+    <a href="/blogs/live-sozy/tagged/{{article_category_tag | handle}}">{{article_category }}</a>
+    {%else%}
+    <a href="/blogs/live-sozy">Sozy Blog</a> 
+    {%endif%}
+  </p>
+  <h1>{{ article.title }}</h1>
+
+  {%if author_tag != blank%}
+  <div class=" articleHeader__author">
+    <div class="img-container">
+      <img class="author-pic"src="">
+    </div> 
+    <p class="author-name"></p>
+    <p>•</p>
+    <p class="article-date">{{ article.created_at | date: format: 'date'}}</p>    
+  </div>
+  {%endif%}
+</div>
+
+
+<div id="page" class="articleMainContainer">
+  {% paginate article.comments by 20 %}
+
+  <div id="blog-article" class="desktop-8 desktop-push-2 tablet-6 mobile-3">
+    {{ grcap_anchor_article_content | replace:shortcode_replace_carousel,carousel_html | replace:shortcode_replace_related_article, related_article_html | replace:shortcode_replace_post,related_post_html}}
+  </div>      
+
+  {% if blog.comments_enabled? %}
+  <div id="comments">
+    {% assign number_of_comments = article.comments_count %}
+
+    <div class="desktop-7 mobile-3">
+      <div class="section-title"><h3>{{ 'blogs.comments.comments_with_count' | t: count: number_of_comments }}</h3></div> 
+
+      <ul id="commentlist">
+        {% for comment in article.comments %}
+        <li>
+          <div class="comment-details">
+            {{ comment.author }}: {{ comment.created_at | date: "%B %d, %Y" }}
+          </div>	
+          <div class="gravatar desktop-1 mobile-1">
+            <img src="//www.gravatar.com/avatar/{{ comment.email | remove: ' ' | strip_newlines | downcase | md5 }}" />		
+          </div>
+          <div class="comment desktop-11 mobile-2">
+            {{ comment.content }}
+          </div>
+        </li>
+        {% endfor %}
+      </ul>
+
+    </div>
+
+    <!-- Comment Form -->
+    <div id="comment-form" class="desktop-5 mobile-3">
+      {% form article %}
+      <div class="section-title"><h3>{{ 'blogs.comments.title' | t }}</h3></div>
+      <!-- Check if a comment has been submitted in the last request, and if yes display an appropriate message -->
+      {% if form.posted_successfully? %}
+      {% if blog.moderated? %}
+      <div class="notice">
+        {{ 'blogs.comments.success_moderated' | t }}
+      </div>
+      {% else %}
+      <div class="notice">{{ 'blogs.comments.success' | t }}</div>
+      {% endif %}
+      {% endif %}
+
+      {% if form.errors %}
+      <div class="notice error">
+        <p>{{ 'general.forms.post_error' | t }}</p>
+        <ul class="disc">
+          {% for field in form.errors %}
+          {% if field == 'form' %}
+          <li>
+            {{ form.errors.messages[field] }}
+          </li>
+          {% else %}
+          <li>
+            <strong>{{ field | replace: 'body', 'Message' }}</strong> {{ form.errors.messages[field] }}
+          </li>
+          {% endif %}
+
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+      <dl>
+        <dt class="{% if form.errors contains 'author' %}error{% endif %}"><label for="comment_author">{{ 'blogs.comments.name' | t }}</label></dt>
+        <dd><input type="text" id="comment_author" name="comment[author]" size="40" value="{{form.author}}" class="{% if form.errors contains 'author' %}input-error{% endif %}" /></dd>
+
+        <dt class="{% if form.errors contains 'email' %}error{% endif %}"><label for="comment_email">{{ 'blogs.comments.email' | t }}</label></dt>
+        <dd><input type="text" id="comment_email" name="comment[email]" size="40" value="{{form.email}}" class="{% if form.errors contains 'email' %}input-error{% endif %}" /></dd>
+
+        <dt class="{% if form.errors contains 'body' %}error{% endif %}"><label for="comment_body">{{ 'blogs.comments.message' | t }}</label></dt>
+        <dd><textarea id="comment_body" name="comment[body]" cols="40" rows="5" class="{% if form.errors contains 'body' %}input-error{% endif %}">{{form.body}}</textarea></dd>
+      </dl>
+
+      {% if blog.moderated? %}
+      <p class="hint">{{ 'blogs.comments.moderated' | t }}</p>
+      {% endif %}    
+
+      <input type="submit" value="{{ 'blogs.comments.post' | t }}" />
+      {% endform %}
+    </div>   
+
+    <div id="pagination">				
+      {% if paginate.previous %}
+      {{ '<' | link_to: paginate.previous.url }}
+      {% endif %}
+      {% for part in paginate.parts %}
+      {% if part.is_link %}
+      {{ part.title | link_to: part.url }}
+      {% else %}
+      {% if part.title == '&hellip;' %}
+      {{ part.title }}
+      {% else %}
+      <span class="current">{{ part.title }}</span>
+      {% endif %}
+      {% endif %}
+      {% endfor %}
+      {% if paginate.next %}
+      {{ '>' | link_to: paginate.next.url }}
+      {% endif %}
+    </div>
+  </div>
+  {% endif %}   
+  {% endpaginate %}        
+</div>
+{%if author_tag != blank%}
+<div class="article-author-info" data-author-tag="{{author_tag}}">
+  <div class="author-block">
+    <div class="img-container">
+      <img class="author-pic"src="">
+    </div>  			
+
+    <div class="block-header">
+      <p class="written-by">Written by</p>
+      <p class="author-name"></p>
+    </div>
+
+    <div class="block-body">
+      <p class="author-bio"></p>
+      <a class="author__website-link" href="" style="display:none"><img src="https://cdn.shopify.com/s/files/1/3012/3948/files/website.svg?v=1616534150"></a>
+      <a class="author__facebook-link" href="" style="display:none"><img src="https://cdn.shopify.com/s/files/1/3012/3948/files/facebook.svg?v=1616534150"></a>
+      <a class="author__twitter-link" href="" style="display:none"><img src="https://cdn.shopify.com/s/files/1/3012/3948/files/twitter.svg?v=1616534150"></a>
+      <a class="author__instagram-link" href="" style="display:none"><img src="https://cdn.shopify.com/s/files/1/3012/3948/files/instagram.svg?v=1616534150"></a>
+    </div>          
+  </div>
+</div>
+{%endif%}
+{%include "article-social-icons"%}
+{%section "article-author-info"%}
+
+
+<script>
+
+  $(document).ready(function(){
+    $(".article-share-icons").clone().appendTo(".header-social-icons");
+    $(".article-related-articles").insertAfter("#shopify-section-article-author-info");
+    $(".related-posts-container").insertAfter(".article-related-articles");
+
+    if($(window).width() < 1000){
+      $(".related-posts-cards").slick({
+        dots:false,
+        arrows: true,
+        slidesToShow:1,
+        slidesToScroll: 1,
+        prevArrow: '<div class="arrow prev-arrow"><img src="https://cdn.shopify.com/s/files/1/3012/3948/files/right-arrow-angle_1401fcd4-9806-4e5d-8e2c-ec8f03a0b701.svg?v=1616512876"></div>',
+        nextArrow: '<div class="arrow next-arrow"><img src="https://cdn.shopify.com/s/files/1/3012/3948/files/right-arrow-angle_1401fcd4-9806-4e5d-8e2c-ec8f03a0b701.svg?v=1616512876"></div>'
+      })
+    }
+
+    $('[data-related-article]').each(function(){
+      var $this = $(this);
+      var handle = $(this).attr("data-related-article");
+      var get_url = "/blogs/"+handle+"?view=related-article-html";
+      $.get( get_url, function( data ) {
+        $this.html( data );
+      });
+    })
+    
+  })
+
+
+</script>

@@ -1,0 +1,113 @@
+<!-- /snippets/banners-collection.liquid -->
+{% capture currentCollection %}{{ collection.handle }}{% endcapture %}
+{% assign has_banner = false %}
+
+{% comment %}Loop through the banners{% endcomment %}
+{% for i in (1..9) %}
+	
+	{% capture temp_blurb %}banner_blurb_{{ i }}{% endcapture %}
+	{% capture temp_collection %}collection_banner_{{ i }}{% endcapture %}
+	{% capture temp_banner_image %}banner_image_{{ i }}{% endcapture %}
+	{% capture temp_banner_mobile_image %}banner_mobile_image_{{ i }}{% endcapture %}
+	{% capture temp_text_alignment %}text_alignment_{{ i }}{% endcapture %}
+	{% capture temp_cta_pos %}cta_pos_{{ i }}{% endcapture %}
+	{% capture temp_cta_offset %}cta_offset_{{ i }}{% endcapture %}
+	{% capture temp_cta_offset_mobile %}cta_offset_mobile_{{ i }}{% endcapture %}
+	{% capture temp_banner_text_style %}banner_text_style_{{ i }}{% endcapture %}
+	
+	{% if currentCollection == settings[temp_collection] %}
+		{% if settings[temp_banner_image] != blank %}
+			{% assign has_banner = true %}
+			
+			{% capture currentBanner %}
+				<div class="module-wrapper module-banner-image module-hero-image banner-{{ collection.handle }}">
+					<div class="image-container">
+						
+						<div class="slide-text {{ settings[temp_banner_text_style] }} align-{{ settings[temp_text_alignment] }}">
+							<div class="slide-text-content">
+								<h1 class="{{ settings[temp_banner_text_style] }}">{{ collection.title }}</h1>
+								{% if settings[temp_blurb] != blank %}
+									<div class="hero-cta-wrapper">
+										<p>{{ settings[temp_blurb] }}</p>
+									</div>
+								{% endif %}
+							</div>
+						</div>
+						
+					</div>
+				</div>
+			{% endcapture %}
+			
+			<style>
+				
+				.module-banner-image h1 { 
+					font-size: 30px; 
+					text-transform: uppercase;
+				}
+				
+				@media (max-width: 720px) {
+					.module-banner-image h1 { font-size: 24px; }
+				}
+				
+				.module-banner-image.banner-{{ collection.handle }} .image-container {
+					{% if settings[temp_banner_image] != blank %}
+						background-image: url({{ settings[temp_banner_image] | img_url: '1600x900' }});
+					{%- else -%}
+						background-color: #f7f7f7;
+					{%- endif -%}
+					height: 70vh;
+				}
+				
+				.module-banner-image.module-hero-image .slide-text {
+					{%- if settings[temp_cta_pos] == "top" -%}
+						top: {{ settings[temp_cta_offset] }}%;
+					{%- else -%}
+						top: auto;
+						bottom: {{ settings[temp_cta_offset] }}%;
+					{%- endif -%}
+					position: absolute;
+				}
+				
+				@media (max-width: 720px) {
+					
+					.slide-text-content {
+						margin-left: auto;
+						margin-right: auto;
+					}
+					
+					.module-banner-image.module-hero-image .slide-text {
+						{%- if settings[temp_cta_pos] == "top" -%}
+							top: {{ settings[temp_cta_offset_mobile] }}%;
+						{%- else -%}
+							top: auto;
+							bottom: {{ settings[temp_cta_offset_mobile] }}%;
+						{%- endif -%}
+						position: absolute;
+					}
+					
+					.module-banner-image.banner-{{ collection.handle }} .image-container {
+						{%- if settings[temp_banner_mobile_image] != blank -%}
+							background-image: url({{ settings[temp_banner_mobile_image] | img_url: '900x1200' }});
+						{%- else -%}
+							background-color: #f7f7f7;
+						{%- endif -%}
+						height: 230px;
+					}
+					
+				}
+				
+			</style>
+			
+			
+		{% endif %}
+	{% endif %}
+	
+{% endfor %}
+
+{% if has_banner %}
+	<div class="clearfix">
+		{{ currentBanner }}
+	</div>
+{% endif %}
+
+

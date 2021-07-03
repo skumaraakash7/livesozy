@@ -1,0 +1,53 @@
+{% assign grcap_anchor_page_content = '<span class="grcap_anchor_page">' | append: page.content | append: '</span>' %}
+<div data-section-id="{{ section.id }}">
+  <div class="section-title desktop-12 mobile-3">
+    <h1>{{ page.title }}</h1>
+  </div>
+  
+  {% if section.settings.form-position != 'center' %}
+  <div id="page" class="desktop-6 tablet-6 mobile-3{% if section.settings.form-position == 'left' %} form-left{% endif %}">
+    <div class="rte"><span class='gc_autolink_page'>{{ grcap_anchor_page_content }}</span></div>
+  </div>
+  
+  <div class="desktop-6 mobile-3 tablet-6">
+    {% include 'contact' %}
+  </div>
+  
+  {% else %}
+  
+  {% comment %}If we have the contact form centered only {% endcomment %}
+  <div id="page" class="desktop-8 desktop-push-2 tablet-6 mobile-3 centered-form">
+    <div class="rte"><span class='gc_autolink_page'>{{ grcap_anchor_page_content }}</span></div>
+    {% include 'contact' %}
+  </div>
+  {% endif %}
+
+  
+</div>
+
+{% schema %}
+{
+    "name": "Contact page",
+    "settings": [
+		{
+        "type": "select",
+        "id": "form-position",
+        "label": "Contact form position",
+        "options": [
+          {
+            "value": "left",
+            "label": "Left"
+          },
+          {
+            "value": "center",
+            "label": "Center"
+          },
+          {
+            "value": "right",
+            "label": "Right"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

@@ -1,0 +1,37 @@
+{% capture number_of_related_products_to_fetch %}{{ number_of_related_products_to_show | plus: 1 }}{% endcapture %}
+
+{%comment%}Flag to carousel products{%endcomment%}
+{%assign flag-carousel = true%}
+
+{% if collection == null or collection.handle == 'frontpage' or collection.handle == 'all' %}
+	{% assign found_a_collection = false %}
+	{% for c in product.collections %}
+		{% if found_a_collection == false and c.handle != 'frontpage' and c.handle != 'all' and c.all_products_count > 1 %}
+			{% assign found_a_collection = true %}
+			{% assign collection = c %}
+		{% endif %}
+	{% endfor %}
+{% endif %}
+
+<div class="desktop-12 mobile-3" id="related" {{collection.handle}}>
+  	<h4 class="custom-h4">{{ 'products.general.related' | t | upcase }}</h4>
+	{% assign max_items = collections["new-arrivals"].products.size  %}      
+	<div class="collection-carousel" data-normal-collection>
+		{% assign current_product_found = false %}      
+		{% for prod in collections['new-arrivals'].products limit: 15 %}
+ 			{% assign min_items = 0 %}
+      		{% assign diff_items = max_items | minus: min_items %}
+      		{% assign randomNumber = "now" | date: "%N" |modulo: diff_items | plus: min_items %}
+      		{% assign randomprod = collections['new-arrivals'].products[randomNumber] %}
+			{% if randomprod.title == product.title or randomprod.available == false%}
+				{% assign current_product_found = true %}
+			{% else %}
+				{% unless current_product_found == false and forloop.last %}
+                  <div product-handle="{{collections['new-arrivals'].products[randomNumber].handle}}" random-number="{{randomNumber}}" class="product lazyOwl {% if section.settings.products_per_row	== 2 %}desktop-6{% cycle ' first', ' last' %}{% elsif section.settings.products_per_row	== 3 %}desktop-4{% cycle ' first', '', ' last' %}{% elsif section.settings.products_per_row == 4 %}desktop-3{% cycle ' first', '', '', ' last' %}{% endif %} tablet-half mobile-full" id="prod-{{ randomprod.id }}" data-alpha="{{ randomprod.title }}"	data-price="{{ randomprod.price }}">
+                    {% include 'product-listing' with product: randomprod, flag-carousel %}
+                  </div>
+				{% endunless %}
+			{% endif %}
+		{% endfor %}
+	</div>
+</div>

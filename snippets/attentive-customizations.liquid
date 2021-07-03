@@ -1,0 +1,32 @@
+<script>
+  (function($) {
+    var $attform = $("#attentiveOptIn");
+    if (Shopify.Checkout.step === "contact_information"){
+      setTimeout(function(){ 
+        $(".address-fields").append($attform);
+        $attform.show();
+        }, 1000);
+    }else{
+    	$attform.hide();
+    }
+  })(Checkout.$);
+</script>
+<style>
+  #attentiveOptIn{
+  	float: left;
+    padding: 0 0.4285714286em 0 0.4285714286em;
+  }
+  .section__footer__attentive{
+    padding-top: 15px;
+  }
+  .section__footer__attentive a{
+    line-height: 1;
+  }
+  .checkbox__label__attentive__subheader{
+    color: black;
+  }
+  .checkbox__label__attentive__header{
+    font-size: 17px;
+    font-weight: 500;
+  }
+</style>

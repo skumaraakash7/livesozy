@@ -1,0 +1,232 @@
+{{ 'Account.scss.css' | asset_url | stylesheet_tag}}
+<div class="acc-wrapper">
+
+  <div class="acc-wrapleft">
+
+    <div class="acc-wrapleftcontent">
+      <h2>Our mission is <br>to empower women with <br>soft + cozy clothing</h2>
+      <p>
+        10% of profits supports survivors of sexual violence.<br>
+        #LiveSozy
+      </p>
+
+      <div class="acc-wrapleftlogos">
+        <div class="acc-wrapleftlogoitem">
+          <img class="acc-wrapleftlogoimg" src="https://cdn.shopify.com/s/files/1/3012/3948/files/female_founded_e1bba196-cb4e-44cb-a5bd-787bfd6f0a88.svg"/>
+        </div>
+        <div class="acc-wrapleftlogoitem">
+          <img class="acc-wrapleftlogoimg" src="https://cdn.shopify.com/s/files/1/3012/3948/files/usa_made_f3aad795-6a17-412e-ab56-6ecb6f531868.svg"/>
+        </div>
+        <div class="acc-wrapleftlogoitem">
+          <img class="acc-wrapleftlogoimg" src="https://cdn.shopify.com/s/files/1/3012/3948/files/1_percent_planet.svg"/>
+        </div>
+        <div class="acc-wrapleftlogoitem">
+          <img class="acc-wrapleftlogoimg" src="https://cdn.shopify.com/s/files/1/3012/3948/files/climate_neutral.svg"/>
+        </div>
+        <div class="acc-wrapleftlogoitem">
+          <img class="acc-wrapleftlogoimg" src="https://cdn.shopify.com/s/files/1/3012/3948/files/b-corp_a5625175-c67a-4b3f-90a0-093242a28955.svg"/>
+        </div>
+        <div class="acc-wrapleftlogoitem">
+          <img class="acc-wrapleftlogoimg" src="https://cdn.shopify.com/s/files/1/3012/3948/files/1treeplanted.svg"/>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="acc-wrapright">
+
+    <div class="acc-wrapright__formsNavigation">
+      <p class="formsNavigation__tab active" data-form="signIn_form"> Sign In</p>
+      <p class="formsNavigation__tab" data-form="createAccount_form">Create an Account</p>
+    </div>
+
+
+    {%comment%}Sign In Form{%endcomment%}
+    <div class="acc-wraprigth__form active " data-form-container="signIn_form">
+      <p class="acc-wrapright__headlineText">Sign into your account to track orders, order history, email preferences, and more!</p>
+      
+      <div class="signInForm__icons">
+        <script src='//open-signin.okasconcepts.com/customer/script?shop=mysozy.myshopify.com'></script>
+        {%comment%}
+        <a href=""  class="signInForm__icon"><img src="https://cdn.shopify.com/s/files/1/3012/3948/files/facebookLog.svg?v=1616165111"></a>
+        <a href=""  class="signInForm__icon"><img src="https://cdn.shopify.com/s/files/1/3012/3948/files/googleLog.svg?v=1616165112"></a>
+     	{%endcomment%}
+      </div>
+
+      <!-- Customer Login -->
+      <div class="signInForm__main_form">
+        {% form 'customer_login' %}
+        {{ form.errors | default_errors }}
+        <div id="login_email" class="clearfix large_form">
+          <label for="customer_email" class="login">{{ 'customer.login.email' | t }}</label>
+          <input type="email" value="" name="customer[email]" id="customer_email" class="large" size="30" placeholder="Email" />
+        </div>
+
+        {% if form.password_needed %}
+        <div id="login_password" class="clearfix large_form">
+          <label for="customer_password" class="login">{{ 'customer.login.password' | t }}</label>
+          <input type="password" value="" name="customer[password]" id="customer_password" class="large password" size="16"  placeholder="Password"/>  
+        </div>
+        {% endif %}
+
+        <div class="action_bottom">
+          <input class="secondary button" type="submit" value="{{ 'customer.login.sign_in' | t }}" />
+        </div>
+
+        {% endform %}
+
+        <div id="forgot_password">
+          <a href="#" onclick="showRecoverPasswordForm();return false;">{{ 'customer.login.forgot_password' | t }}</a>
+        </div>
+        <div id="create_account">
+          Don't have an account? <span class='createAccount_span'>Create an Account</span>
+        </div>
+      </div>
+        
+      <!-- Password Recovery -->
+      <div id="recover-password" class="desktop-12 mobile-3" style='display:none'>
+        <div class="template_header">
+          <h2>{{ 'customer.recover_password.title' | t }}</h2>
+          <p class="note">{{ 'customer.recover_password.subtext' | t }}</p>
+        </div>
+
+        {% form 'recover_customer_password' %}
+
+        {{ form.errors | default_errors }}
+
+        <div id="recover_email" class="clearfix large_form">
+          <label for="email" class="large">{{ 'customer.recover_password.email' | t }}</label>
+          <input type="email" value="" size="30" name="email" id="recover-email" class="large" placeholder="Email"/>
+        </div>
+
+        <div class="action_bottom">
+          <input class="secondary button" type="submit" value="{{ 'customer.recover_password.submit' | t }}" />
+          <span class="note"><a href="#" onclick="hideRecoverPasswordForm();return false;">{{ 'customer.recover_password.cancel' | t }}</a></span>
+        </div>
+
+        {% endform %}
+      </div>
+    </div>
+
+
+    {%comment%}Create Account Form{%endcomment%}
+    <div class="acc-wraprigth__form" data-form-container="createAccount_form">
+      <p class="acc-wrapright__headlineText">Create an account to track orders, order history, email preferences, and more!</p>
+      
+      <div class="signInForm__icons">
+        <script src='//open-signin.okasconcepts.com/customer/script?shop=mysozy.myshopify.com'></script>
+        {%comment%}
+        <a href=""  class="signInForm__icon" ><img src="https://cdn.shopify.com/s/files/1/3012/3948/files/facebookLog.svg?v=1616165111"></a>
+        <a href=""  class="signInForm__icon" ><img src="https://cdn.shopify.com/s/files/1/3012/3948/files/googleLog.svg?v=1616165112"></a>
+      	{%endcomment%}
+      </div>
+
+      
+      <div class="createAccount__mainForm">
+        {% form 'create_customer' %}
+        {{ form.errors | default_errors }}
+
+        <div id="first_name" class="clearfix large_form">
+          <label for="first_name" class="login">{{ 'customer.register.first_name' | t }}</label>
+          <input type="text" value="" name="customer[first_name]" id="first_name" class="large" size="30" placeholder="First Name"/>
+        </div>
+
+        <div id="last_name" class="clearfix large_form">
+          <label for="last_name" class="login">{{ 'customer.register.last_name' | t }}</label>
+          <input type="text" value="" name="customer[last_name]" id="last_name" class="large" size="30" placeholder="Last Name"/>
+        </div>
+
+        <div id="email" class="clearfix large_form">
+          <label for="email" class="login">{{ 'customer.register.email' | t }}</label>
+          <input type="email" value="" name="customer[email]" id="email" class="large" size="30" placeholder="Eamil Address" />
+        </div>
+
+        <div id="password" class="clearfix large_form">
+          <label for="password" class="login">{{ 'customer.register.password' | t }}</label>
+          <input type="password" value="" name="customer[password]" id="password" class="large password" size="30"  placeholder="Password"/>
+        </div>
+
+        <p id="createAccount__message">We’ll also sign you up for Sozy emails. <span></span> You may unsubscribe at any time.</p>
+        
+        <div class="action_bottom">
+          <input class="secondary button" type="submit" value="{{ 'customer.register.submit' | t }} ACCOUNT"/>
+        </div>
+        {% endform %}
+      </div>
+    </div>
+
+
+
+    {%comment%}
+    <div id="template" class="desktop-5 mobile-3">
+      <!-- Guest Checkout login -->
+      {% if shop.checkout.guest_login %}
+      <div id="guest" class="desktop-12 mobile-3">
+        <div class="template_header">
+          <h2>{{ 'customer.login.guest_title' | t }}</h2>
+          {% form 'guest_login' %}
+          <input class="secondary button" type="submit" value="{{ 'customer.login.guest_continue' | t }}" />
+          {% endform %}
+        </div>
+      </div>
+      {% endif %}
+      <div class="clear"></div>
+      <!-- End Guest Checkout login -->
+    </div>
+    {%endcomment%}
+
+  </div>
+
+</div>
+
+
+<script type="text/javascript">
+  
+  function showRecoverPasswordForm() {
+    document.getElementById('recover-password').style.display = 'block';
+    //document.getElementById('customer').style.display='none';
+    var position_raw  = $("#recover-password") .position();
+    var position_top = position_raw.top;
+    $("html, body").animate({ scrollTop: (position_top - 100) }, 600);
+  }
+
+  function hideRecoverPasswordForm() {
+    document.getElementById('recover-password').style.display = 'none';
+    //document.getElementById('customer').style.display = 'inline-block';
+    
+    $("html, body").animate({ scrollTop: 0}, 600);
+  }
+  
+  if (window.location.hash == '#recover') { showRecoverPasswordForm() } 
+  
+  
+  
+  $(".formsNavigation__tab").on("click",function(){
+    $(".formsNavigation__tab").removeClass("active");
+    $(this).addClass("active");
+    let data_form =    $(this).attr("data-form");
+    
+    $(".acc-wraprigth__form").removeClass("active");    
+    $('[data-form-container="'+data_form+'"]').addClass("active");
+  });
+  
+  $(".createAccount_span").on('click',function(){
+    $(".formsNavigation__tab").removeClass("active");
+    $("[data-form='createAccount_form']").addClass("active");
+    
+    $(".acc-wraprigth__form").removeClass("active"); 
+    $('[data-form-container="createAccount_form"]').addClass("active");
+    
+    
+
+ 
+  })
+  
+  
+
+
+  
+</script>
+
+
