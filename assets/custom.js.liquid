@@ -480,7 +480,6 @@ $(window).load(function() {
         return product.id == product_id;
       });
       product = product.length > 0 ? product[0].json : undefined;
-      
      if (product !== undefined) {
         var images = _.filter(product.images, function(image) {
           return image.alt.indexOf('swatch') == -1;

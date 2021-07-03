@@ -1,255 +1,255 @@
 <footer data-section-id="{{ section.id }}">
   <div id="footer-wrapper">
-    <div id="footer" class="row no-fouc">
+	<div id="footer" class="row no-fouc">
 
 
-    {% case section.blocks.size %}
-      {% when 0 %}
-      {% when 1 %}
-        {% assign column_width = 'desktop-12 tablet-6 mobile-3' %}
-      {% when 2 %}
-        {% assign column_width = 'desktop-6 tablet-3 mobile-3' %}
-      {% when 3 %}
-        {% assign column_width = 'desktop-4 tablet-3 mobile-3' %}
-      {% when 4 %}
-        {% assign column_width = 'desktop-3 tablet-3 mobile-3' %}
-    {% endcase %}
+	{% case section.blocks.size %}
+	  {% when 0 %}
+	  {% when 1 %}
+		{% assign column_width = 'desktop-12 tablet-6 mobile-3' %}
+	  {% when 2 %}
+		{% assign column_width = 'desktop-6 tablet-3 mobile-3' %}
+	  {% when 3 %}
+		{% assign column_width = 'desktop-4 tablet-3 mobile-3' %}
+	  {% when 4 %}
+		{% assign column_width = 'desktop-3 tablet-3 mobile-3' %}
+	{% endcase %}
 
-      {% for block in section.blocks %}
-      {% case block.type %}
-      {% when 'menu' %}
-      <div class="{{ column_width }}">
-        <h4 class="footer-col-title">{{ block.settings.title }}</h4>
-        <ul class="footer-col-list " {{ block.shopify_attributes }}>
-          {% for link in linklists[block.settings.footer_nav].links %}
-              {% if link.title == 'Get 25% off' %}
-                  {% assign newurl = "https://" | append: request.host | append: request.path | append: '?tkbl_expand=true' %}
-          			<li><a href="{{newurl}}">{{ link.title }}</a></li>
-              {% else %}
-          	  <li>{{ link.title | link_to: link.url }}</li>
-              {% endif %}
-          {% endfor %}
-        </ul>
-      </div>
-      {% when 'newsletter' %}
-      <div class="{{ column_width }}">
-        <h4>{{ block.settings.title | escape }}</h4>
-        <div id="footer_signup">
-          <p>{{ settings.footer_signup_text | escape }}</p>
-          <div class="klaviyo-form-RchR7p"></div>
-        </div>
-      </div>
-      {% when 'text' %}
-      <div class="{{ column_width }} ">
-        <h4 class="footer-col-title col-click">{{ block.settings.title | escape }}</h4>
-        <div class="rte footer-text-paragraph footer-col-list open-accordion">{{ block.settings.footer_text }}</div>
-        
-        <div class="appLinksStores only_desktop">
-          <a href="https://apps.apple.com/us/app/sozy/id1486988713?l=en"> <img src="https://cdn.shopify.com/s/files/1/3012/3948/files/appleStore_svg.svg?v=1614872788"></a>
-          <a href="https://play.google.com/store/apps/details?id=co.tapcart.app.xXJRl7YkiS&hl=en_AU&gl=US"> <img src="https://cdn.shopify.com/s/files/1/3012/3948/files/googlePlay_svg.svg?v=1614872788"></a>          
-        </div>
-      </div>
-      {% endcase %}
-      {% endfor %}
+	  {% for block in section.blocks %}
+	  {% case block.type %}
+	  {% when 'menu' %}
+	  <div class="{{ column_width }}">
+		<h4 class="footer-col-title">{{ block.settings.title }}</h4>
+		<ul class="footer-col-list " {{ block.shopify_attributes }}>
+		  {% for link in linklists[block.settings.footer_nav].links %}
+			  {% if link.title == 'Get 25% off' %}
+				  {% assign newurl = "https://" | append: request.host | append: request.path | append: '?tkbl_expand=true' %}
+				<li><a href="{{newurl}}">{{ link.title }}</a></li>
+			  {% else %}
+			  <li>{{ link.title | link_to: link.url }}</li>
+			  {% endif %}
+		  {% endfor %}
+		</ul>
+	  </div>
+	  {% when 'newsletter' %}
+	  <div class="{{ column_width }}">
+		<h4>{{ block.settings.title | escape }}</h4>
+		<div id="footer_signup">
+		  <p>{{ settings.footer_signup_text | escape }}</p>
+		  <div class="klaviyo-form-RchR7p"></div>
+		</div>
+	  </div>
+	  {% when 'text' %}
+	  <div class="{{ column_width }} ">
+		<h4 class="footer-col-title col-click">{{ block.settings.title | escape }}</h4>
+		<div class="rte footer-text-paragraph footer-col-list open-accordion">{{ block.settings.footer_text }}</div>
+		
+		<div class="appLinksStores only_desktop">
+		  <a href="https://apps.apple.com/us/app/sozy/id1486988713?l=en"> <img class="lazy2" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" data-src="https://cdn.shopify.com/s/files/1/3012/3948/files/appleStore_svg.svg?v=1614872788"></a>
+		  <a href="https://play.google.com/store/apps/details?id=co.tapcart.app.xXJRl7YkiS&hl=en_AU&gl=US"> <img class="lazy2" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" data-src="https://cdn.shopify.com/s/files/1/3012/3948/files/googlePlay_svg.svg?v=1614872788"></a>          
+		</div>
+	  </div>
+	  {% endcase %}
+	  {% endfor %}
 
-      <div class="clear"></div>
-      <div class="footer-incons-container">
-      <h4 class="footer-col-title">FOLLOW US</h4>
-      <ul id="footer-icons" class="desktop-12 tablet-6 mobile-3">
-        
-        {% if settings.facebook_url != blank %}<li><a href="{{ settings.facebook_url }}" target="_blank"><i class="fa fa-facebook fa-2x" aria-hidden="true"></i></a></li>{% endif %}
-        {% if settings.twittername != blank %}<li><a href="{{ settings.twittername }}" target="_blank"><i class="fa fa-twitter fa-2x" aria-hidden="true"></i></a></li>{% endif %}
-        {% if settings.pinterest_url != blank %}<li><a href="{{ settings.pinterest_url }}" target="_blank"><i class="fa fa-pinterest fa-2x" aria-hidden="true"></i></a></li>{% endif %}
-        {% if settings.instagram-id != blank %}<li><a href="//instagram.com/{{ settings.instagram-id }}" target="_blank"><i class="fa fa-instagram fa-2x" aria-hidden="true"></i></a></li>{% endif %}
-        
-        
-        {% if settings.tumblr_url != blank %}<li><a href="{{ settings.tumblr_url }}" target="_blank"><i class="fa fa-tumblr fa-2x" aria-hidden="true"></i></a></li>{% endif %}
-        {% if settings.youtube_url != blank %}<li><a href="{{ settings.youtube_url }}" target="_blank"><i class="fa fa-youtube fa-2x" aria-hidden="true"></i></a></li>{% endif %}
-        {% if settings.googleplus_url != blank %}<li><a href="{{ settings.googleplus_url }}" target="_blank"><i class="fa fa-google-plus-official fa-2x" aria-hidden="true"></i></a></li>{% endif %}
-        {% if settings.snapchat-id != blank %}<li><a href="//snapchat.com/add/{{ settings.snapchat-id }}" target="_blank"><i class="fa fa-snapchat-ghost fa-2x" aria-hidden="true"></i></a></li>{% endif %}
-        {% if settings.weibo-id != blank %}<li><a href="//weibo.com/{{ settings.weibo-id }}" target="_blank"><i class="fa fa-weibo fa-2x" aria-hidden="true"></i></a></li>{% endif %}
-      </ul>
-      </div>
-      
-      
-      <div class="clear"></div>
-      <div class="credit desktop-12 tablet-6 mobile-3">
-        <p style="display: none;">	
-          {% for type in shop.enabled_payment_types %}
-          <img src="{{ type | payment_type_img_url }}" />
-          {% endfor %}
-        </p>
+	  <div class="clear"></div>
+	  <div class="footer-incons-container">
+	  <h4 class="footer-col-title">FOLLOW US</h4>
+	  <ul id="footer-icons" class="desktop-12 tablet-6 mobile-3">
+		
+		{% if settings.facebook_url != blank %}<li><a href="{{ settings.facebook_url }}" target="_blank"><i class="fa fa-facebook fa-2x" aria-hidden="true"></i></a></li>{% endif %}
+		{% if settings.twittername != blank %}<li><a href="{{ settings.twittername }}" target="_blank"><i class="fa fa-twitter fa-2x" aria-hidden="true"></i></a></li>{% endif %}
+		{% if settings.pinterest_url != blank %}<li><a href="{{ settings.pinterest_url }}" target="_blank"><i class="fa fa-pinterest fa-2x" aria-hidden="true"></i></a></li>{% endif %}
+		{% if settings.instagram-id != blank %}<li><a href="//instagram.com/{{ settings.instagram-id }}" target="_blank"><i class="fa fa-instagram fa-2x" aria-hidden="true"></i></a></li>{% endif %}
+		
+		
+		{% if settings.tumblr_url != blank %}<li><a href="{{ settings.tumblr_url }}" target="_blank"><i class="fa fa-tumblr fa-2x" aria-hidden="true"></i></a></li>{% endif %}
+		{% if settings.youtube_url != blank %}<li><a href="{{ settings.youtube_url }}" target="_blank"><i class="fa fa-youtube fa-2x" aria-hidden="true"></i></a></li>{% endif %}
+		{% if settings.googleplus_url != blank %}<li><a href="{{ settings.googleplus_url }}" target="_blank"><i class="fa fa-google-plus-official fa-2x" aria-hidden="true"></i></a></li>{% endif %}
+		{% if settings.snapchat-id != blank %}<li><a href="//snapchat.com/add/{{ settings.snapchat-id }}" target="_blank"><i class="fa fa-snapchat-ghost fa-2x" aria-hidden="true"></i></a></li>{% endif %}
+		{% if settings.weibo-id != blank %}<li><a href="//weibo.com/{{ settings.weibo-id }}" target="_blank"><i class="fa fa-weibo fa-2x" aria-hidden="true"></i></a></li>{% endif %}
+	  </ul>
+	  </div>
+	  
+	  
+	  <div class="clear"></div>
+	  <div class="credit desktop-12 tablet-6 mobile-3">
+		<p style="display: none;">  
+		  {% for type in shop.enabled_payment_types %}
+		  <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" class="lazy2" data-src="{{ type | payment_type_img_url }}" />
+		  {% endfor %}
+		</p>
 
-        <div class="appLinksStores only_mobile">
-          <a href="https://apps.apple.com/us/app/sozy/id1486988713?l=en"> <img class="storeApp_icon" src="https://cdn.shopify.com/s/files/1/3012/3948/files/appleStore_svg.svg?v=1614872788"></a>
-          <a href="https://play.google.com/store/apps/details?id=co.tapcart.app.xXJRl7YkiS&hl=en_AU&gl=US"> <img class="storeApp_icon" src="https://cdn.shopify.com/s/files/1/3012/3948/files/googlePlay_svg.svg?v=1614872788"></a>          
-        </div>
+		<div class="appLinksStores only_mobile">
+		  <a href="https://apps.apple.com/us/app/sozy/id1486988713?l=en"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" class="storeApp_icon lazy2" data-src="https://cdn.shopify.com/s/files/1/3012/3948/files/appleStore_svg.svg?v=1614872788"></a>
+		  <a href="https://play.google.com/store/apps/details?id=co.tapcart.app.xXJRl7YkiS&hl=en_AU&gl=US"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" class="storeApp_icon lazy2" data-src="https://cdn.shopify.com/s/files/1/3012/3948/files/googlePlay_svg.svg?v=1614872788"></a>          
+		</div>
 
-        <p class="test" id="footer-menu">
-          {% for link in linklists.footer-menu.links %}
-          {%unless forloop.first == true%}• {%endunless%}<a href="{{ link.url }}"> {{ link.title }} </a>
-          {% endfor %}
-        </p>
-
-
+		<p class="test" id="footer-menu">
+		  {% for link in linklists.footer-menu.links %}
+		  {%unless forloop.first == true%}• {%endunless%}<a href="{{ link.url }}"> {{ link.title }} </a>
+		  {% endfor %}
+		</p>
 
 
-      </div>
-    </div>
+
+
+	  </div>
+	</div>
   </div>
 </footer>
 
 
 <script>
   $(document).ready(function(){
-    $(".footer-col-title").on("click",function(){      
-      if($(window).width() < 1024){
-        if($(this).hasClass("col-click")){
-          $(this).removeClass("col-click");
-          $(this).siblings(".footer-col-list").removeClass("open-accordion");
-        }else{        
-          $(".footer-col-title").removeClass("col-click");
-          $(this).addClass("col-click");
-          $(".footer-col-list").removeClass("open-accordion")
-          $(this).siblings(".footer-col-list").addClass("open-accordion");
-        } 
-      }
-    });
+	$(".footer-col-title").on("click",function(){      
+	  if($(window).width() < 1024){
+		if($(this).hasClass("col-click")){
+		  $(this).removeClass("col-click");
+		  $(this).siblings(".footer-col-list").removeClass("open-accordion");
+		}else{        
+		  $(".footer-col-title").removeClass("col-click");
+		  $(this).addClass("col-click");
+		  $(".footer-col-list").removeClass("open-accordion")
+		  $(this).siblings(".footer-col-list").addClass("open-accordion");
+		} 
+	  }
+	});
   })
 </script>
 
 
 <style>
   #footer-wrapper {
-    text-align: {{ section.settings.footer_text_align }};
+	text-align: {{ section.settings.footer_text_align }};
   }
 
   #footer-wrapper h4 {
-    text-transform: {{ section.settings.footer_title_transform }};
-    font-size: {{ section.settings.footer-title_size }}px;
-    font-weight: {{ section.settings.footer_title_weight }};
+	text-transform: {{ section.settings.footer_title_transform }};
+	font-size: {{ section.settings.footer-title_size }}px;
+	font-weight: {{ section.settings.footer_title_weight }};
   }
 </style>
 
 {% schema %}
 {
-    "name": "Footer",
-	"max_blocks": 4,
-    "settings": [
-     {
-        "type": "select",
-        "id": "footer_text_align",
-        "label": "Footer text align",
-        "options": [
-          {
-            "value": "left",
-            "label": "left"
-          },
-          {
-            "value": "center",
-            "label": "Center"
-          },
-          {
-            "value": "right",
-            "label": "Right"
-          }
-        ]
-      },
-      {
-        "type": "select",
-        "id": "footer_title_weight",
-        "label": "Footer title weight",
-        "options": [
-          {
-            "value": "300",
-            "label": "Light"
-          },
-          {
-            "value": "500",
-            "label": "Normal"
-          },
-          {
-            "value": "700",
-            "label": "Bold"
-          }
-        ]
-      },
-      {
-        "type": "select",
-        "id": "footer_title_transform",
-        "label": "Footer title case",
-        "options": [
-          {
-            "value": "uppercase",
-            "label": "Uppercase"
-          },
-          {
-            "value": "inherit",
-            "label": "regular"
-          }
-        ]
-      },
-      {
-        "type": "range",
-        "id": "footer-title_size",
-        "min": 12,
-        "max": 36,
-        "step": 1,
-        "unit": "px",
-        "label": "Footer title size",
-        "default": 14
-      }
-    ],
-   "blocks":[
-      {
-         "type":"menu",
-         "name":"Menu",
-         "settings":[
-            {
-               "type": "link_list",
-               "id": "footer_nav",
-               "label": "Sidebar menu",
-               "info": "This menu won't show dropdown items"
-            },
-           {
-            "type": "text",
-            "id": "title",
-            "label": "Menu title",
-            "default": "Explore"
-           }
-         ]
-      },
-    {
-      "type": "text",
-      "name": "Text",
-      "settings":[
-        {
-          "type": "text",
-          "id": "title",
-          "label": "Text title",
-          "default": "About"
-        },
-      {
-          "id": "footer_text",
-          "type": "richtext",
-          "label": "Text",
-          "default": "<p>Adding text to your footer helps introduce your business to new customers.</p>"
-       }
-      ]
-    },
-      {
-        "type": "newsletter",
-        "name": "Newsletter signup",
-        "limit": 1,
-		"settings":[
-            {
-              "type": "text",
-              "id": "title",
-              "label": "Mailing list section title",
-              "default": "connect"
-            }
-		]
-	  }
-   ]
-  }
+"name": "Footer",
+"max_blocks": 4,
+"settings": [
+{
+"type": "select",
+"id": "footer_text_align",
+"label": "Footer text align",
+"options": [
+{
+"value": "left",
+"label": "left"
+},
+{
+"value": "center",
+"label": "Center"
+},
+{
+"value": "right",
+"label": "Right"
+}
+]
+},
+{
+"type": "select",
+"id": "footer_title_weight",
+"label": "Footer title weight",
+"options": [
+{
+"value": "300",
+"label": "Light"
+},
+{
+"value": "500",
+"label": "Normal"
+},
+{
+"value": "700",
+"label": "Bold"
+}
+]
+},
+{
+"type": "select",
+"id": "footer_title_transform",
+"label": "Footer title case",
+"options": [
+{
+"value": "uppercase",
+"label": "Uppercase"
+},
+{
+"value": "inherit",
+"label": "regular"
+}
+]
+},
+{
+"type": "range",
+"id": "footer-title_size",
+"min": 12,
+"max": 36,
+"step": 1,
+"unit": "px",
+"label": "Footer title size",
+"default": 14
+}
+],
+"blocks":[
+{
+"type":"menu",
+"name":"Menu",
+"settings":[
+{
+"type": "link_list",
+"id": "footer_nav",
+"label": "Sidebar menu",
+"info": "This menu won't show dropdown items"
+},
+{
+"type": "text",
+"id": "title",
+"label": "Menu title",
+"default": "Explore"
+}
+]
+},
+{
+"type": "text",
+"name": "Text",
+"settings":[
+{
+"type": "text",
+"id": "title",
+"label": "Text title",
+"default": "About"
+},
+{
+"id": "footer_text",
+"type": "richtext",
+"label": "Text",
+"default": "<p>Adding text to your footer helps introduce your business to new customers.</p>"
+}
+]
+},
+{
+"type": "newsletter",
+"name": "Newsletter signup",
+"limit": 1,
+"settings":[
+{
+"type": "text",
+"id": "title",
+"label": "Mailing list section title",
+"default": "connect"
+}
+]
+}
+]
+}
 {% endschema %}

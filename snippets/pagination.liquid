@@ -11,7 +11,7 @@
     {%unless paginate.items <  paginate.page_size%}
     	<span class="pagination__arrow-btn mobile_edition"><img src="https://cdn.shopify.com/s/files/1/3012/3948/files/back-arrow.svg"> PREVIOUS</span>
     {%endunless%}  
-  {%endif%} 
+  {%endif%}
 
   {% for part in paginate.parts %}
     {% if part.is_link %} 

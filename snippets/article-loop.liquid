@@ -4,16 +4,19 @@
       {% if article.image %}    
         <img class="article-image" src="{{ article.image | img_url: '800x530', crop: 'center' }}" alt="{{ article.title }}">  
       {% endif %}
+      {%assign author_tag = ""%}
       {%for tag in article.tags%}
         {%if tag contains 'category:'%}
           {%assign article_category = tag | split: 'category:'%}
           {%assign article_category = article_category[1]%}
-          {%break%}
+        {%endif%}
+        {%if tag contains 'author:'%}
+        {%assign author_tag = tag%}
         {%endif%}
       {%endfor%}
       <p class="art-category">{%if article_category%}{{article_category}}{%else%}{{blog.title}}{%endif%}</p>
       <h3 class="art-title">{{ article.title }}</h3>
-      <p class="by-author">BY {{article.author}}</p>
+      <p class="by-author">BY {%if author_tag != blank%}{{author_tag | replace:'author:',''| replace:'_',' '}}{%else%}{{article.author}}{%endif%}</p>
     </a>
   </div>   
 </div>

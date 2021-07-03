@@ -1,4 +1,3 @@
-{% assign grcap_anchor_product_content = '<span class="grcap_anchor_product">' | append: product.description | append: '</span>' %}
 <!-- /snippets/yotpo-star-rating.liquid -->
 <div class="yotpo bottomLine"
     data-appkey="J53RkYbPOdnX4Qf11g1mqLGvdfuGkko5udAy5CuG"
@@ -8,6 +7,6 @@
     data-name="{{ product.title | escape }}"
     data-url="{{ shop.url }}{{ product.url }}"
     data-image-url="{{ product.featured_image | product_img_url: 'large' |replace: '?', '%3F' | replace: '&','%26'}}"
-    data-description="{{ grcap_anchor_product_content | escape }}"
+    data-description="{{ product.description | escape }}"
     data-bread-crumbs="{% for tag in product.tags %}{{ tag | escape }};{% endfor %}">
 </div>

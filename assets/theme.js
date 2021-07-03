@@ -1178,7 +1178,7 @@ theme.Product = (function() {
 
 
 
-$(document).ready(function(){
+setTimeout(function(){
   jQuery(window).trigger('resize').trigger('scroll');
 
   $('.no-fouc').removeClass('no-fouc');
@@ -1483,7 +1483,7 @@ theme.Collection = (function() {
 
 
 
-$(document).ready(function() {
+setTimeout(function() {
   var sections = new theme.Sections();
   sections.register('instagram', theme.Instagram);
   sections.register('slideshow-section', theme.Slideshow);

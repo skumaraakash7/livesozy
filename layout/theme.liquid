@@ -3,328 +3,267 @@
 <!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
 <!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
 <!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
-<script src="https://hello.pledgeling.com/assets/shop/donation/button.js" async></script>
-<head>
-  <!-- better-open-graph-tags-head-begin -->
-  {% if shop.metafields.bopengraphtags.enabled == "true" %}
-  {% capture snippet_content %}{% include 'better-open-graph-tags-open-graph-tags'  %}{% endcapture %}
-  {% unless snippet_content contains "Liquid error" %}
-  {{ snippet_content }}
-  {% endunless %}
-  {% endif %}
-  <!-- better-open-graph-tags-head-end -->
+	<script type="lazyload2" data-src="https://hello.pledgeling.com/assets/shop/donation/button.js"></script>
+	<head>
+		<!-- better-open-graph-tags-head-begin -->
+		{% if shop.metafields.bopengraphtags.enabled == "true" %}
+			{% capture snippet_content %}{% include 'better-open-graph-tags-open-graph-tags'  %}{% endcapture %}
+			{% unless snippet_content contains "Liquid error" %}
+				{{ snippet_content }}
+			{% endunless %}
+		{% endif %}
+		<!-- better-open-graph-tags-head-end -->
+		<meta charset="utf-8">
+		{% include 'social-media-meta-tags' %}
+		<!-- SEO ================================================== -->
+		<title>{% if template == 'index' %}{% if page_title contains 'Welcome' %}{{ shop.name }} &ndash; Welcome{% else %}{{ page_title }}{% endif %}{% elsif template == '404' %}Page Not Found{% elsif page_title contains shop.name %}{{ page_title }}{% else %}{{ page_title }} &ndash; {{ shop.name }}{% endif %}</title>
+		{% if page_description %}
+		<meta name="description" content="{{ page_description }}">
+		{% endif %}
+		<link rel="canonical" href="{{ canonical_url }}">
+		<!-- CSS ================================================== -->
+		{% if template.name == "index" %}
+			{% include "critical-css" %}
+		{% endif %}
+		{% if template.name == "collection" %}
+			{% include "collection-critical-css" %}
+		{% endif %}
+		{% if template.name == "product" %}
+			{% include "product-critical-css" %}
+		{% endif %}
+		<link rel="stylesheet" data-href="https://use.typekit.net/pjc1tta.css">
+		<link rel="stylesheet" data-href="{{ 'header-footer2020.scss.css' |asset_url }}">
+		<link rel="stylesheet" data-href="{{ 'homepage2020.scss.css' | asset_url}}">
+		<link rel="stylesheet" data-href="{{ 'collection-page2020.scss.css' | asset_url}}">
+		<link rel="stylesheet" data-href="{{ 'collection-page2020.scss.css' | asset_url}}">
+		<link rel="stylesheet" data-href="{{ 'stylesheet.css' | asset_url}}">
+		<link rel="stylesheet" data-href="{{ 'queries.css' | asset_url}}">
+		<link rel="stylesheet" data-href="{{ 'custom.scss.css' | asset_url}}">
+		<link rel="stylesheet" data-href="{{ 'custom-st.scss.css' | asset_url}}">
+		<!-- JS ================================================== -->
+<!--
+		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+-->
+		{% include "jquery-js" %}
+		{% if settings.ajax_cart_method == "drawer" %}
+			<script type="lazyload2" data-src="{{ 'handlebars.min.js' | asset_url }}"></script>
+			{% include 'ajax-cart-template' %}
+			<script type="lazyload2" data-src="{{ 'ajax-cart.js' | asset_url }}"></script>
+			<script type="lazyload2">
+				setTimeout(function() {
+					ajaxCart.init({
+						//formSelector: '#AddToCartForm',
+						formSelector: '#AddToCartForm, .form--quick-atc',
+						cartContainer: '#CartContainer',
+						//addToCartSelector: '#AddToCart',
+						addToCartSelector: '#AddToCart, .btn',
+						cartCountSelector: '.CartCount',
+						cartCostSelector: '.CartCost',
+						moneyFormat: {{ shop.money_format | json }},
+						onToggleCallback: function(cart) {
+							Currency.convertAll(shopCurrency, Currency.currentCurrency);
+							jQuery('.selected-currency').text(Currency.currentCurrency);
+						}
+					});
+				});
+				jQuery('body').on('ajaxCart.afterCartLoad', function(evt, cart) {
+					// Bind to 'ajaxCart.afterCartLoad' to run any javascript after the cart has loaded in the DOM
+					timber.RightDrawer.open();
+					//afterpay custom placement
+					{%render 'afterpay-ajax-cart'%}
+				});
+			</script>
+		{% endif %}
+		<script type="lazyload2" data-src="{{ 'custom_plugins.js' | asset_url }}"></script>
+		<script type="lazyload2" data-src="https://cdn.jsdelivr.net/npm/lozad/dist/lozad.min.js"></script>
+		<script type="lazyload2" data-src="{{ 'theme.js' | asset_url }}"></script>
+		<script type="lazyload2" data-src="https://cdnjs.cloudflare.com/ajax/libs/jquery.touchswipe/1.6.19/jquery.touchSwipe.min.js"></script>
+		<script type="lazyload2" data-src="{{ 'custom.js' | asset_url }}"></script>
+		<script type="lazyload2" data-src="{{ 'option_selection.js' | shopify_asset_url }}"></script>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		{% if settings.favicon %}
+		<link rel="shortcut icon" href="{{ settings.favicon | img_url: '32x32' }}" type="image/png">
+		{% endif %}
+		{% if template contains 'customers' %}
+			{{ "shopify_common.js" | shopify_asset_url | script_tag }}
+			{{ "customer_area.js"  | shopify_asset_url | script_tag }}
+		{% endif %}
 
+		{%- if request.host == "mysozy.myshopify.com" or template contains 'cart' or template contains 'checkout' -%}
+			{{ content_for_header }}
+		{%- else -%}
+			{% capture content_for_header2 %}{{ content_for_header }}{% endcapture %}
+			{{ content_for_header2 | replace: ' defer="defer" ', ' type="lazyload2" ' | replace: " src=", " data-src=" | replace: "window.addEventListener('load', asyncLoad, false);", "window.addEventListener('ks_load', asyncLoad, false);" | replace: "DOMContentLoaded", "DOMContentLoaded2" }}
+		{%- endif -%}
 
-  <meta charset="utf-8" />
+		<link rel="next" href="/next">
+		<link rel="prev" href="/prev">
 
-  {% include 'social-media-meta-tags' %}
+		<meta name="p:domain_verify" content="4ef10859099844d81714ac2d03d4877f">
+		{% include 'talkable-partial' %}
+		<script type="lazyload2" data-src="https://cdn.jsdelivr.net/npm/lozad/dist/lozad.min.js"></script>
 
-  <!-- SEO
-================================================== -->
+		{% include 'hotjar' %}
+		{% render 'shogun-head' %}
 
-  <title>
-    {% if template == 'index' %}{% if page_title contains 'Welcome' %}{{ shop.name }} &ndash; Welcome{% else %}{{ page_title }}{% endif %}{% elsif template == '404' %}Page Not Found{% elsif page_title contains shop.name %}{{ page_title }}{% else %}{{ page_title }} &ndash; {{ shop.name }}{% endif %}
-  </title>
-  {% if page_description %}
-  <meta name="description" content="{{ page_description }}" />
-  {% endif %}
-  <link rel="canonical" href="{{ canonical_url }}" />
-
-  <!-- CSS
-================================================== -->
-  <link rel="stylesheet" href="https://use.typekit.net/pjc1tta.css"> 
-  {{ 'header-footer2020.scss.css' |asset_url | stylesheet_tag }}
-   <link rel="preload" href="{{ 'homepage2020.scss.css' | asset_url}}" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="{{ 'homepage2020.scss.css' | asset_url}}"></noscript>
-   <link rel="preload" href="{{ 'collection-page2020.scss.css' | asset_url}}" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="{{ 'collection-page2020.scss.css' | asset_url}}"></noscript>
-     <link rel="preload" href="{{ 'collection-page2020.scss.css' | asset_url}}" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="{{ 'collection-page2020.scss.css' | asset_url}}"></noscript>
-     <link rel="preload" href="{{ 'stylesheet.css' | asset_url}}" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="{{ 'stylesheet.css' | asset_url}}"></noscript>
-     <link rel="preload" href="{{ 'queries.css' | asset_url}}" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="{{ 'queries.css' | asset_url}}"></noscript>
-     <link rel="preload" href="{{ 'custom.scss.css' | asset_url}}" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="{{ 'custom.scss.css' | asset_url}}"></noscript>
-       <link rel="preload" href="{{ 'custom-st.scss.css' | asset_url}}" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="{{ 'custom-st.scss.css' | asset_url}}"></noscript>
-  <!-- PRELOAD IMPORTANT IMAGES
-================================================== --> 
-  <link rel="preload" as="image" href="//cdn.shopify.com/s/files/1/3012/3948/files/Sozy-April-2021-0621_2000x900_crop_center.progressive.jpg">
-  <link rel="preload" as="image" href="//cdn.shopify.com/s/files/1/3012/3948/files/Sozy-April-2021-0621-2_700x.progressive.jpg">
-
-  <!-- JS
-================================================== -->
-
-  <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-  {{ 'theme.js' | asset_url | script_tag }}
-  {{ 'custom_plugins.js' | asset_url | script_tag }}
-  <script async src="https://cdnjs.cloudflare.com/ajax/libs/jquery.touchswipe/1.6.19/jquery.touchSwipe.min.js" integrity="sha256-ns1OeEP3SedE9Theqmu444I44sikbp1O+bF/6BNUUy0=" crossorigin="anonymous"></script>  
-  {{ 'custom.js' | asset_url | script_tag }}
-  {{ 'option_selection.js' | shopify_asset_url | script_tag }}
-  
-  
-
-
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  
-  {% if settings.favicon %}
-  <link rel="shortcut icon" href="{{ settings.favicon | img_url: '32x32' }}" type="image/png" />
-  {% endif %}
-  {% if template contains 'customers' %}
-  {{ "shopify_common.js" | shopify_asset_url | script_tag }}
-  {{ "customer_area.js"  | shopify_asset_url | script_tag }}
-  {% endif %}
-  {{ content_for_header }}
-  <link rel="next" href="/next"/>
-  <link rel="prev" href="/prev"/>
-  
-
-  
-  <meta name="p:domain_verify" content="4ef10859099844d81714ac2d03d4877f"/>
-  {% include 'talkable-partial' %}
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lozad/dist/lozad.min.js"></script>
-  
-  {% include 'hotjar' %}
-
-  {% render 'shogun-head' %}
-<script type="text/javascript">
-    (function(c,l,a,r,i,t,y){
-        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "5u4rt9731n");
-</script>
-<script src="https://www.dwin1.com/19038.js" type="text/javascript" defer="defer"></script>
-  <script src="https://cdn-widgetsrepository.yotpo.com/v1/loader/zsiPgMo9N2G4ba7_kt6Jrg" async></script>
-
-	<script id="grcap_autolink_script" src="https://fn.autolink.growthcaptain.fr/userScript?shop=mysozy.myshopify.com"></script>
+		<script type="lazyload2">
+			(function(c,l,a,r,i,t,y){
+				c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+				t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+				y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+			})(window, document, "clarity", "script", "5u4rt9731n");
+		</script>
+		<script type="lazyload2" data-src="https://www.dwin1.com/19038.js"></script>
+		<script type="lazyload2" data-src="https://cdn-widgetsrepository.yotpo.com/v1/loader/zsiPgMo9N2G4ba7_kt6Jrg"></script>
+		<style>.no-fouc{visibility:visible!important}</style>
+	  <script src="https://cdn-widgetsrepository.yotpo.com/v1/loader/zsiPgMo9N2G4ba7_kt6Jrg" async></script>
 </head>
-
-<body class="gridlock shifter-left {{ template }}">
-  {% if settings.ajax_cart_method == 'drawer' %}
-  {% include 'timber-cart' %}
-  {%include 'checkout-upsell'%}
-  {% endif %}
-  <div class="shifter-page {% if settings.ajax_cart_method == 'drawer' %} is-moved-by-drawer{% endif %}" id="PageContainer">  
-    
-    {%comment%}
-    <div id="fsb_placeholder">
-      <script>
-        var fsb_adjusted = false;
-        $( "#fsb_placeholder" ).on( "fsb_fully_loaded", function(event, p1) {
-          if ((p1=='inserted' || p1=='inserted_sticky') && !fsb_adjusted ){
-            fsb_adjusted = true;
-            var fsb_height = $("#fsb_background").height();
-            $("<div />", {html: '<style>' + '.coverheader{top:' + fsb_height + 'px;}#fsb_background{z-index:20 !important;}' + '</style>'}).appendTo("body");
-          }
-        });
-      </script>
-    </div>
-    {%endcomment%}
-    
-	{% section 'header' %}
-	<div class="page-wrap">
-		{% if template contains 'collection' %}
-			{% if collection.description contains '[banner]' %}
-				{% capture banner %}{{ collection.handle }}.jpg{% endcapture %}
-				<div class="collection-banner">
-					<img src="{{ banner | file_url }}" alt="{{ collection.title }}">
+	<body class="gridlock shifter-left {{ template }}">
+		{% if settings.ajax_cart_method == 'drawer' %}
+			{% include 'timber-cart' %}
+			{%include 'checkout-upsell'%}
+		{% endif %}
+		<div class="shifter-page {% if settings.ajax_cart_method == 'drawer' %} is-moved-by-drawer{% endif %}" id="PageContainer">
+			{% section 'header' %}
+			<div class="page-wrap">
+				{% if template contains 'collection' %}
+					{% if collection.description contains '[banner]' %}
+						{% capture banner %}{{ collection.handle }}.jpg{% endcapture %}
+						<div class="collection-banner"><img src="{{ banner | file_url }}" alt="{{ collection.title }}"></div>
+					{% endif %}
+				{% endif %}
+				{% if template == 'index' or template contains 'blog' or template contains 'list-collections' or template contains 'collection' %}
+					{{ content_for_layout }}
+				{% else %}
+				<div id="content" class="row content-row">
+					{% if settings.breadcrumb %}
+						{% include 'breadcrumb' %}	
+					{% endif %}	
+					{{ content_for_layout }}
 				</div>
-			{% endif %}
-		{% endif %}
-		{% if template == 'index' or template contains 'blog' or template contains 'list-collections' or template contains 'collection' %}
-			{{ content_for_layout }}
-		{% else %}
-			<div id="content" class="row content-row">
-				{% if settings.breadcrumb %}
-					{% include 'breadcrumb' %}	
-				{% endif %}	
-				{{ content_for_layout }}
+				{% endif %}
 			</div>
+			{% if template  == 'index'  %}
+			<script type="lazyload2" data-src="{{ 'instafeed.js' | asset_url }}"></script>
+			{% endif %}
+			{%section 'footer-email-section'%}
+			{%section 'footer-cta-double'%}
+			{%if template.name == "index"%}
+				{%section 'copy-block-homepage'%}
+			{%endif%}
+			{%section 'icons-grid'%}
+			{% section 'footer' %}
+			{% include 'popup' %}
+			<div style='display:none'>
+				<div id='search_popup' style='padding:30px;'>
+					<!-- BEGIN #subs-container -->
+					<div id="subs-container" class="clearfix">
+						<div id="search">
+							<form action="/search" method="get">
+								<input type="text" name="q" id="q" placeholder="{{ 'general.search.placeholder' | t }}">
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		{% section 'mobile-navigation' %}
+		<a href="#" class="scrollup"><i class="fa fa-chevron-up" aria-hidden="true"></i> TOP</a>
+		<!-- Begin Recently Viewed Products -->
+		<script type="text/javascript" charset="utf-8">
+			//<![CDATA[
+			// Including api.jquery.js conditionnally.
+			if (typeof Shopify.resizeImage === 'undefined') {
+				document.write({{ "api.jquery.js" | shopify_asset_url | script_tag | json }});
+			}
+			//]]>
+		</script>
+		<script type="lazyload2" data-src="//ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js"></script>
+		<script type="lazyload2" data-src="{{ 'jquery.products.min.js' | asset_url }}"></script>
+		<div id="fb-root"></div>
+		<script type="lazyload2">(function(d, s, id) {
+		var js, fjs = d.getElementsByTagName(s)[0];
+		if (d.getElementById(id)) return;
+		js = d.createElement(s); js.id = id;
+		js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=127142210767229";
+		fjs.parentNode.insertBefore(js, fjs);
+		}(document, 'script', 'facebook-jssdk'));</script>
+
+		{% include 'currencies' %}
+		<!--Gem_Page_Footer_Script-->
+		{% include 'gem-app-footer-scripts' %}
+		<!--End_Gem_Page_Footer_Script-->
+		<!-- spurit_um-added -->
+		{% include 'spurit_um-theme-snippet' %}
+		<!-- /spurit_um-added -->
+		<script type="lazyload2" data-src="https://s3.amazonaws.com/lastsecondcoupon/js/freeshippingbar.js?shop=mysozy.myshopify.com"></script>
+		{% comment %}Retention Rocket{% endcomment %}
+		<script type="lazyload2" data-src="https://app.retentionrocket.com/content/cartdrawerJs/mysozy/script.js" async></script>
+		<script>
+			jQuery(function() {
+				jQuery('.swatch :radio').change(function() {
+					var optionIndex = jQuery(this).closest('.swatch').attr('data-option-index');
+					var optionValue = jQuery(this).val();
+					jQuery(this)
+					.closest('form')
+					.find('.single-option-selector')
+					.eq(optionIndex)
+					.val(optionValue)
+					.trigger('change');
+				});
+			});
+		</script>
+
+		{% if template contains 'product' %}
+			{% include 'sticky-add-cart' %}
 		{% endif %}
-    </div>
-    
-      {% if template  == 'index'  %}{{ 'instafeed.js' | asset_url | script_tag }}{% endif %}
-    {%section 'footer-email-section'%}
-    {%section 'footer-cta-double'%}
-    {%if template.name == "index"%}
-    	{%section 'copy-block-homepage'%}    
-    {%endif%}
-    {%section 'icons-grid'%}
-    {% section 'footer' %}
-    {% include 'popup' %} 
-    <div style='display:none'>
-      <div id='search_popup' style='padding:30px;'>
-        <!-- BEGIN #subs-container -->
-        <div id="subs-container" class="clearfix">
-          <div id="search">
-            <form action="/search" method="get">
-              <input type="text" name="q" id="q" placeholder="{{ 'general.search.placeholder' | t }}"/>
-            </form>
-          </div>  
-        </div>
-      </div>
-    </div> 
-  </div>  
-  {% section 'mobile-navigation' %}
-  
-  <a href="#" class="scrollup"><i class="fa fa-chevron-up" aria-hidden="true"></i> TOP</a>
-  <!-- Begin Recently Viewed Products -->
-  <script type="text/javascript" charset="utf-8">
-    //<![CDATA[
-    // Including api.jquery.js conditionnally.
-    if (typeof Shopify.resizeImage === 'undefined') {
-      document.write({{ "api.jquery.js" | shopify_asset_url | script_tag | json }});
-    }
-    //]]>
-  </script>
-  {{ '//ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js' | script_tag }}
-  {{ 'jquery.products.min.js' | asset_url | script_tag }}
 
-  <div id="fb-root"></div>
-  <script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=127142210767229";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
+		{% include 'smile-initializer' %}
 
-  {% include 'currencies' %}
-
-  {% if settings.ajax_cart_method == "drawer" %}
-  {{ 'handlebars.min.js' | asset_url | script_tag }}
-  {% include 'ajax-cart-template' %}
-  {{ 'ajax-cart.js' | asset_url | script_tag }}
-  <script>
-    jQuery(function($) {
-      ajaxCart.init({
-        //formSelector: '#AddToCartForm',
-        formSelector: '#AddToCartForm, .form--quick-atc',
-        cartContainer: '#CartContainer',
-        //addToCartSelector: '#AddToCart',
-        addToCartSelector: '#AddToCart, .btn',
-        cartCountSelector: '.CartCount',
-        cartCostSelector: '.CartCost',
-        moneyFormat: {{ shop.money_format | json }},
-        onToggleCallback: function(cart) {
-        Currency.convertAll(shopCurrency, Currency.currentCurrency);
-        jQuery('.selected-currency').text(Currency.currentCurrency);
-      }
-     });
-    });
-    jQuery('body').on('ajaxCart.afterCartLoad', function(evt, cart) {
-      // Bind to 'ajaxCart.afterCartLoad' to run any javascript after the cart has loaded in the DOM
-      timber.RightDrawer.open();
-      //afterpay custom placement
-      {%render 'afterpay-ajax-cart'%}
-    });      
-  </script>
-  {% endif %}
-
-<!--Gem_Page_Footer_Script-->
-{% include 'gem-app-footer-scripts' %}
-<!--End_Gem_Page_Footer_Script-->
-
-<!-- spurit_um-added -->
-{% include 'spurit_um-theme-snippet' %}
-<!-- /spurit_um-added -->
-<script type="text/javascript" src="https://s3.amazonaws.com/lastsecondcoupon/js/freeshippingbar.js?shop=mysozy.myshopify.com"></script>
-
-
-
-  {% comment %}Retention Rocket{% endcomment %}
-  <script src="https://app.retentionrocket.com/content/cartdrawerJs/mysozy/script.js" async></script>
-  
-<script>
-jQuery(function() {
-  jQuery('.swatch :radio').change(function() {
-    var optionIndex = jQuery(this).closest('.swatch').attr('data-option-index');
-    var optionValue = jQuery(this).val();
-    jQuery(this)
-      .closest('form')
-      .find('.single-option-selector')
-      .eq(optionIndex)
-      .val(optionValue)
-      .trigger('change');
-  });
-});
-</script>
-  
-  {% if template contains 'product' %}
-  	{% include 'sticky-add-cart' %}
-  {% endif %}
-  
- {% include 'smile-initializer' %}
- 
-
-  <script src="https://cdn.attn.tv/livesozy/dtag.js"></script>
-
-{% if customer %} <div id="shopmsg-customer-helper" data-id="{{ customer.id }}" style="display:none;"></div>{% endif %}</body>
+		<script type="lazyload2" data-src="https://cdn.attn.tv/livesozy/dtag.js"></script>
+		{% if customer %} <div id="shopmsg-customer-helper" data-id="{{ customer.id }}" style="display:none;"></div>{% endif %}
+	</body>
 </html>
-
-
 <!-- Start of Afterpay assets -->
 <!-- Begin Shopify-Afterpay JavaScript Snippet (v1.0.3) -->
 <script type="text/javascript">
-  var afterpay_logo_theme = 'colour'; // 'colour', 'black' or 'white'.
-  var afterpay_product_selector = '#product-price'; // update if messaging is not present on product page
-//   var afterpay_cart_static_selector = ''; // update if messaging is not present on cart page
-  var afterpay_min = 0;
-  var afterpay_max = 1000;
-  var afterpay_show_currency_code = false;
-  var afterpay_modal_responsive = true;
-  var afterpay_modal_open_icon = true;
-  var afterpay_hide_upper_limit = true;
+	var afterpay_logo_theme = 'colour'; // 'colour', 'black' or 'white'.
+	var afterpay_product_selector = '#product-price'; // update if messaging is not present on product page
+	//   var afterpay_cart_static_selector = ''; // update if messaging is not present on cart page
+	var afterpay_min = 0;
+	var afterpay_max = 1000;
+	var afterpay_show_currency_code = false;
+	var afterpay_modal_responsive = true;
+	var afterpay_modal_open_icon = true;
+	var afterpay_hide_upper_limit = true;
 
-  var afterpay_shop_currency = {{ shop.currency | json }};
-  var afterpay_shop_money_format = {{ shop.money_format | json }};
-  var afterpay_shop_permanent_domain = {{ shop.permanent_domain | json }};
-  var afterpay_theme_name = {{ theme.name | json }};
-  var afterpay_product = {{ product | json }};
-  var afterpay_current_variant = {{ product.selected_or_first_available_variant | json }};
-  var afterpay_cart_total_price = {{ cart.total_price | json }};
-  var afterpay_js_snippet_version = '1.0.3';
-  const cartItems = {{ cart.items | json }};
-  const isGiftCard = (item) => item.product_type === "Gift Card";
-  
-  if(afterpay_product && afterpay_product.type === "Gift Card") {
-    afterpay_product_selector = '';
-  }
-  
-  if(cartItems && cartItems.some(isGiftCard)) {
-	afterpay_cart_static_selector = '';
-  }
-  console.log("Afterpay-1.x.js loaded");
-  var afterpay_script = document.createElement('script');
-  afterpay_script.setAttribute('src','https://js.afterpay.com/afterpay-1.x.js');
-  document.head.appendChild(afterpay_script);
+	var afterpay_shop_currency = {{ shop.currency | json }};
+	var afterpay_shop_money_format = {{ shop.money_format | json }};
+	var afterpay_shop_permanent_domain = {{ shop.permanent_domain | json }};
+	var afterpay_theme_name = {{ theme.name | json }};
+	var afterpay_product = {{ product | json }};
+	var afterpay_current_variant = {{ product.selected_or_first_available_variant | json }};
+	var afterpay_cart_total_price = {{ cart.total_price | json }};
+	var afterpay_js_snippet_version = '1.0.3';
+	const cartItems = {{ cart.items | json }};
+	const isGiftCard = (item) => item.product_type === "Gift Card";
+
+	if(afterpay_product && afterpay_product.type === "Gift Card") {
+		afterpay_product_selector = '';
+	}
+
+	if(cartItems && cartItems.some(isGiftCard)) {
+		afterpay_cart_static_selector = '';
+	}
 </script>
-
-<script type="text/javascript" src="https://static.afterpay.com/shopify-afterpay-javascript.js"></script>
+<script type="lazyload2">
+	console.log("Afterpay-1.x.js loaded");
+	var afterpay_script = document.createElement('script');
+	afterpay_script.setAttribute('src','https://js.afterpay.com/afterpay-1.x.js');
+	document.head.appendChild(afterpay_script);
+</script>
+<script type="lazyload2" data-src="https://static.afterpay.com/shopify-afterpay-javascript.js"></script>
 <!-- End Shopify-Afterpay JavaScript Snippet (v1.0.3) -->
-<style type="text/css">
-  .afterpay-logo {
-    width: 6em !important;
-    height: auto !important;
-  }
-  .afterpay-paragraph {
-  	font-size: 0.8em;
-	margin-bottom: 18px !important;
-  }
-  #shopping-cart .afterpay-paragraph {
-    font-size: 0.9em;
-    margin-top: -8px;
-  }
-  @media only screen and (max-width: 740px) {
-    #shopping-cart .afterpay-paragraph {
-      margin-top: -26px;
-    }
-  }
-  .afterpay-link-inner { 
-    text-decoration: none; 
-    color: black;
-  }
-</style>
+<style>.afterpay-logo{width:6em!important;height:auto!important}.afterpay-paragraph{font-size:.8em;margin-bottom:18px!important}#shopping-cart .afterpay-paragraph{font-size:.9em;margin-top:-8px}@media only screen and (max-width:740px){#shopping-cart .afterpay-paragraph{margin-top:-26px}}.afterpay-link-inner{text-decoration:none;color:#000}</style>
 <!-- End of Afterpay assets -->
+<script>var _0x397f=['mousemove','1ArOwEe','readyState','src','stylesheet','11dgScYH','Yes-optimization','cart','8VAYXFF','style','addEventListener','data-srcset','style[type=lazyload2]','500679AISKmx','2225AFrPZC','setAttribute','href','link','onload','nodeName','log','ks_load','link[data-href]','rel','lazybg','innerHeight','dataset','mobstyle','location','script[type=lazyload2]','length','innerHTML','img.lazy2','92823UPYqut','platform','type','data-src','value','iframe','appendChild','parentNode','remove','scroll','DOMContentLoaded','getBoundingClientRect','88879HbZcPq','querySelectorAll','41XixEtz','insertBefore','srcset','Linux\x20x86_64','dispatchEvent','941831poVxSg','document','script','getElementById','classList','lazy2','removeChild','onerror','top','createElement','onreadystatechange','name','responseText','body','mobsrc','width','12473XOByUJ','initEvent','indexOf','nodeValue','attributes','845352nByVpq','nextSibling','forEach','424ygrIUR','GET','status','getAttribute','.lazybg','data-href'];var _0x231278=_0x4ff2;(function(_0x2a2d85,_0x23bd53){var _0x4b7a4e=_0x4ff2;while(!![]){try{var _0x2f6a58=parseInt(_0x4b7a4e(0xde))*parseInt(_0x4b7a4e(0x103))+-parseInt(_0x4b7a4e(0xe3))+-parseInt(_0x4b7a4e(0x105))*-parseInt(_0x4b7a4e(0x11a))+parseInt(_0x4b7a4e(0x122))*parseInt(_0x4b7a4e(0xe4))+-parseInt(_0x4b7a4e(0x11f))+-parseInt(_0x4b7a4e(0x129))*-parseInt(_0x4b7a4e(0x10a))+-parseInt(_0x4b7a4e(0xf7))*parseInt(_0x4b7a4e(0xdb));if(_0x2f6a58===_0x23bd53)break;else _0x2a2d85['push'](_0x2a2d85['shift']());}catch(_0x22cd3c){_0x2a2d85['push'](_0x2a2d85['shift']());}}}(_0x397f,0xb4cdc));var src,windowWidth,lazyBackground,lazyIframe,lazybg,xmlhttp,s,i,flag=0x1,lazy_load_by_px=0xc8,external_single_loaded=0x1;function ks_init(){flag&&(flag=0x0,lazyLoadStyle(),lazyLoadImg(),lazyLoadBackground(),lazyLoadCss(),load_all_js(),lazyLoadIframe());}function insertAfter(_0x1b1890,_0x3f48eb){var _0x3f300b=_0x4ff2;_0x3f48eb[_0x3f300b(0xfe)][_0x3f300b(0x106)](_0x1b1890,_0x3f48eb[_0x3f300b(0x120)]);}function lazyLoadImg(){var _0x4d803b=_0x4ff2,_0x1abe92=document[_0x4d803b(0x104)](_0x4d803b(0xf6)),_0x4c5134=window[_0x4d803b(0xef)];for(i=0x0;i<_0x1abe92[_0x4d803b(0xf4)];i++){var _0x567cb7=_0x1abe92[i][_0x4d803b(0x102)]();if(0x0!=_0x567cb7[_0x4d803b(0x112)]&&_0x567cb7[_0x4d803b(0x112)]-_0x4c5134<lazy_load_by_px){src=windowWidth<0x258?void 0x0===_0x1abe92[i][_0x4d803b(0xf0)][_0x4d803b(0x118)]?_0x1abe92[i][_0x4d803b(0xf0)][_0x4d803b(0xd9)]:_0x1abe92[i]['dataset'][_0x4d803b(0x118)]:void 0x0===_0x1abe92[i][_0x4d803b(0xf0)]['src']?_0x1abe92[i][_0x4d803b(0xd9)]:_0x1abe92[i]['dataset']['src'];var _0x53d0f4=_0x1abe92[i][_0x4d803b(0x125)](_0x4d803b(0xe1))?_0x1abe92[i][_0x4d803b(0x125)](_0x4d803b(0xe1)):'';null!=src&&''!=src&&(_0x1abe92[i][_0x4d803b(0xd9)]=src),null!=_0x53d0f4&&''!=_0x53d0f4&&(_0x1abe92[i][_0x4d803b(0x107)]=_0x53d0f4),_0x1abe92[i][_0x4d803b(0x10e)][_0x4d803b(0xff)](_0x4d803b(0x10f));}}}function lazyLoadBackground(){var _0x27ee61=_0x4ff2;(lazyBackground=document['querySelectorAll'](_0x27ee61(0x126)))['forEach'](function(_0x1d4493){var _0x3843ef=_0x27ee61;null!==(lazybg=windowWidth<0x258?void 0x0===_0x1d4493['dataset'][_0x3843ef(0xf1)]?_0x1d4493['dataset'][_0x3843ef(0xdf)]:_0x1d4493[_0x3843ef(0xf0)]['mobstyle']:void 0x0===_0x1d4493[_0x3843ef(0xf0)][_0x3843ef(0xdf)]?_0x1d4493[_0x3843ef(0xdf)]:_0x1d4493['dataset'][_0x3843ef(0xdf)])&&(_0x1d4493[_0x3843ef(0xdf)]=lazybg),_0x1d4493[_0x3843ef(0x10e)]['remove'](_0x3843ef(0xee));});}function lazyLoadCss(){var _0x482b63=_0x4ff2,_0x52483e=document[_0x482b63(0x104)](_0x482b63(0xec));for(i=0x0;i<_0x52483e[_0x482b63(0xf4)];i++)if(null!==_0x52483e[i][_0x482b63(0x125)]('data-href')){var _0x594b3c=document[_0x482b63(0x113)](_0x482b63(0xe7));_0x594b3c['href']=_0x52483e[i]['getAttribute'](_0x482b63(0x127)),_0x594b3c[_0x482b63(0xed)]=_0x482b63(0xda),_0x52483e[i]['parentNode'][_0x482b63(0x106)](_0x594b3c,_0x52483e[i]),_0x52483e[i]['parentNode'][_0x482b63(0x110)](_0x52483e[i]);}}function lazyLoadStyle(){var _0x19797a=_0x4ff2,_0x4465ed=document['querySelectorAll'](_0x19797a(0xe2));for(i=0x0;i<_0x4465ed['length'];i++){var _0x23d566=document['createElement'](_0x19797a(0xdf));_0x23d566[_0x19797a(0xf5)]=_0x4465ed[i][_0x19797a(0xf5)],_0x4465ed[i][_0x19797a(0xfe)][_0x19797a(0x106)](_0x23d566,_0x4465ed[i]),_0x4465ed[i][_0x19797a(0xfe)][_0x19797a(0x110)](_0x4465ed[i]);}}function lazyLoadIframe(){var _0x4963d8=_0x4ff2;(lazyIframe=document[_0x4963d8(0x104)](_0x4963d8(0xfc)))[_0x4963d8(0x121)](function(_0x8a0b71){var _0x89a49=_0x4963d8;_0x8a0b71[_0x89a49(0xd9)]=void 0x0===_0x8a0b71[_0x89a49(0xf0)]['src']?_0x8a0b71['src']:_0x8a0b71[_0x89a49(0xf0)]['src'];});}function w3_load_js_uri(_0x5e365c){var _0x382690=_0x4ff2,_0xf60f83=document[_0x382690(0x113)](_0x382690(0x10c));if(void 0x0!==_0x5e365c[_0x382690(0x11e)]){for(var _0x34606e,_0x77c0d7=0x0,_0x50ece7=_0x5e365c['attributes'],_0x2c24ab=_0x50ece7[_0x382690(0xf4)];_0x77c0d7<_0x2c24ab;_0x77c0d7++)_0x382690(0xfa)!=(_0x34606e=_0x50ece7[_0x77c0d7])[_0x382690(0xe9)]&&_0x382690(0xf9)!=_0x34606e['nodeName']&&_0xf60f83[_0x382690(0xe5)](_0x34606e[_0x382690(0xe9)],_0x34606e[_0x382690(0x11d)]);}return _0xf60f83[_0x382690(0xd9)]=_0x5e365c['getAttribute']('data-src'),insertAfter(_0xf60f83,_0x5e365c),delete _0x5e365c[_0x382690(0xf0)][_0x382690(0xd9)],delete _0x5e365c[_0x382690(0xf9)],_0x5e365c['parentNode'][_0x382690(0x110)](_0x5e365c),_0xf60f83;}function _0x4ff2(_0x281707,_0x3eebe9){return _0x4ff2=function(_0x397fd8,_0x4ff257){_0x397fd8=_0x397fd8-0xd9;var _0x5128da=_0x397f[_0x397fd8];return _0x5128da;},_0x4ff2(_0x281707,_0x3eebe9);}function w3_load_inline_js_single(_0xf2fa76){var _0x3f8b3f=_0x4ff2;if(!external_single_loaded)return setTimeout(function(){w3_load_inline_js_single(_0xf2fa76);},0xc8),!0x1;for(var _0x5585b3=document[_0x3f8b3f(0x113)](_0x3f8b3f(0x10c)),_0x3db064=0x0;_0x3db064<_0xf2fa76['attributes'][_0x3f8b3f(0xf4)];_0x3db064++){var _0x5ab754=_0xf2fa76[_0x3f8b3f(0x11e)][_0x3db064];_0x3f8b3f(0xf9)!=_0x5ab754[_0x3f8b3f(0x115)]&&_0x5585b3[_0x3f8b3f(0xe5)](_0x5ab754['name'],_0x5ab754[_0x3f8b3f(0xfb)]);}_0x5585b3[_0x3f8b3f(0xf5)]=_0xf2fa76['innerHTML'],insertAfter(_0x5585b3,_0xf2fa76),_0xf2fa76[_0x3f8b3f(0xfe)]['removeChild'](_0xf2fa76);}function lazyLoadScripts(){var _0x4c9625=_0x4ff2,_0x1d5600=document['querySelectorAll'](_0x4c9625(0xf3));if(!(_0x1d5600[_0x4c9625(0xf4)]<0x1)){if(null!==_0x1d5600[0x0][_0x4c9625(0x125)](_0x4c9625(0xfa))){var _0x207bc0=w3_load_js_uri(_0x1d5600[0x0]);_0x207bc0[_0x4c9625(0xe8)]=function(){lazyLoadScripts();},_0x207bc0[_0x4c9625(0x111)]=function(){lazyLoadScripts();};}else w3_load_inline_js_single(_0x1d5600[0x0]),lazyLoadScripts();}}function lazyLoadCss2(_0x114214,_0x44c642){var _0x55dc6f=_0x4ff2;(xmlhttp=new XMLHttpRequest())[_0x55dc6f(0x114)]=function(){var _0x1b2e63=_0x55dc6f;0x4==this[_0x1b2e63(0x12a)]&&0xc8==this[_0x1b2e63(0x124)]&&(document[_0x1b2e63(0x10d)](_0x44c642)[_0x1b2e63(0xf5)]=this[_0x1b2e63(0x116)]);},xmlhttp['open'](_0x55dc6f(0x123),_0x114214,!0x0),xmlhttp['send']();}function lazyLoadJS(_0x257fc8){var _0x3a6cc2=_0x4ff2;(s=document['createElement']('script'))[_0x3a6cc2(0xd9)]=_0x257fc8,s[_0x3a6cc2(0xe8)]=function(){var _0x181cce=_0x3a6cc2;document[_0x181cce(0x117)][_0x181cce(0xfd)](s);};}function load_all_js(){var _0x4185ff=_0x4ff2;lazyLoadScripts(),window[_0x4185ff(0xf2)][_0x4185ff(0xe6)][_0x4185ff(0x11c)]('mysozy.myshopify.com')>-0x1||window[_0x4185ff(0xf2)][_0x4185ff(0xe6)][_0x4185ff(0x11c)](_0x4185ff(0xdd))>-0x1||window[_0x4185ff(0xf2)][_0x4185ff(0xe6)][_0x4185ff(0x11c)]('checkout')>-0x1?console[_0x4185ff(0xea)]('No-optimization'):(console[_0x4185ff(0xea)](_0x4185ff(0xdc)),setTimeout(function(){var _0xc901c7=_0x4185ff,_0x37f226=new Event(_0xc901c7(0xeb));window[_0xc901c7(0x109)](_0x37f226);},0xc8)),setTimeout(function(){var _0x263312=_0x4185ff,_0x423812=document['createEvent']('Event');_0x423812[_0x263312(0x11b)]('DOMContentLoaded2',!0x0,!0x0),window[_0x263312(0x10b)][_0x263312(0x109)](_0x423812);var _0xcb8473=document[_0x263312(0x104)]('.critical2');for(i=0x0;i<_0xcb8473['length'];i++)_0xcb8473[i][_0x263312(0xf5)]='';},0xfa0);}document[_0x231278(0xe0)](_0x231278(0x101),function(){var _0x99cce8=_0x231278;windowWidth=screen[_0x99cce8(0x119)],window[_0x99cce8(0xe0)](_0x99cce8(0x100),function(){lazyLoadImg(),ks_init();}),window[_0x99cce8(0xe0)](_0x99cce8(0x128),function(){lazyLoadImg(),ks_init();}),_0x99cce8(0x108)!=navigator[_0x99cce8(0xf8)]&&ks_init(),window[_0x99cce8(0xe0)]('touchstart',function(){lazyLoadImg(),ks_init();});});</script>

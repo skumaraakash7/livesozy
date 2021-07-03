@@ -1,60 +1,55 @@
 <nav class="shifter-navigation no-fouc" data-section-id="{{ section.id }}" data-section-type="mobile-navigation">
- 
-  <div class="mob-scroll">
-  
-  <div class="search">
-    <img src="https://cdn.shopify.com/s/files/1/3012/3948/files/search.svg?v=1603726697">
-    <form role="search" action="/search" method="get">
-      <input type="text" name="q" id="q" placeholder="{{ 'general.search.placeholder' | t }}" />
-    </form>
-  </div>
-  <ul id="accordion" role="navigation">
-    {% for link in linklists[section.settings.main_nav].links %}
-    {% if link.links != blank %}
-    <li class="accordion-toggle {%if link.title == "Shop"%}open {%endif%}" aria-haspopup="true" aria-expanded="false"><a href="{{ link.url }}">{{ link.title | escape }}</a></li>
-    <div class="accordion-content" {%if link.title == "Shop"%}style="display: block" {%endif%}>
-      <ul class="sub">
-        {% for sub_link in link.links %}
-        {% if sub_link.links != blank %}
-        <div class="accordion-toggle2" aria-haspopup="true" aria-expanded="false"><a href="{{ sub_link.url }}">{{ sub_link.title | escape }}</a></div>
-        <div class="accordion-content2">
-          <ul class="sub">
-            {% for sub_sub_link in sub_link.links %}
-            <li><a href="{{ sub_sub_link.url }}">{{ sub_sub_link.title }}</a></li>
-            {% endfor %}
-          </ul>
-        </div>
-        {% else %}
-        <li><a href="{{ sub_link.url }}">{{ sub_link.title | escape }}</a></li>
-        {% endif %}
-        {% endfor %}
-      </ul>
-    </div>
-    {% else %}
-    <li><a href="{{ link.url }}">{{ link.title | escape }}</a></li>
-    {% endif %}
-    {% endfor %}
-  </ul>
-  
-  </div>
-  
-  
+<div class="mob-scroll">
+<div class="search">
+<img class="lazy2" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" data-src="https://cdn.shopify.com/s/files/1/3012/3948/files/search.svg?v=1603726697">
+<form role="search" action="/search" method="get">
+<input type="text" name="q" id="q" placeholder="{{ 'general.search.placeholder' | t }}" />
+</form>
+</div>
+<ul id="accordion" role="navigation">
+{% for link in linklists[section.settings.main_nav].links %}
+{% if link.links != blank %}
+<li class="accordion-toggle {%if link.title == "Shop"%}open {%endif%}" aria-haspopup="true" aria-expanded="false"><a href="{{ link.url }}">{{ link.title | escape }}</a></li>
+<div class="accordion-content" {%if link.title == "Shop"%}style="display: block" {%endif%}>
+<ul class="sub">
+{% for sub_link in link.links %}
+{% if sub_link.links != blank %}
+<div class="accordion-toggle2" aria-haspopup="true" aria-expanded="false"><a href="{{ sub_link.url }}">{{ sub_link.title | escape }}</a></div>
+<div class="accordion-content2">
+<ul class="sub">
+{% for sub_sub_link in sub_link.links %}
+<li><a href="{{ sub_sub_link.url }}">{{ sub_sub_link.title }}</a></li>
+{% endfor %}
+</ul>
+</div>
+{% else %}
+<li><a href="{{ sub_link.url }}">{{ sub_link.title | escape }}</a></li>
+{% endif %}
+{% endfor %}
+</ul>
+</div>
+{% else %}
+<li><a href="{{ link.url }}">{{ link.title | escape }}</a></li>
+{% endif %}
+{% endfor %}
+</ul>
+</div>
 </nav>
 
 {% schema %}
-  {
-    "name": "Mobile navigation",
-    "settings": [
-	  {
-        "type": "header",
-        "content": "Navigation"
-      },
-      {
-        "type": "link_list",
-        "id": "main_nav",
-        "label": "Choose main menu",
-        "default":"main-menu"
-      }
-	]
-  }
+{
+"name": "Mobile navigation",
+"settings": [
+{
+"type": "header",
+"content": "Navigation"
+},
+{
+"type": "link_list",
+"id": "main_nav",
+"label": "Choose main menu",
+"default":"main-menu"
+}
+]
+}
 {% endschema %}

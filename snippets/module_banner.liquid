@@ -1,7 +1,5 @@
 <!-- snippets/module_banner.liquid -->
-
 <section class="homepage-content-banner index-section no-fouc module-{{ section.id }}" data-section-id="{{ section.id }}">
-
 	{% if section.settings.button-link != blank  %}
 		<a href="{{ section.settings.button-link }}">
 	{% endif %}
@@ -9,11 +7,9 @@
 			{% if section.settings.pre-heading != blank %}
 				<p class="custom-module-pretitle">{{ section.settings.pre-heading | escape }}</p>
 			{% endif %}
-			
 			{% if section.settings.heading != blank %}
 				<h3 class="custom-module-title">{{ section.settings.heading | escape }}</h3>
 			{% endif %}
-			
 			{% if section.settings.button-link != blank and section.settings.button-text != blank %}
 				<p>
 					<a class="custom-module-button" href="{{ section.settings.button-link }}">
@@ -25,13 +21,12 @@
 	{% if section.settings.button-link != blank  %}
 		</a>
 	{% endif %}
-
 	<div class="banner-image-desktop mobile-hidden tablet-hidden">
 		{% if section.settings.button-link != blank %}
 			<a href="{{ section.settings.button-link }}">
 		{% endif %}
 			{% if section.settings.image %}
-				<img src="{{ section.settings.image.src | img_url: '2000x900', crop: 'center', format: 'pjpg' }}" class="fullwidth" alt="{{ section.settings.image.alt }}" />
+				<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" data-src="{{ section.settings.image.src | img_url: '2000x900', crop: 'center', format: 'pjpg' }}" class="fullwidth lazy2" alt="{{ section.settings.image.alt }}" />
 			{% endif %}
 		{% if section.settings.button-link %}
 			</a>
@@ -42,29 +37,23 @@
 			<a href="{{ section.settings.button-link }}">
 		{% endif %}
 			{% if section.settings.image-mobile %}
-				<img src="{{ section.settings.image-mobile.src | img_url: '700x', format: 'pjpg' }}" class="fullwidth" alt="{{ section.settings.image-mobile.alt }}"/>
+				<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" data-src="{{ section.settings.image-mobile.src | img_url: '700x', format: 'pjpg' }}" class="fullwidth lazy2" alt="{{ section.settings.image-mobile.alt }}"/>
 			{% endif %}
 		{% if section.settings.button-link %}
 			</a>
 		{% endif %}
 	</div>
-	
 </section>
 <div class="clear"></div>
-
 <style>
-	
 	.module-{{ section.id }} .custom-module-content {
 		position: absolute;
-		
 		width: {{ section.settings.text_width }}%;
-		
 		padding-top: {{ section.settings.text_padding_top }}px;
 		padding-bottom: {{ section.settings.text_padding_bottom }}px;
 		padding-left: {{ section.settings.text_padding_left }}px;
 		padding-right: {{ section.settings.text_padding_right }}px;
 		text-align: {{ section.settings.text_alignment }};
-		
 		{% if section.settings.text_position == "top-left" %}
 			top: 0;
 			left: 0;
@@ -99,37 +88,29 @@
 			right: 0;
 		{% endif %}
 	}
-	
 	.module-{{ section.id }} p.custom-module-pretitle,
 	.module-{{ section.id }} h3.custom-module-title {
 		color: {{ section.settings.text-color }};
 		text-align: {{ section.settings.text_alignment }};
 	}
-	
 	.module-{{ section.id }} a.custom-module-button {
 		color: {{ section.settings.button-text-color }};
 		background-color: {{ section.settings.button-color }};
 	}
-	
 	{% unless section.settings.desktop_enable %}
 		.module-{{ section.id }} {
 			display: none;
 		}
 	{% endunless %}
-	
 	@media screen and (max-width: 740px) {
-		
 		.module-{{ section.id }} .custom-module-content {
 			position: absolute;
-		
 			width: {{ section.settings.text_width_mobile }}%;
-		
 			padding-top: {{ section.settings.text_padding_top_mobile }}px;
 			padding-bottom: {{ section.settings.text_padding_bottom_mobile }}px;
 			padding-left: {{ section.settings.text_padding_left_mobile }}px;
 			padding-right: {{ section.settings.text_padding_right_mobile }}px;
 			text-align: {{ section.settings.text_alignment_mobile }};
-		
 			{% if section.settings.text_position_mobile == "top-left" %}
 				top: 0;
 				left: 0;
@@ -164,26 +145,20 @@
 				right: 0;
 			{% endif %}
 		}
-      {%if section.settings.text_position_mobile == "center-center" %}
-      .custom-module-title{
-        top: 200px;
-        position: relative;
-      }
-      {%endif%}
-	
+		{%if section.settings.text_position_mobile == "center-center" %}
+		.custom-module-title{
+			top: 200px;
+			position: relative;
+		}
+		{%endif%}
 		.module-{{ section.id }} p.custom-module-pretitle,
 		.module-{{ section.id }} h3.custom-module-title {
 			text-align: {{ section.settings.text_alignment_mobile }};
 		}
-		
 		{% unless section.settings.mobile_enable %}
 			.module-{{ section.id }} {
 				display: none;
 			}
 		{% endunless %}
-		
 	}
-	
 </style>
-
-

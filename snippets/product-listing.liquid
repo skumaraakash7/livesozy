@@ -56,7 +56,7 @@
 		<div class="so icn">{{ 'products.general.sold' | t }}</div>
   {% endif %}
 
-  <a class="product-link"  onclick="javascript: return false;"   href="{{ product.url | within: collection }}" title="{{ product.title | escape }}">
+  <a class="product-link" onclick="javascript: return false;" href="{{ product.url | within: collection }}" title="{{ product.title | escape }}">
 
     {% assign prod_image = product.selected_or_first_available_variant.image.src %}
     {% if prod_image == null %}

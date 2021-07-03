@@ -1,76 +1,64 @@
 {%assign text_flag = false%}
-
-
 {%if enable_instragram == true%}
-<div id="insta-feed"></div>
+	<div id="insta-feed"></div>
 {%endif%}
-
 <div class="footer-icons-container">
-  <div class="f-internal-container">
-    {%-for block in section.blocks-%}
-      
-    {%if block.settings.text != blank%}
-    {%assign text_flag = true%}
-    {%else%}
-    {%assign text_flag = false%}
-    {%endif%}    
-    
-    <div class="f-card {%unless text_flag%}more-space{%endunless%}">      
-      <div class="img-test {%unless text_flag%}more-width{%endunless%}">
-    	<img class="lazy" data-src="{{block.settings.img}}">
-      </div>
-      {%if text_flag%}
-      <h3>{{block.settings.text}}</h3>
-      {%endif%}
-    </div>    
-    {%-endfor-%}
-  </div>
+	<div class="f-internal-container">
+		{%-for block in section.blocks-%}
+			{%if block.settings.text != blank%}
+				{%assign text_flag = true%}
+			{%else%}
+				{%assign text_flag = false%}
+			{%endif%}
+			<div class="f-card {%unless text_flag%}more-space{%endunless%}">
+				<div class="img-test {%unless text_flag%}more-width{%endunless%}">
+					<img class="lazy2" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" data-src="{{ block.settings.img }}">
+				</div>
+				{%if text_flag%}
+					<h3>{{block.settings.text}}</h3>
+				{%endif%}
+			</div>
+		{%-endfor-%}
+	</div>
 </div>
-
 <style>
-  .footer-icons-container{
-    background: {{section.settings.bg_color}}
-  }
+.footer-icons-container{
+background: {{section.settings.bg_color}}
+}
 </style>
 {% schema %}
-  {
-    "name": "Icons Grid",
-    "settings": [
-      {
-        "type":"checkbox",
-        "id":"enable_instragram",
-        "label":"Enable Instagram",
-        "default":false
-      },
-      {
-      "type":"color",
-      "id":"bg_color",
-      "label":"Background Color"
-      }	
-	],
-	"blocks":[
-      {
-      "type":"Image",
-      "name":"Icon",
-      "settings":[
-		{
-          "type":"text",
-          "id":"img",
-          "label":"Image URL"
-        },
-        {
-          "type":"textarea",
-          "id":"text",
-          "label":"Text"
-        }
-		]
-      }
-	]
-  }
+{
+"name": "Icons Grid",
+"settings": [
+{
+"type":"checkbox",
+"id":"enable_instragram",
+"label":"Enable Instagram",
+"default":false
+},
+{
+"type":"color",
+"id":"bg_color",
+"label":"Background Color"
+} 
+],
+"blocks":[
+{
+"type":"Image",
+"name":"Icon",
+"settings":[
+{
+"type":"text",
+"id":"img",
+"label":"Image URL"
+},
+{
+"type":"textarea",
+"id":"text",
+"label":"Text"
+}
+]
+}
+]
+}
 {% endschema %}
-
-{% stylesheet %}
-{% endstylesheet %}
-
-{% javascript %}
-{% endjavascript %}

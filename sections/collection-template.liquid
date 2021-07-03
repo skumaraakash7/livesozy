@@ -1,4 +1,3 @@
-{% assign grcap_anchor_collection_content = '<span class="grcap_anchor_collection">' | append: collection.description | append: '</span>' %}
 {% capture currentCollection %}{{ collection.handle }}{% endcapture %}
 {% assign has_banner = false %}
 
@@ -36,9 +35,9 @@
 
 <div class="{% if section.settings.show_collection_sidebar %}desktop-10{% else %}desktop-12{% endif %} tablet-6 mobile-3" id="bside">
 
-	{% if grcap_anchor_collection_content != blank %}
+	{% if collection.description != blank %}
 	<div id="collection-description">
-		<div class="rte internal-col-descr">{{ grcap_anchor_collection_content | remove: "[banner]" | remove: "<span></span>"}}</div>
+		<div class="rte internal-col-descr">{{ collection.description | remove: "[banner]" | remove: "<span></span>"}}</div>
 	</div>
 	{% endif %}
 

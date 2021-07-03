@@ -85,12 +85,7 @@ $color_active_input: #5A5959;
       }            
     }  
 
-    .product-link{ 
-      
-      .featured{
-        width: 100% !important;
-      }
-      
+    .product-link{     
       .product_form{
         background-color: transparent !important;
         padding-bottom: 20px;
@@ -265,7 +260,7 @@ $color_active_input: #5A5959;
     }
 
     img{
-      width: 100% !important;
+      width: 100%;
       display: block;
       margin: 0 !important;
     }

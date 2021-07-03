@@ -1,4 +1,3 @@
-{% assign grcap_anchor_product_content = '<span class="grcap_anchor_product">' | append: product.description | append: '</span>' %}
 <!-- /snippets/yotpo-star-rating.liquid -->
 {%comment%} NOT USED ANYMORE
 <div class="yotpo bottomLine {%if product.metafields.yotpo.bottomline contains "Write a review"%}spacer-write{%endif%}" data-product-id="{{ product.id }}">
@@ -17,6 +16,6 @@
     data-name="{{ product.title | escape }}"
     data-url="{{ shop.url }}{{ product.url }}"
     data-image-url="{{ product.featured_image | product_img_url: 'large' |replace: '?', '%3F' | replace: '&','%26'}}"
-    data-description="{{ grcap_anchor_product_content | escape }}"
+    data-description="{{ product.description | escape }}"
     data-bread-crumbs="{% for tag in product.tags %}{{ tag | escape }};{% endfor %}">
 </div>

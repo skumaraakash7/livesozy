@@ -1,136 +1,119 @@
 <div class="post-cards-container">
-  <h2>{{section.settings.title}}</h2>
-   <div class="cards-container">
-     {%for article in blogs.live-sozy.articles limit:3%}
-     
-       <div class="post-card">
-         <a href="{{article.url}}">
-           <img src="{{article.image.src | img_url: "master"}}">
-           <h3>{{article.title}}</h3>
-           <a class="cta-a" href="{{article.url}}">READ NOW </a>
-         </a>
-     </div>
-
-     
-     {%endfor%}
-  </div>
-  
+	<h2>{{section.settings.title}}</h2>
+	<div class="cards-container">
+		{%for article in blogs.live-sozy.articles limit:3%}
+		<div class="post-card">
+			<a href="{{article.url}}"><img class="lazy2" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" data-src="{{article.image.src | img_url: "master"}}"><h3>{{article.title}}</h3><a class="cta-a" href="{{article.url}}">READ NOW </a></a>
+		</div>
+		{%endfor%}
+	</div>
 </div>
-
-<script>
-  $(document).ready(function(){
-    $(".cards-container").slick({
-      infinite: false,
-      dots: false,
-      slidesToShow: 3,
-      slidesToScroll: 1,
-      speed: 300,
-      arrows: false, 
-      touchThreshold: 50,
-      responsive:[
-        {
-          breakpoint: 1024,
-          settings: {
-            slidesToShow: 3,
-            slidesToScroll: 1,
-            infinite: false,
-            dots: false,            
-            arrows: false,
-            touchThreshold: 50
-          }
-        },
-        {
-          breakpoint: 980,
-          settings: {
-            slidesToShow: 1,
-            slidesToScroll: 1,
-            infinite: true,            
-            dots: false,
-            arrows: false,
-            touchThreshold: 50
-          }
-        },
-        {
-          breakpoint: 480,
-          settings: {
-            slidesToShow: 1,
-            slidesToScroll: 1,
-            infinite: true,            
-            arrows: false,
-            dots: false,
-            touchThreshold: 50
-          }
-        }
-      
-      ]
-    })
-  
-  })
+<script type="lazyload2">
+	setTimeout(function(){
+		$(".cards-container").slick({
+			infinite: false,
+			dots: false,
+			slidesToShow: 3,
+			slidesToScroll: 1,
+			speed: 300,
+			arrows: false,
+			touchThreshold: 50,
+			responsive:[
+				{
+					breakpoint: 1024,
+					settings: {
+						slidesToShow: 3,
+						slidesToScroll: 1,
+						infinite: false,
+						dots: false,
+						arrows: false,
+						touchThreshold: 50
+					}
+				},
+				{
+					breakpoint: 980,
+					settings: {
+						slidesToShow: 1,
+						slidesToScroll: 1,
+						infinite: true,
+						dots: false,
+						arrows: false,
+						touchThreshold: 50
+					}
+				},
+				{
+					breakpoint: 480,
+					settings: {
+						slidesToShow: 1,
+						slidesToScroll: 1,
+						infinite: true,
+						arrows: false,
+						dots: false,
+						touchThreshold: 50
+					}
+				}
+			]
+		})
+	})
 </script>
 
 {% schema %}
-  {
-    "name": "Home Page Posts",
-    "settings": [
-      {
-        "type":"textarea",
-        "id":"title",
-        "label":"Title"
-      }
-	],
-	"max_blocks":3,	
-	"blocks":[
-      {
-      	"type":"image_picker",
-      	"name":"Post",
-	  	"settings":[
-		  {
-		   "type":"header",
-           "content":"Image"
-		  },
-          {
-          "type":"image_picker",
-          "id":"image_desk",
-          "label":"Desktop Image"
-          },
-          {
-          "type":"image_picker",
-          "id":"image_mob",
-          "label":"Mobile Image"
-          },
-		  {
-		   "type":"header",
-           "content":"Text"
-		  },
-          {
-          "type":"textarea",
-          "id":"post_title",
-          "label":"Post Title"
-          },
-          {
-          "type":"text",
-          "id":"cta_text",
-          "label":"CTA Text"
-          },
-          {
-          "type":"url",
-          "id":"cta_url",
-          "label":"CTA URL"
-          }
-		]
-      }
-	],
-    "presets": [
-      {
-        "name": "Posts",
-        "category": "Home Page"
-      }
-    ]
-  }
+{
+"name": "Home Page Posts",
+"settings": [
+{
+"type":"textarea",
+"id":"title",
+"label":"Title"
+}
+],
+"max_blocks":3, 
+"blocks":[
+{
+"type":"image_picker",
+"name":"Post",
+"settings":[
+{
+"type":"header",
+"content":"Image"
+},
+{
+"type":"image_picker",
+"id":"image_desk",
+"label":"Desktop Image"
+},
+{
+"type":"image_picker",
+"id":"image_mob",
+"label":"Mobile Image"
+},
+{
+"type":"header",
+"content":"Text"
+},
+{
+"type":"textarea",
+"id":"post_title",
+"label":"Post Title"
+},
+{
+"type":"text",
+"id":"cta_text",
+"label":"CTA Text"
+},
+{
+"type":"url",
+"id":"cta_url",
+"label":"CTA URL"
+}
+]
+}
+],
+"presets": [
+{
+"name": "Posts",
+"category": "Home Page"
+}
+]
+}
 {% endschema %}
-
-{% stylesheet %}
-{% endstylesheet %}
-
-{% javascript %}
-{% endjavascript %}

@@ -1,4 +1,3 @@
-{% assign grcap_anchor_article_content = '<span class="grcap_anchor_article">' | append: article.content | append: '</span>' %}
 {{ 'blog-article-page.css' | asset_url | stylesheet_tag }}
 <div data-section-id="{{ section.id }}">
 
@@ -51,7 +50,7 @@
           {%- endfor -%}
         </ul>
       </div>
-    </div>    
+    </div>   
 
     {% if section.settings.text != blank %}
     <div id="collection-description" class="desktop-12 tablet-6 mobile-3"> 
@@ -85,7 +84,7 @@
           {%-if article.excerpt != blank-%}
           <p class="art-excerpt">{{article.excerpt}}</p>
           {%-else-%}
-          <p class="art-excerpt">{{grcap_anchor_article_content |replace:"<p> </p>",""| strip_html | truncate: 90 |replace:"  ",""}}</p>
+          <p class="art-excerpt">{{article.content |replace:"<p> </p>",""| strip_html | truncate: 90 |replace:"  ",""}}</p>
           {%-endif-%}  
           
     

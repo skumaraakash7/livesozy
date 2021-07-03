@@ -1,4 +1,3 @@
-{% assign grcap_anchor_article_content = '<span class="grcap_anchor_article">' | append: article.content | append: '</span>' %}
 {{ 'blog-article-page.css' | asset_url | stylesheet_tag }}
 {{ 'aricle-productsCarousel.scss.css' | asset_url | stylesheet_tag}}
 
@@ -45,8 +44,8 @@
 {%endfor%}
 
 {%comment%} ------- SHORTCODES --------- {%endcomment%}
-{%if grcap_anchor_article_content contains '[carousel="'%}
-{% assign carousel_shortcodes = grcap_anchor_article_content | split: '[carousel="' %}
+{%if article.content contains '[carousel="'%}
+{% assign carousel_shortcodes = article.content | split: '[carousel="' %}
 {% assign carousel_shortcodes = carousel_shortcodes[1] | split: '"]' %}
 {% assign carousel_collection_handle = carousel_shortcodes[0] %}
 {%assign flag-carousel = true%}
@@ -65,8 +64,8 @@
 {%endcapture%}
 {%endif%}
 
-{%if grcap_anchor_article_content contains '[related_article="'%}
-{%assign related_shortcodes = grcap_anchor_article_content | split: '[related_article="'%}
+{%if article.content contains '[related_article="'%}
+{%assign related_shortcodes = article.content | split: '[related_article="'%}
 {%assign related_shortcodes = related_shortcodes[1] | split: '"]'%}
 {%assign related_article_handle = related_shortcodes[0]%}
 {%assign shortcode_replace_related_article = '[related_article="'|append:related_article_handle|append:'"]'%}
@@ -77,8 +76,8 @@
  
 
 
-{%if grcap_anchor_article_content contains '[related-posts-handles="'%}
-{%assign post_shortcodes = grcap_anchor_article_content | split: '[related-posts-handles="'%}
+{%if article.content contains '[related-posts-handles="'%}
+{%assign post_shortcodes = article.content | split: '[related-posts-handles="'%}
 {%assign post_shortcodes = post_shortcodes[1] | split: '"]' %}
 {%assign shortcode_replace_post = '[related-posts-handles="'|append:post_shortcodes[0]|append:'"]'%}
 {%assign post_shortcodes = post_shortcodes[0] | split: ","%}
@@ -114,10 +113,9 @@
 {%endfor%}
 <div class="articleHeader">
   <p class="articleHeader__artCategory">
-    {%if article_category%}
-    <a href="/blogs/live-sozy/tagged/{{article_category_tag | handle}}">{{article_category }}</a>
+    {%if article_category%}<a href="/blogs/live-sozy/tagged/{{article_category_tag | handle}}">{{article_category }}</a>
     {%else%}
-    <a href="/blogs/live-sozy">Sozy Blog</a> 
+   <a href="/blogs/live-sozy">Sozy Blog</a> 
     {%endif%}
   </p>
   <h1>{{ article.title }}</h1>
@@ -139,7 +137,7 @@
   {% paginate article.comments by 20 %}
 
   <div id="blog-article" class="desktop-8 desktop-push-2 tablet-6 mobile-3">
-    {{ grcap_anchor_article_content | replace:shortcode_replace_carousel,carousel_html | replace:shortcode_replace_related_article, related_article_html | replace:shortcode_replace_post,related_post_html}}
+    {{ article.content | replace:shortcode_replace_carousel,carousel_html | replace:shortcode_replace_related_article, related_article_html | replace:shortcode_replace_post,related_post_html}}
   </div>      
 
   {% if blog.comments_enabled? %}

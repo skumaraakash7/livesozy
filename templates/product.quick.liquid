@@ -1,4 +1,3 @@
-{% assign grcap_anchor_product_content = '<span class="grcap_anchor_product">' | append: product.description | append: '</span>' %}
 {% layout none %}
 <div class="product-quick-view" style="position: relative; z-index: 0" id="product-{{ product.id }}" data-product-id="{{ product.id }}">
   <div id="product-{{ product.id }}" class="product-photos">
@@ -69,7 +68,7 @@
       </form>      
       
       <div class="rte">
-        {{ grcap_anchor_product_content | strip_html | truncatewords: 40 }}
+        {{ product.description | strip_html | truncatewords: 40 }}
         <p class="view-full"><a href="{{ product.url | within: collection }}">{{ 'products.general.view_full' | t }}</a></p>
       </div> 
       <div class="desc">

@@ -1,15 +1,11 @@
 <section class="index-section homepage-products featured-collections-row no-fouc section-{{ section.id }}" data-section-id="{{ section.id }}">
-	
 	{% if section.settings.title != blank %}
 		<div class="section-title row">
 			<h2>{{ section.settings.title | escape }}</h2>
 		</div>
 	{% endif %}
-	
 	<div class="row"> 
-		
 		{% if section.settings.homepage-product-layout == 'grid' %}
-			
 			{% case section.settings.grid %}
 				{% when 2 %}
 					{%- assign grid_item_width = 'desktop-6 tablet-3 mobile-half' -%}
@@ -18,14 +14,12 @@
 				{% when 4 %}
 					{%- assign grid_item_width = 'desktop-3 tablet-2 mobile-half' -%}
 				{% endcase %}
-				
 			<article class="product-loop">
 				{% for block in section.blocks %}
 					{%- assign collection = collections[block.settings.collection] -%}
-						
 						<div class="collection {{ grid_item_width }} mobile-half" data-alpha="{{ collection.title }}">
 							<a href="{{ collection.url }}" title="{{ collection.title | escape }}">
-								<img class="collection-image" src="{{ collection.image | img_url: '600x600', crop: 'center' }}" alt="{{ collection.title }}">
+								<img class="collection-image lazy2" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" data-src="{{ collection.image | img_url: '600x600', crop: 'center' }}" alt="{{ collection.title }}">
 							</a>
 							<h4>{{ collection.title }}</h4>
 							{% if section.settings.show_buttons %}
@@ -34,23 +28,18 @@
 								</a>
 							{% endif %}
 						</div>
-						
 				{% endfor %}
 			</article> 
-			
 		{% elsif section.settings.homepage-product-layout == 'carousel' %}
-			
 			<div class="collection-row-carousel clearfix">
 				{% for block in section.blocks %}
 					{%- assign collection = collections[block.settings.collection] -%}
-					
 					<div class="lazyOwl collection" data-alpha="{{ collection.title }}">
 						<a href="{{ collection.url }}" title="{{ collection.title | escape }}">
-							
 							{% if block.settings.image != blank %}
-								<img class="collection-image" src="{{ block.settings.image | img_url: '600x600', crop: 'center' }}" alt="{{ collection.title }}">
+								<img class="collection-image lazy2" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" data-src="{{ block.settings.image | img_url: '600x600', crop: 'center' }}" alt="{{ collection.title }}">
 							{% else %}
-								<img class="collection-image" src="{{ collection.image | img_url: '600x600', crop: 'center' }}" alt="{{ collection.title }}">
+								<img class="collection-image lazy2" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" data-src="{{ collection.image | img_url: '600x600', crop: 'center' }}" alt="{{ collection.title }}">
 							{% endif %}
 						</a>
 						<h4>{{ collection.title }}</h4>
@@ -62,113 +51,106 @@
 							</div>
 						{% endif %}
 					</div>
-				
 				{% endfor %} 
 			</div>
-			
 		{% endif %}
-		
 		{% if section.blocks.size == 0 %}
 			{% include 'onboard-collection' %}
 		{% endif %}
-		
 	</div>
 </section>
 <div class="clear"></div>
 
 {% schema %}
-	{
-		"name": "Collections row",
-		"class": "featured-collection-row-new",
-		"settings": [
-		{
-			"type": "text",
-			"id": "title",
-			"label": "Heading",
-			"default": "Featured Collections"
-		},
-		{
-			"type": "select",
-			"id": "homepage-product-layout",
-			"label": "Show grid or carousel",
-			"options": [
-				{
-					"value": "grid",
-					"label": "Grid"
-				},
-				{
-					"value": "carousel",
-					"label": "Carousel"
-				}
-			]
-		},
-		{
-			"type": "range",
-			"id": "grid",
-			"min": 2,
-			"max": 4,
-			"step": 1,
-			"label": "Collections per row",
-			"info": "Grid usage only",
-			"default": 3
-		},
-		{
-			"type": "color",
-			"id": "homepage-collection-title-color",
-			"label": "Title",
-			"default": "#000"
-		},
-		{
-			"type": "color",
-			"id": "homepage-collection-background",
-			"label": "Background",
-			"default": "#fff"
-		},
-		{
-			"type": "checkbox",
-			"id": "show_buttons",
-			"label": "Enable buttons",
-			"default": true
-		}
-	],
-	"blocks": [
-			
-		{
-			"type": "featured_collection",
-			"name": "Collection",
-			"settings": [
-				{
-					"id": "collection",
-					"type": "collection",
-					"label": "Collection"
-				},
-				{
-					"type": "image_picker",
-					"id": "image",
-					"label": "Image",
-					"info": "800x800 jpg recommended"
-				}
-			]
-		}
-			
-			
-	],
-	"presets": [
-		{
-			"name": "Collections row",
-			"category": "Collection"
-		}
-	]
+{
+"name": "Collections row",
+"class": "featured-collection-row-new",
+"settings": [
+{
+"type": "text",
+"id": "title",
+"label": "Heading",
+"default": "Featured Collections"
+},
+{
+"type": "select",
+"id": "homepage-product-layout",
+"label": "Show grid or carousel",
+"options": [
+{
+"value": "grid",
+"label": "Grid"
+},
+{
+"value": "carousel",
+"label": "Carousel"
+}
+]
+},
+{
+"type": "range",
+"id": "grid",
+"min": 2,
+"max": 4,
+"step": 1,
+"label": "Collections per row",
+"info": "Grid usage only",
+"default": 3
+},
+{
+"type": "color",
+"id": "homepage-collection-title-color",
+"label": "Title",
+"default": "#000"
+},
+{
+"type": "color",
+"id": "homepage-collection-background",
+"label": "Background",
+"default": "#fff"
+},
+{
+"type": "checkbox",
+"id": "show_buttons",
+"label": "Enable buttons",
+"default": true
+}
+],
+"blocks": [
+
+{
+"type": "featured_collection",
+"name": "Collection",
+"settings": [
+{
+"id": "collection",
+"type": "collection",
+"label": "Collection"
+},
+{
+"type": "image_picker",
+"id": "image",
+"label": "Image",
+"info": "800x800 jpg recommended"
+}
+]
+}
+
+
+],
+"presets": [
+{
+"name": "Collections row",
+"category": "Collection"
+}
+]
 }
 {% endschema %}
-
-
 <style>
-	.section-{{ section.id }} {
-		background: {{ section.settings.homepage-collection-background }};
-	}
-
-	.section-{{ section.id }} .section-title h2, section.homepage-products .fr a { 
-		color: {{ section.settings.homepage-collection-title-color }}! important; 
-	}
+.section-{{ section.id }} {
+background: {{ section.settings.homepage-collection-background }};
+}
+.section-{{ section.id }} .section-title h2, section.homepage-products .fr a { 
+color: {{ section.settings.homepage-collection-title-color }}! important; 
+}
 </style>

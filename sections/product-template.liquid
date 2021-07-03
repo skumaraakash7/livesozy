@@ -2,9 +2,9 @@
 var product_pdp = {{ product | json }};
 var _products = _products || []; 
 _products.push({
-    id: {{ product.id }},
-    handle: {{ product.handle | json }},
-    json: product_pdp
+	id: {{ product.id }},
+	handle: {{ product.handle | json }},
+	json: product_pdp
   });
 </script>
 <div itemscope_ itemtype="http://schema.org/Product" id="product-{{ product.id }}" 
@@ -16,24 +16,24 @@ _products.push({
 	
 	<div class="clear"></div>
 	
-  	<div class="product-data-container">
+	<div class="product-data-container">
   
 	{% comment %} ###### PRODUCT PHOTOS ###### {% endcomment %}
 	<div id="product-photos" class="desktop-7 mobile-3">
-      <div class="desktop">
+	  <div class="desktop">
 		{% if product.available %}
 			{% if product.compare_at_price > product.price %}
 				<div class="final-sale">
-					<img src="{{ 'final-sale.png' | asset_url }}" alt="{{ 'products.product.sale' | t }}" />
+					<img class="lazy2" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mM88x8AAp0BzdNtlUkAAAAASUVORK5CYII=" data-src="{{ 'final-sale.png' | asset_url }}" alt="{{ 'products.product.sale' | t }}" />
 				</div>
 			{% endif %}
 		{% endif %}
-        
-        {% if product.tags contains 'Pre-order' %}
-        <div class="final-sale">
-          <img src="{{ 'pre-order.png' | asset_url }}" alt="" />
-        </div>
-        {% endif %}
+		
+		{% if product.tags contains 'Pre-order' %}
+		<div class="final-sale">
+		  <img class="lazy2" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mM88x8AAp0BzdNtlUkAAAAASUVORK5CYII=" data-src="{{ 'pre-order.png' | asset_url }}" alt="" />
+		</div>
+		{% endif %}
 		
 		{% assign colors = '' %}
 		{% for variant in product.variants %}
@@ -56,7 +56,7 @@ _products.push({
 					{% if image.alt == color %}
 						<div class="slide {{ color }} xxx-{{ forloop.length }}">
 							<a href="{{ image | product_img_url: 'master' }}" data-image-id="{{ image.id }}" class="clicker-thumb">
-								<img class="thumbnail" src="{{ image | product_img_url: 'master' }}" data-image-id="{{ image.id }}" alt="{{ image.alt | escape }}" data-image-id="{{ image.id }}" />
+								<img class="thumbnail lazy2" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mM88x8AAp0BzdNtlUkAAAAASUVORK5CYII=" data-src="{{ image | product_img_url: 'master' }}" data-image-id="{{ image.id }}" alt="{{ image.alt | escape }}" data-image-id="{{ image.id }}" />
 							</a>
 						</div>
 					{% endif %}
@@ -65,55 +65,55 @@ _products.push({
 			</div>
 			{% endif %}
 		{% endfor %}
-        
+		
 
-        <div id="product-main-image" class="{% if product.images.size > 1 %}desktop-10{% else %}desktop-12{% endif %} main-product-image">
-          <img id="{{ product.id }}" data-image-id="{{ image.id }}" src="{{ featured_image | img_url: 'master' }}" alt='{{ image.alt | escape }}' title="{{ product.title }}"/>
-        </div>
+		<div id="product-main-image" class="{% if product.images.size > 1 %}desktop-10{% else %}desktop-12{% endif %} main-product-image">
+		  <img id="{{ product.id }}" data-image-id="{{ image.id }}" class="lazy2" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mM88x8AAp0BzdNtlUkAAAAASUVORK5CYII=" data-src="{{ featured_image | img_url: 'master' }}" alt='{{ image.alt | escape }}' title="{{ product.title }}"/>
+		</div>
 
-        
-      </div>
+		
+	  </div>
 
-      <script>
-        var _productImages = [];
-        {% for color in colorsArr %}
-          var images = [];
-          {% for image in product.images %}
-            {% if image.alt == color %}
-              images.push('{{ image.src | img_url: 'x1080' }}');
-            {% endif %}
-          {% endfor %}
-        
-        _productImages.push({
-          color: '{{ color }}',          
-          images: images
-        });
-        {% endfor %}
-      </script>
-      
-      <div class="mobile">
-        {%if product.images.size > 1 %}
-        <div class="mobile-carousel">
-          {% for image in product.images %}
-            {% if image.alt == product.selected_or_first_available_variant.option1 %}
-            <div class="carousel-cell">
-              <img class="lozad" src="{{ image | img_url: 'x480' }}" data-src="{{ image | img_url: 'x900' }}" />
-          	</div>
-          	{% endif %}
-          {% endfor %}
-        </div>
-         {%else%}
-          <div id="product-main-image" class="{% if product.images.size > 1 %}desktop-10{% else %}desktop-12{% endif %} main-product-image">
-            <img id="{{ product.id }}" data-image-id="{{ image.id }}" src="{{ featured_image | img_url: 'master' }}" alt='{{ image.alt | escape }}' title="{{ product.title }}"/>
-          </div>
-        {%endif%}
-      </div>
+	  <script>
+		var _productImages = [];
+		{% for color in colorsArr %}
+		  var images = [];
+		  {% for image in product.images %}
+			{% if image.alt == color %}
+			  images.push('{{ image.src | img_url: 'x1080' }}');
+			{% endif %}
+		  {% endfor %}
+		
+		_productImages.push({
+		  color: '{{ color }}',          
+		  images: images
+		});
+		{% endfor %}
+	  </script>
+	  
+	  <div class="mobile">
+		{%if product.images.size > 1 %}
+		<div class="mobile-carousel">
+		  {% for image in product.images %}
+			{% if image.alt == product.selected_or_first_available_variant.option1 %}
+			<div class="carousel-cell">
+			  <img class="lazy2" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mM88x8AAp0BzdNtlUkAAAAASUVORK5CYII=" data-src="{{ image | img_url: 'x900' }}" />
+			</div>
+			{% endif %}
+		  {% endfor %}
+		</div>
+		 {%else%}
+		  <div id="product-main-image" class="{% if product.images.size > 1 %}desktop-10{% else %}desktop-12{% endif %} main-product-image">
+			<img id="{{ product.id }}" data-image-id="{{ image.id }}" class="lazy2" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mM88x8AAp0BzdNtlUkAAAAASUVORK5CYII=" data-src="{{ featured_image | img_url: 'master' }}" alt='{{ image.alt | escape }}' title="{{ product.title }}"/>
+		  </div>
+		{%endif%}
+	  </div>
 	</div>
 	
 	{% comment %} ###### PRODUCT DETAILS ###### {% endcomment %}
 	<div id="product-right" class="desktop-5 mobile-3">
 		<div class="product-details-wrapper">
-          {%comment%}
+		  {%comment%}
 			{% if collection %} 
 				<div class="desktop-1 right mobile-hide">
 					{% if collection.previous_product %}
@@ -125,12 +125,12 @@ _products.push({
 					{% endif %}
 				</div>
 			{% endif %}
-          {%endcomment%}
-          
+		  {%endcomment%}
+		  
 			<div id="product-description">
-                           
-              {% include 'yotpo-star-rating' %}
-              <h1 itemprop="name">{{ product.title }}</h1>			
+						   
+			  {% include 'yotpo-star-rating' %}
+			  <h1 itemprop="name">{{ product.title }}</h1>			
 			
 				{% if section.settings.product-vendor %}
 					<h3>{{ 'products.product.designer' | t }}: {{ product.vendor }}</h3>
@@ -200,22 +200,22 @@ _products.push({
 							<div class="tab-content">{{ product.metafields.tab5.content }}</div>
 						</div>
 						{% endif %}
-                        <div class="tab">
-                          <div class="tab-title"><h2 class="collapsed">Our Cause</h2></div>
-                          <div class="tab-content">
-                            <p>To support women in need. With every Sozy purchase we are collectively making a difference in the world, with 10% of profit supporting survivors of sexual violence and an additional 10% of profit supporting other charitable and environmental initiatives. 
-                              <a href="/pages/about-us">Learn More</a>
-                            </p>
-                          </div>
-                        </div>
+						<div class="tab">
+						  <div class="tab-title"><h2 class="collapsed">Our Cause</h2></div>
+						  <div class="tab-content">
+							<p>To support women in need. With every Sozy purchase we are collectively making a difference in the world, with 10% of profit supporting survivors of sexual violence and an additional 10% of profit supporting other charitable and environmental initiatives. 
+							  <a href="/pages/about-us">Learn More</a>
+							</p>
+						  </div>
+						</div>
 
-                        <div class="tab">
-                          <div class="tab-title"><h2 class="collapsed">Returns</h2></div>
-                          <div class="tab-content">
-                            <p>We know that you will love what you ordered but if something doesn't work out, we will gladly accept unworn, unwashed, or defective merchandise for return or exchange within 30 days from the shipping date. Unless you are processing an exchange, $5 will be deducted from your refund for return shipping. Original shipping costs are non-refundable. <strong>Items purchased outside of the United States are not eligible for returns due to customs issues.</strong> "Final Sale” means the specified items are not eligible for return or exchange.</p>
-                             <p>Read our full return policy <a href="/pages/exchanges-returns">here</a>.</p>
-                          </div>
-                        </div>
+						<div class="tab">
+						  <div class="tab-title"><h2 class="collapsed">Returns</h2></div>
+						  <div class="tab-content">
+							<p>We know that you will love what you ordered but if something doesn't work out, we will gladly accept unworn, unwashed, or defective merchandise for return or exchange within 30 days from the shipping date. Unless you are processing an exchange, $5 will be deducted from your refund for return shipping. Original shipping costs are non-refundable. <strong>Items purchased outside of the United States are not eligible for returns due to customs issues.</strong> "Final Sale” means the specified items are not eligible for return or exchange.</p>
+							 <p>Read our full return policy <a href="/pages/exchanges-returns">here</a>.</p>
+						  </div>
+						</div>
 					</div>
 				</div>
 			
@@ -231,7 +231,7 @@ _products.push({
 	</div>
 	
   
-  	</div>
+	</div>
   
   
 	<div class="clear"></div>
@@ -268,9 +268,9 @@ _products.push({
 
 <script type="text/javascript">
   var _productSettings = (function() {
-    return {
-      zoom: {{ section.settings.enable-zoom }}
-    };
+	return {
+	  zoom: {{ section.settings.enable-zoom }}
+	};
   })();
 </script>
 
@@ -404,43 +404,43 @@ _products.push({
 </style>
 <script src="https://a.klaviyo.com/media/js/onsite/onsite.js"></script>
 <script>
-    var klaviyo = klaviyo || [];
-    klaviyo.init({
-      account: "NYFx8m",
-      platform: "shopify"
-    });
-    klaviyo.enable("backinstock",{ 
-    trigger: {
-      product_page_text: "NOTIFY ME WHEN AVAILABLE",
-      product_page_class: "btn",
-      product_page_text_align: "center",
-      product_page_margin: "0px",
-      replace_anchor: true
-    },
-    modal: {
-     headline: "{product_name}",
-     body_content: "Register to receive a notification when this item comes back in stock.",
-     email_field_label: "Email",
-     button_label: "NOTIFY ME WHEN AVAILABLE",
-     subscription_success_label: "You're in! We'll let you know when it's back.",
-     footer_content: '',
-     additional_styles: "@import url('https://use.typekit.net/pjc1tta.css');@import url('{{ 'klaviyo_additional_styles.css' | asset_url}}');",
-     font_family: "brandon-grotesque, sans-serif",
-     drop_background_color: "#000",
-     background_color: "#fff",
-     text_color: "#222", 
-     button_text_color: "#fff",
-     button_background_color: "#CB5E62",
-     close_button_color: "#ccc",
-     error_background_color: "#fcd6d7",
-     error_text_color: "#C72E2F",
-     success_background_color: "#d3efcd",
-     success_text_color: "#1B9500"
-    }
+	var klaviyo = klaviyo || [];
+	klaviyo.init({
+	  account: "NYFx8m",
+	  platform: "shopify"
+	});
+	klaviyo.enable("backinstock",{ 
+	trigger: {
+	  product_page_text: "NOTIFY ME WHEN AVAILABLE",
+	  product_page_class: "btn",
+	  product_page_text_align: "center",
+	  product_page_margin: "0px",
+	  replace_anchor: true
+	},
+	modal: {
+	 headline: "{product_name}",
+	 body_content: "Register to receive a notification when this item comes back in stock.",
+	 email_field_label: "Email",
+	 button_label: "NOTIFY ME WHEN AVAILABLE",
+	 subscription_success_label: "You're in! We'll let you know when it's back.",
+	 footer_content: '',
+	 additional_styles: "@import url('https://use.typekit.net/pjc1tta.css');@import url('{{ 'klaviyo_additional_styles.css' | asset_url}}');",
+	 font_family: "brandon-grotesque, sans-serif",
+	 drop_background_color: "#000",
+	 background_color: "#fff",
+	 text_color: "#222", 
+	 button_text_color: "#fff",
+	 button_background_color: "#CB5E62",
+	 close_button_color: "#ccc",
+	 error_background_color: "#fcd6d7",
+	 error_text_color: "#C72E2F",
+	 success_background_color: "#d3efcd",
+	 success_text_color: "#1B9500"
+	}
   });
 </script>
-<script>
-	$(document).ready(function(){
+<script type="lazyload2">
+	setTimeout(function(){
 		$('.swatch-element.color').click(function(){
 		var x = $(this).data("color");
 			$(".sets_slider").removeClass("shownow");
@@ -450,17 +450,5 @@ _products.push({
 			
 			$(".sets_slider."+x+" .thumbnail-slider1 .slide:first-child a").trigger("click");
 		});
-		
-//		 $(".sets_slider."+x+" .thumbnail-slider1").bxSlider({
-//				 mode: "vertical",
-//				 minSlides: 4,
-//				 slideMargin: 10,
-//				 infiniteLoop: false,
-//				 pager: false,
-//				 prevText: "",
-//				 nextText: "",
-//				 hideControlOnEnd: true
-//		 });
 	});
 </script>
-

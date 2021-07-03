@@ -1,4 +1,3 @@
-{% assign grcap_anchor_product_content = '<span class="grcap_anchor_product">' | append: product.description | append: '</span>' %}
 {% comment %}
 Open graph tags.
 {% endcomment %}
@@ -11,7 +10,7 @@ Open graph tags.
 <meta property="og:type" content="product">
 <meta property="og:title" content="{{ product.title | strip_html | escape }}">
 <meta property="og:url" content="{{ canonical_url }}">
-<meta property="og:description" content="{{ grcap_anchor_product_content | strip_html | escape }}">
+<meta property="og:description" content="{{ product.description | strip_html | escape }}">
 {% for image in product.images limit:3 %}
 <meta property="og:image" content="http:{{ image.src | img_url: 'grande' }}">
 <meta property="og:image:secure_url" content="https:{{ image.src | img_url: 'grande' }}">
@@ -68,7 +67,7 @@ This snippet renders meta data needed to create a Twitter card.
 <meta name="twitter:description" content="{{ page_description | escape }}">
 {% elsif template contains 'product' %}
 <meta name="twitter:title" content="{{ product.title | strip_html | escape }}">
-<meta name="twitter:description" content="{{ grcap_anchor_product_content | strip_html | truncate: 200, '' | escape }}">
+<meta name="twitter:description" content="{{ product.description | strip_html | truncate: 200, '' | escape }}">
 <meta name="twitter:image" content="https:{{ product | img_url: 'large' }}">
 <meta name="twitter:image:width" content="480">
 <meta name="twitter:image:height" content="480">

@@ -28,7 +28,7 @@
 				<a href="{{ section.settings.button-link }}">
 			{% endif %}
 				{% if section.settings.image-1 %}
-					<img class="lazy" data-src="{{ section.settings.image-1.src | img_url: '1200x900', crop: 'center' }}" class="fullwidth" alt="{{ section.settings.image-1.alt }}" />
+					<img class="lazy2" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" data-src="{{ section.settings.image-1.src | img_url: '1200x900', crop: 'center' }}" class="fullwidth" alt="{{ section.settings.image-1.alt }}" />
 				{% endif %}
 			{% if section.settings.button-link-1 != blank  %}
 				</a>
@@ -39,7 +39,7 @@
 				<a href="{{ section.settings.button-link-1 }}">
 			{% endif %}
 				{% if section.settings.image-mobile-1 %}
-					<img class="lazy" data-src="{{ section.settings.image-mobile-1.src | img_url: '700x700', crop: 'center' }}" class="fullwidth" alt="{{ section.settings.image-mobile-1.alt }}"/>
+					<img class="lazy2" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" data-src="{{ section.settings.image-mobile-1.src | img_url: '700x700', crop: 'center' }}" class="fullwidth" alt="{{ section.settings.image-mobile-1.alt }}"/>
 				{% endif %}
 			{% if section.settings.button-link-1 != blank  %}
 				</a>
@@ -73,7 +73,7 @@
 				<a href="{{ section.settings.button-link-2 }}">
 			{% endif %}
 				{% if section.settings.image-2 %}
-					<img src="{{ section.settings.image-2.src | img_url: '1200x900', crop: 'center' }}" class="fullwidth" alt="{{ section.settings.image-2.alt }}" />
+					<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" data-src="{{ section.settings.image-2.src | img_url: '1200x900', crop: 'center' }}" class="fullwidth lazy2" alt="{{ section.settings.image-2.alt }}" />
 				{% endif %}
 			{% if section.settings.button-link-2 != blank  %}
 				</a>
@@ -84,7 +84,7 @@
 				<a href="{{ section.settings.button-link-2 }}">
 			{% endif %}
 				{% if section.settings.image-mobile-2 %}
-					<img src="{{ section.settings.image-mobile-2.src | img_url: '700x700', crop: 'center' }}" class="fullwidth" alt="{{ section.settings.image-mobile-2.alt }}"/>
+					<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" data-src="{{ section.settings.image-mobile-2.src | img_url: '700x700', crop: 'center' }}" class="fullwidth lazy2" alt="{{ section.settings.image-mobile-2.alt }}"/>
 				{% endif %}
 			{% if section.settings.button-link-2 != blank  %}
 				</a>
@@ -322,8 +322,5 @@
 		.module-{{ section.id }} .homepage-double-cta-right h2.custom-module-title {
 			text-align: {{ section.settings.text_alignment_mobile-2 }};
 		}
-		
 	}
-	
 </style>
-

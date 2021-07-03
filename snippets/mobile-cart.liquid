@@ -1,36 +1,5 @@
-<!-- Shown on Mobile Only -->
-<ul id="cart" class="mobile-3 tablet-6 mobile-only">  
-  <li class="open-mob-btn"><span class="shifter-handle"><img src="https://cdn.shopify.com/s/files/1/3012/3948/files/menu-left.svg?v=1603742966"></span></li>
-  
-  {%comment%}
-  <li class="seeks"><a id="inline" href="#search_popup" class="open_popup"><i class="fa fa-search" aria-hidden="true"></i></a>
-    {% if settings.show_multiple_currencies %}{% include 'currencies-switcher' %}{% endif %}</li>
-  {%endcomment%}
-  
-  {%comment%}
-  {% if shop.customer_accounts_enabled %}
-  <li class="cust">
-    {% if customer  %}
-    <a href="/account"><i class="fa fa-user-o" aria-hidden="true"></i></a>
-    <a href="/account/logout" class="logout-link"><i class="fa fa-user-times" aria-hidden="true"></i></a>
-    {% else %}
-    <a href="/account/login"><i class="fa fa-user-o" aria-hidden="true"></i></a>
-    {% endif %}
-  </li>
-  {% endif %}
-  {%endcomment%}
-  
-  <li class="mobile-logo-header">
-    <a href="https://livesozy.com/"><img src="//cdn.shopify.com/s/files/1/3012/3948/files/black-01_0882b60c-40ee-49ce-9dc9-04a57d0e37bd_400x.png?v=1534108532"></a>
-  </li>
-  
-  <li class="mob-cart-img">
-    <a href="/cart" class="site-header__cart-toggle js-drawer-open-right" aria-controls="CartDrawer" aria-expanded="false">
-      <span class="cart-words">{{ 'cart.general.title' | t }}</span>
-      <img src="https://cdn.shopify.com/s/files/1/3012/3948/files/cart-vector.svg?v=1603727534">
-      {%if cart.item_count >= 1%}
-      <span class="CartCount">{{ cart.item_count }}</span>
-      {%endif%}
-    </a> 
-  </li>       
-</ul>  
+<ul id="cart" class="mobile-3 tablet-6 mobile-only">
+	<li class="open-mob-btn"><span class="shifter-handle"><img class="lazy2" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" data-src="https://cdn.shopify.com/s/files/1/3012/3948/files/menu-left.svg?v=1603742966"></span></li>
+	<li class="mobile-logo-header"><a href="https://livesozy.com/"><img class="lazy2" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" data-src="//cdn.shopify.com/s/files/1/3012/3948/files/black-01_0882b60c-40ee-49ce-9dc9-04a57d0e37bd_400x.png?v=1534108532"></a></li>
+	<li class="mob-cart-img"><a href="/cart" class="site-header__cart-toggle js-drawer-open-right" aria-controls="CartDrawer" aria-expanded="false"><span class="cart-words">{{ 'cart.general.title' | t }}</span><img class="lazy2" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" data-src="https://cdn.shopify.com/s/files/1/3012/3948/files/cart-vector.svg?v=1603727534">{%if cart.item_count >= 1%}<span class="CartCount">{{ cart.item_count }}</span>{%endif%}</a></li>
+</ul>
